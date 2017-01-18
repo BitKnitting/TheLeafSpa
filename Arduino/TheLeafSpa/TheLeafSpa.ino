@@ -9,7 +9,6 @@
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)
 DHT dht(DHTPIN, DHTTYPE);
-// Both the Grove CO2 sensor and Sparkfun's ESP8266 Sheild use SoftwareSerial.
 //1.Connect the Grove CO2 Sensor to Grove Base shield D7 Port
 #include <SoftwareSerial.h>
 SoftwareSerial CO2sensor(7, 8);      // TX, RX
@@ -18,22 +17,6 @@ const unsigned char cmdGetCO2Reading[] =
   0xff, 0x01, 0x86, 0x00, 0x00,
   0x00, 0x00, 0x00, 0x79
 };
-#include <SparkFunESP8266WiFi.h>
-//////////////////////////////
-// ESP8266Server definition //
-//////////////////////////////
-// server object used towards the end of the demo.
-// (This is only global because it's called in both setup()
-// and loop()).
-ESP8266Server server = ESP8266Server(80);
-//////////////////////////////
-// WiFi Network Definitions //
-//////////////////////////////
-// Replace these two character strings with the name and
-// password of your WiFi network.
-/************************* WiFi Access Point *********************************/
-const char mySSID[] = "NF7VH";
-const char myPSK[] = "FX9MP5LGC5NHDRQV";
 // The GitHub location for the Timer library is here: //http://github.com/JChristensen/Timer
 #include <Timer.h>
 Timer tReadEvent;
@@ -61,7 +44,6 @@ void setup() {
   DEBUG_PRINTF("The amount of available ram: ");
   DEBUG_PRINTLN(freeRam());
   //
-  connectESP8266();
   loadGlobalSettings();
   DEBUG_PRINTF("Seconds Between Readings: ");
   DEBUG_PRINT(globalSettings.secsBtwnReadings);
@@ -118,7 +100,10 @@ void doReadings() {
   sensorData.CO2Value = takeCO2Reading();
   DEBUG_PRINTF("Temperature reading: ");
   DEBUG_PRINT(sensorData.temperatureValue);
-  DEBUG_PRINTF("˚C | Humidity reading: ");
+  DEBUG_PRINTF("˚C | ");
+  float farenheit = sensorData.temperatureValue * 1.8 + 32.;
+  DEBUG_PRINT(farenheit);
+  DEBUG_PRINTF("˚F | Humidity: ");
   DEBUG_PRINT(sensorData.humidityValue);
   DEBUG_PRINTF("% | CO2 reading: ");
   DEBUG_PRINT(sensorData.CO2Value);
@@ -152,32 +137,10 @@ int takeCO2Reading() {
     return -1;
   }
   int CO2PPM = (int)data[2] * 256 + (int)data[3];
-  //temperature = (int)data[4] - 40;
+  //temperature = (int)data[4] - 40;  --> getting temperature from the DHT22.
   return CO2PPM;
 }
-/*
-   connectESP8266() includes the initESP8266() and connect8266() functions from the Sparkfun example.
-   esp8266.begin() verifies the ESP8266 is operational and sets it up for the rest of the sketch.
-   The ESP8266 can be set to one of three modes:
-   1 - ESP8266_MODE_STA - Station only
-   2 - ESP8266_MODE_AP - Access point only
-   3 - ESP8266_MODE_STAAP - Station/AP combo
-   Use esp8266.getMode() to check which mode it's in
-*/
-void connectESP8266() {
-  if (!esp8266.begin()) {
-    DEBUG_PRINTLNF("Error initializing the ESP8266 Shield.");
-    return;
-  }
-  DEBUG_PRINTLNF("ESP8266 Shield initialized.");
-  if (esp8266.getMode() != ESP8266_MODE_STA) {
-    DEBUG_PRINTLNF("Setting ESP8266's mode to Station Only");
-    if (esp8266.setMode(ESP8266_MODE_STA) < 0) {
-      DEBUG_PRINTLNF("Error seeting ESP8266's mode to Station Only");
-    }
-  }
-  DEBUG_PRINTLNF("Mode set to station.");
-}
+
 
 
 
