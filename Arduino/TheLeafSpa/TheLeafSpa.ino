@@ -11,7 +11,7 @@
 DHT dht(DHTPIN, DHTTYPE);
 //1.Connect the Grove CO2 Sensor to Grove Base shield D7 Port
 #include <SoftwareSerial.h>
-SoftwareSerial CO2sensor(7, 8);      // TX, RX
+SoftwareSerial CO2sensor(5,6);      // TX, RX
 const unsigned char cmdGetCO2Reading[] =
 {
   0xff, 0x01, 0x86, 0x00, 0x00,
@@ -137,6 +137,8 @@ int takeCO2Reading() {
     return -1;
   }
   int CO2PPM = (int)data[2] * 256 + (int)data[3];
+  //subtracting 100ppm based on calibration with Extech CO2 meter made January 18th, 2017 (MKJ)
+  CO2PPM -= 100;
   //temperature = (int)data[4] - 40;  --> getting temperature from the DHT22.
   return CO2PPM;
 }
