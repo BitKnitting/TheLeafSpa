@@ -33,6 +33,8 @@ void setup() {
   DEBUG_PRINTLN(freeRam());
   pinMode(RELAYPIN4, OUTPUT);
   t.every(1800000,turnPumpOn);   // 30 mins in ms => 1 min = 60 secs * 1000 ms/sec = 60,000 ms/min* 30mins  = 1,800,000 ms 
+  //start by turning the pump on
+  turnPumpOn();
 }
 /*
    LOOP
