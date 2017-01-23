@@ -44,16 +44,18 @@ void loop() {
 }
 /*
  * turnPumpOn - TBD on the amount of time...
+ * HIGH turns on the Power Switch
  */
  void turnPumpOn() {
-  digitalWrite(RELAYPIN4, LOW);
+  digitalWrite(RELAYPIN4, HIGH);
   timeOnEvent = t.after(120000,turnPumpOff);       // 2 mins in ms => 2 * 60 secs/min * 1000 ms/sec = 
  }
  /*
   * turnPumpOff - after the amount of time the pump was on.
+  * LOW turns off the Power Switch
   */
   void turnPumpOff() {
-    digitalWrite(RELAYPIN4,HIGH);
+    digitalWrite(RELAYPIN4,LOW);
     t.stop(timeOnEvent);
   }
 
