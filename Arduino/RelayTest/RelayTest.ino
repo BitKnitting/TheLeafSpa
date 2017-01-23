@@ -18,6 +18,10 @@ DHT dht(DHTPIN, DHTTYPE);
 //1.Connect the Grove CO2 Sensor to Grove Base shield D7 Port
 #include <SoftwareSerial.h>
 SoftwareSerial CO2sensor(5, 6);     // TX, RX
+// The GitHub location for the Timer library is here: //http://github.com/JChristensen/Timer
+#include <Timer.h>
+Timer t;
+int   timeOnEvent;
 //Identify relay pin
 #define RELAYPIN4 7
 /*
@@ -28,17 +32,26 @@ void setup() {
   DEBUG_PRINTF("The amount of available ram: ");
   DEBUG_PRINTLN(freeRam());
   pinMode(RELAYPIN4, OUTPUT);
+  t.every(1800000,turnPumpOn);   // 30 mins in ms => 1 min = 60 secs * 1000 ms/sec = 60,000 ms/min* 30mins  = 1,800,000 ms 
 }
 /*
    LOOP
 */
 void loop() {
-  //Turn relay ON
-  digitalWrite(RELAYPIN4, LOW);
-  //Wait 
-  delay(3000);
-  //Turn relay OFF
-  digitalWrite(RELAYPIN4, HIGH);
-  //Wait 
-  delay(3000);
+  t.update();
 }
+/*
+ * turnPumpOn - TBD on the amount of time...
+ */
+ void turnPumpOn() {
+  digitalWrite(RELAYPIN4, LOW);
+  timeOnEvent = t.after(120000,turnPumpOff);       // 2 mins in ms => 2 * 60 secs/min * 1000 ms/sec = 
+ }
+ /*
+  * turnPumpOff - after the amount of time the pump was on.
+  */
+  void turnPumpOff() {
+    digitalWrite(RELAYPIN4,HIGH);
+    t.stop(timeOnEvent);
+  }
+
