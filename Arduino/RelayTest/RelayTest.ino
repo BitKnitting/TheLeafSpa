@@ -32,7 +32,7 @@ void setup() {
   DEBUG_PRINTF("The amount of available ram: ");
   DEBUG_PRINTLN(freeRam());
   pinMode(RELAYPIN4, OUTPUT);
-  t.every(1800000,turnPumpOn);   // 30 mins in ms => 1 min = 60 secs * 1000 ms/sec = 60,000 ms/min* 30mins  = 1,800,000 ms 
+  t.every(3600000,turnPumpOn);   // 60 mins in ms => 1 min = 60 secs * 1000 ms/sec = 60,000 ms/min* 60mins  = 3,600,000 ms 
   //start by turning the pump on
   turnPumpOn();
 }
