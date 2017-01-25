@@ -1,5 +1,5 @@
 /*
-   Part of The Leaf Spa Testing
+   Part of The Leaf Spa Work.
    Be Kind. Margaret Johnson.
 */
 // Set DEBUG to 0 if NOT connected to serial monitor (for debugging)
@@ -17,7 +17,6 @@ int   timeOnEvent;
 // include the SD library:
 #include <SPI.h>
 #include <SD.h>
-const char logFileName[] = "datalog.txt";
 
 // Adafruit SD shields and modules: pin 10
 const int chipSelect = 10;
@@ -27,6 +26,8 @@ const int chipSelect = 10;
 #include <SoftwareSerial.h>
 SoftwareSerial s_serial(7, 8);      // TX, RX
 #define CO2Sensor s_serial
+// 1200ppm is the targeted CO2 level
+const int setCO2Level = 1200;
 
 const unsigned char cmd_get_sensor[] =
 {
@@ -51,20 +52,10 @@ void setup() {
     CO2Sensor.begin(9600);
   }
   t.every(60000, takeCO2Reading); //take CO2 measurements every 1 minute -> 1 mins * 60 sec/min * 1000 ms/sec = 60,000
-  deleteFileBeforeLogging();
   takeCO2Reading();
 }
 void loop() {
   t.update();
-}
-/******************************************************************************
-  Delete file before logging data
- *******************************************************************************/
-void deleteFileBeforeLogging()
-{
-  if (SD.exists(logFileName)) {
-    SD.remove(logFileName);
-  }
 }
 /* takeCO2Reading() wrapper around getCO2Reading() to check if a reading happened..writes to log file
 
@@ -76,7 +67,12 @@ void takeCO2Reading() {
   if (CO2Reading < 0) {
     blink(5);
   } else {
-    File dataFile = SD.open(logFileName, FILE_WRITE);
+    if (CO2Reading < setCO2Level) {
+      adjustCO2Level();
+      
+    }
+    File dataFile = SD.open("datalog.txt", FILE_WRITE);
+    //Log the reading to the file.
     if (dataFile) {
       dataFile.println(CO2Reading);
       dataFile.close();
@@ -113,9 +109,12 @@ int getCO2Reading() {
   {
     return -1;
   }
-  int co2ppm = (int)data[2] * 256 + (int)data[3] - 60;  //subtracted 60ppm to calibrate with Extech CO2 meter measurement.
-  return co2ppm.
+
+  return ( (int)data[2] * 256 + (int)data[3]);
 }
+/*
+ * adjustCO2Level() - average out some readings...still lower than target set CO2 level?  If it is, turn on CO2 for "a bit"?
+ */
 /*
     blink() called when ran into an error that stopped code from running correctly
 */
