@@ -14,7 +14,7 @@ SoftwareSerial s_serial(7, 8);      // TX, RX
 #define CO2Sensor s_serial
 // 1200ppm is the targeted CO2 level
 const int setCO2Level = 1200;
-
+const int CO2SwitchPin = 3;
 const unsigned char cmd_get_sensor[] =
 {
   0xff, 0x01, 0x86, 0x00, 0x00,
@@ -26,6 +26,7 @@ void setup() {
   DEBUG_PRINTF("The amount of available ram: ");
   DEBUG_PRINTLN(freeRam());
   CO2Sensor.begin(9600);
+  pinMode(CO2SwitchPin, OUTPUT);
   showMenu();
 }
 void loop() {
@@ -38,6 +39,9 @@ void serialHandler() {
   char inChar;
   if ((inChar = Serial.read()) > 0) {
     switch (inChar) {
+      case '\r':
+      case '\n':
+        break;
       case 'r': // take CO2 reading
       case 'R':
         {
@@ -52,7 +56,15 @@ void serialHandler() {
         {
           DEBUG_PRINTLNF("Enter number of secs to turn CO2 tank on: ");
           while (Serial.available() == 0);
-          int nCO2TankSecs = Serial.parseInt();
+          bool lfnl = false;
+          while (Serial.peek() == '\n' || Serial.peek() == '\r') {
+            Serial.read();
+            lfnl = true;
+          }
+          if (lfnl) {
+            while (Serial.available() == 0);
+          }
+          unsigned long nCO2TankSecs = Serial.parseInt();
           nCO2TankSecs < 1 ? 1 : nCO2TankSecs;
           DEBUG_PRINTF("Number of seconds to turn CO2 tank on: ");
           DEBUG_PRINTLN(nCO2TankSecs);
@@ -99,20 +111,22 @@ int getCO2Reading() {
   {
     return -1;
   }
-  int co2Level = (int)data[2] * 256 + (int)data[3] - 60; //subtracting 60ppm to adjust to Extech CO2 meter reading;
+  int co2Level = (int)data[2] * 256 + (int)data[3] - 100; //subtracting to adjust to Extech CO2 meter reading;
   return co2Level;
 }
 /*
    turnTankOn(int nSeconds) - turn the CO2 tank on for nSeconds.
 */
-const int CO2SwitchPin = 4; //arbitrarily using io pin 4...
 void turnTankOnFor(int nSeconds) {
   // Testing using the Power Switch....
   digitalWrite(CO2SwitchPin, HIGH);
-  delay(nSeconds);
+  delay(nSeconds*1000);
   digitalWrite(CO2SwitchPin, LOW);
+  DEBUG_PRINTF("Turned CO2 on for ");
+  DEBUG_PRINT(nSeconds);
+  DEBUG_PRINTLNF(" seconds");
 }
-/*
+/* 
     blink() called when ran into an error that stopped code from running correctly
 */
 void blink(int timesToLoop) {
