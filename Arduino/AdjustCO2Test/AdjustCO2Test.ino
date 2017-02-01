@@ -12,9 +12,10 @@
 #include <SoftwareSerial.h>
 SoftwareSerial s_serial(7, 8);      // TX, RX
 #define CO2Sensor s_serial
+bool fContinuouslyRead = false;
 // 1200ppm is the targeted CO2 level
 const int setCO2Level = 1200;
-const int CO2SwitchPin = 3;
+const int CO2SwitchPin = 4;
 const unsigned char cmd_get_sensor[] =
 {
   0xff, 0x01, 0x86, 0x00, 0x00,
@@ -27,10 +28,16 @@ void setup() {
   DEBUG_PRINTLN(freeRam());
   CO2Sensor.begin(9600);
   pinMode(CO2SwitchPin, OUTPUT);
+  digitalWrite(CO2SwitchPin, HIGH);
   showMenu();
 }
 void loop() {
   serialHandler();
+  if (fContinuouslyRead) {
+    int co2Level = getCO2Reading(); 
+    DEBUG_PRINTF("CO2 level: ");
+    DEBUG_PRINTLN(co2Level);
+  }
 }
 /*
    void serialHandler() handle user input from serial monitor (see showMenu()).
@@ -45,15 +52,26 @@ void serialHandler() {
       case 'r': // take CO2 reading
       case 'R':
         {
+          fContinuouslyRead = false;
           int co2Level = getCO2Reading();
           DEBUG_PRINTF("CO2 level: ");
           DEBUG_PRINTLN(co2Level);
           showMenu();
         }
         break;
+      case 'c': // continuously read toggle
+      case 'C' :
+        {
+          fContinuouslyRead = !fContinuouslyRead;
+          if (!fContinuouslyRead) {
+            showMenu();
+          }
+        }
+        break;
       case 'o': // turn tank on for n seconds
       case 'O':
         {
+          fContinuouslyRead = false;
           DEBUG_PRINTLNF("Enter number of secs to turn CO2 tank on: ");
           while (Serial.available() == 0);
           bool lfnl = false;
@@ -74,10 +92,12 @@ void serialHandler() {
       case '?':
       case 'h': // Display menu again.
         {
+          fContinuouslyRead = false;
           showMenu();
         }
         break;
       default:
+        fContinuouslyRead = false;
         break;
     }
   }
@@ -119,14 +139,14 @@ int getCO2Reading() {
 */
 void turnTankOnFor(int nSeconds) {
   // Testing using the Power Switch....
-  digitalWrite(CO2SwitchPin, HIGH);
-  delay(nSeconds*1000);
   digitalWrite(CO2SwitchPin, LOW);
+  delay(nSeconds * 1000);
+  digitalWrite(CO2SwitchPin, HIGH);
   DEBUG_PRINTF("Turned CO2 on for ");
   DEBUG_PRINT(nSeconds);
   DEBUG_PRINTLNF(" seconds");
 }
-/* 
+/*
     blink() called when ran into an error that stopped code from running correctly
 */
 void blink(int timesToLoop) {
@@ -142,6 +162,7 @@ const char menuText[] PROGMEM =
   "Available commands:" "\n"
   "  ?     - shows available comands" "\n"
   "  r     - take CO2 reading" "\n"
+  "  c     - toggle continuously read CO2 on and off \n"
   "  o     - turn CO2 tank on for n seconds" "\n"
   ;
 /*-----------------------------------------------------------
