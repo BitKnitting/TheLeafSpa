@@ -2,6 +2,9 @@
 #include <DebugLib.h>
 const int relayPin = 4; //arbitrarily use GPIO pin 4
 #define CO2Sensor s_serial
+#define ON LOW
+#define OFF HIGH
+
 const int defaultPin = 4;
 int pin = defaultPin;
 void setup() {
@@ -9,7 +12,7 @@ void setup() {
   DEBUG_PRINTF("The amount of available ram: ");
   DEBUG_PRINTLN(freeRam());
   pinMode(pin, OUTPUT);
-  digitalWrite(pin,HIGH);
+  digitalWrite(pin,OFF);
   showMenu();
 }
 
@@ -29,14 +32,14 @@ void serialHandler() {
       case 'l': // set digital pin to LOW
       case 'L':
         {
-          digitalWrite(pin, LOW);
+          digitalWrite(pin, ON);
           showMenu();
         }
         break;
       case 'h': // set digital pin to HIGH
       case 'H' :
         {
-          digitalWrite(pin, HIGH);
+          digitalWrite(pin, OFF);
           showMenu();
         }
         break;
@@ -55,7 +58,7 @@ void serialHandler() {
           }
           pin = Serial.parseInt();
           pinMode(pin, OUTPUT);
-          digitalWrite(pin,HIGH);
+          digitalWrite(pin,OFF);
           DEBUG_PRINTF("Changed switch pin to pin ");
           DEBUG_PRINTLN(pin);
           showMenu();
@@ -76,8 +79,8 @@ const char menuText[] PROGMEM =
   "Available commands:" "\n"
   "  ?     - shows available comands" "\n"
   "  p     - change pin number (default = 4)" "\n"
-  "  h     - turn pin HIGH" "\n"
-  "  l     - turn pin LOW \n"
+  "  h     - turn AC OFF" "\n"
+  "  l     - turn AC ON \n"
   ;
 /*-----------------------------------------------------------
   show command line menu
