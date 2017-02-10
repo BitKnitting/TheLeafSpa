@@ -124,6 +124,7 @@ void initStuff() {
   pinMode(pumpPin, OUTPUT);
   pinMode(LEDPin,OUTPUT);
   digitalWrite(pumpPin, OFF);
+  digitalWrite(LEDPin,OFF);
   DEBUG_PRINTF("Setting timer to read sensors every ");
   DEBUG_PRINT(globalSettings.secsBtwnReadings);
   DEBUG_PRINTLNF(" seconds.");
@@ -225,25 +226,4 @@ void adjustCO2(int co2reading) {
   }
   
 }
-/*
-   unsigned long doubleToUL(float numToRound) - if the number is has a fraction of .5 or greater, the int returned is a rounded up from the float passed in.
-*/
-unsigned long doubleToUL(float fNumToRound) {
-  unsigned long ulToReturn;
-  DEBUG_PRINTF("floating point number: ");
-  static char outstr[8];
-  dtostrf(fNumToRound, 7, 2, outstr);
-  DEBUG_PRINTLN(outstr);
-  int truncatedNumber = int(fNumToRound);
-  float temp = fNumToRound - truncatedNumber + .51;
-  if (temp >= 1.) {
-    ulToReturn = int(fNumToRound + 1);
-  } else {
-    ulToReturn = int (fNumToRound);
-  }
-  DEBUG_PRINTF("unsigned long to return: ");
-  DEBUG_PRINTLN(ulToReturn);
-  return ulToReturn;
-}
-
 

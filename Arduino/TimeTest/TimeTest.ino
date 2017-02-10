@@ -2,10 +2,13 @@
 #define DEBUG 1
 #include <DebugLib.h>
 #include <TimeLib.h>
+#include <TimeAlarms.h>
 #include <Wire.h>
 #include <DS1307RTC.h>  // a basic DS1307 library that returns time as a time_t
 void setup() {
+  initStuff();
   DEBUG_BEGIN;
+  DEBUG_WAIT;
   DEBUG_PRINTF("The amount of available ram: ");
   DEBUG_PRINTLN(freeRam());
   setSyncProvider(RTC.get);   // the function to sync the time from the RTC
@@ -16,6 +19,7 @@ void setup() {
 
   //Get the current time.
   time_t currentTime = now();
+  //Get the value for Unix epoch time for 
   time_t timeAtMidnight = tmConvert_t(year(),month(),day(),24,0,0);
   debugPrintDate(timeAtMidnight);
   time_t amtTimeUntilMidnight = timeAtMidnight - currentTime;
