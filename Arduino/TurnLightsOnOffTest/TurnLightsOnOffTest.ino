@@ -34,7 +34,7 @@ void setup() {
   initStuff();
 }
 /***********************************************************
-   setup()
+   loop()
  ***********************************************************/
 void loop() {
   //The Alarm callbacks were not called unless Alarm.Delay() was in the loop.

@@ -1,8 +1,6 @@
 // Set DEBUG to 0 if NOT connected to serial monitor (for debugging)
 #define DEBUG 1
 #include <DebugLib.h>
-// Set TEST_ACTIONS to 1 if testing how the on/off actions work.
-#define TEST_ACTIONS 1
 /* The SD code I got from the SD card file dump - I got from somewhere. From the file.....
 
   created  22 December 2010  by Limor Fried
@@ -15,6 +13,14 @@
 #include <SD.h>
 //     Adafruit SD shields and modules: pin 10
 const int chipSelect = 10;
+const int cardDetectPin = 3;
+enum cardState_t {
+  Inserted = LOW,
+  Removed = HIGH,
+  Unchanged = HIGH + 1,
+  Initial = HIGH + 2
+} prevCardState, currentCardState;
+
 #include <DHT.h>
 #define DHTPIN 5     // what pin we're connected to
 // Uncomment whatever type you're using!
@@ -23,22 +29,24 @@ const int chipSelect = 10;
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)
 DHT dht(DHTPIN, DHTTYPE);
 #include <SoftwareSerial.h>
-SoftwareSerial CO2sensor(6, 7);   // TX, RX
+SoftwareSerial CO2sensor(7, 8);  // TX, RX
 const unsigned char cmdGetCO2Reading[] =
 {
   0xff, 0x01, 0x86, 0x00, 0x00,
   0x00, 0x00, 0x00, 0x79
 };
-// The GitHub location for the Timer library is here: //http://github.com/JChristensen/Timer
-#include <Timer.h>
-Timer timer;
+//RTC timer functionality.  Refer to the discussion on this blog post: https://bitknitting.wordpress.com/2017/02/10/build-log-for-february-9th/
+#include <TimeLib.h>
+#include <TimeAlarms.h>
+#include <DS1307RTC.h>  // a basic DS1307 library that returns time as a time_t
 // RELAY pins
-#define ON LOW
+#define ON LOW //I discuss relay ON / OFF in this blog post: https://bitknitting.wordpress.com/2017/02/03/build-log-for-february-2nd/
 #define OFF HIGH
-#define pumpPin 4 //put the DC pin for the relay that will control the pump into pin 4 of the Arduino.
-#define LEDPin  5
-// EEPROM is used to load/save global settings.
-#define eepromWriteCheck 0x5678
+#define pumpPin 4 //put the pin for the relay that will control the pump into pin 4 of the Arduino.  Make sure the pump is plugged into the right socket.
+#define LEDPin  5 //same thing as for the pumpPin...
+#define CO2Pin  6 //same things as for the other pins...
+// EEPROM is used to load/save global settings.  See resetGlobalSettings() to get a feel for what properties are stored.
+#define eepromWriteCheck 0x1234
 #include <avr/eeprom.h>
 struct globalSettings_T
 {
@@ -47,7 +55,9 @@ struct globalSettings_T
   int16_t            targetCO2Level;
   int16_t            amtSecsWaterPumpIsOn;
   unsigned long      secsBetweenTurningPumpON;
-  int16_t            photoperiod;
+  int                hourToTurnLightOff;
+  int                hourToTurnLightOn;
+  time_t             timeCardWasRemoved;
 } globalSettings;
 struct sensorData_T
 {
@@ -55,24 +65,81 @@ struct sensorData_T
   float temperatureValue;
   float humidityValue;
 } sensorData;
-bool fLEDsAreOn = false;
-/*
-   SETUP
-*/
+//The log file holds rows that are different types of data depending on what the activity is
+//reading the sensors, turning the pump, LED, or CO2 on/off
+enum logRow_t {
+  SensorData,
+  PumpOn,
+  PumpOff,
+  LEDOn,
+  LEDOff,
+  CO2On,
+  CO2Off,
+  CardInserted,
+  CardRemoved,
+} logRowType;
+const char *logFileName = "datalog.txt";
+
+/***********************************************************
+   setup()
+ ***********************************************************/
 void setup() {
-  DEBUG_BEGIN;
-  DEBUG_PRINTF("The amount of available ram: ");
-  DEBUG_PRINTLN(freeRam());
-  //
-  loadGlobalSettings();
-  debugPrintGlobalSettings();
   initStuff();
+  //start things off
+  doReading();
+  doPump();
+  turnLightOnOrOff();
+}
+/***********************************************************
+   loop()
+ ***********************************************************/
+void loop() {
+  //The Alarm callbacks were not called unless Alarm.Delay() was in the loop.
+  Alarm.delay(1);
 }
 /*
-   LOOP
+   initStuff()
 */
-void loop() {
-  timer.update();
+void initStuff() {
+  DEBUG_BEGIN;
+  DEBUG_WAIT;
+  DEBUG_PRINTF("The amount of available ram: ");
+  DEBUG_PRINTLN(freeRam());
+  setSyncProvider(RTC.get);   // the function to sync the time from the RTC..from Paul's example.
+  if (timeStatus() != timeSet)
+    DEBUG_PRINTLNF("Unable to sync with the RTC");
+  else
+    DEBUG_PRINTLNF("RTC has set the system time");
+  dht.begin();
+  CO2sensor.begin(9600);
+  // The cardDetectPin is used to figure out if the SD card is in the slot...
+  // I'm using INPUT_PULLUP for the pin mode to use attachInterupt()...the challenge with
+  // attachInterupt() inserting/removing card typically generates more than 1 interrupt so
+  // it is difficult to know what the last one is....
+  pinMode(cardDetectPin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(cardDetectPin), closeSD, CHANGE);
+  //call in init to set whether the SD Card was in the reader when script started (or not).
+  prevCardState = Initial;
+  DEBUG_PRINTF("Previous card state on init: ");
+  DEBUG_PRINTLN(prevCardState);
+  pinMode(pumpPin, OUTPUT);
+  pinMode(LEDPin, OUTPUT);
+  pinMode(CO2Pin, OUTPUT);
+  digitalWrite(pumpPin, OFF);
+  digitalWrite(LEDPin, OFF);
+  digitalWrite(CO2Pin, OFF);
+  loadGlobalSettings();
+  debugPrintGlobalSettings();
+  DEBUG_PRINTF("Setting timer to read sensors every ");
+  DEBUG_PRINT(globalSettings.secsBtwnReadings);
+  DEBUG_PRINTLNF(" seconds.");
+  // Set up reading the sensors.
+  Alarm.timerRepeat((const int)globalSettings.secsBtwnReadings, doReading); //set the timer up to go off when it is time to take sensor readings.
+  // Set up turning the pump off and on.
+  Alarm.timerRepeat((const int)globalSettings.secsBetweenTurningPumpON, doPump);
+  // Set up LED photoperiod through on and off alarms that fire every day.
+  Alarm.alarmRepeat((const int)globalSettings.hourToTurnLightOff, 0, 0, turnLightOff);
+  Alarm.alarmRepeat((const int)globalSettings.hourToTurnLightOn, 0, 0, turnLightOn);
 }
 /*
    loadGlobalSettings() uses EEPROM to get the settings variables identified within the globalSettings structure.
@@ -96,8 +163,10 @@ void resetGlobalSettings() {
   globalSettings.secsBtwnReadings = (DEBUG == 1) ? 2 : 15 * 60;  //if in debug mode, make the period between readings short.
   globalSettings.targetCO2Level = 1200;
   globalSettings.amtSecsWaterPumpIsOn = (DEBUG == 1) ? 3 :  60; //amount of seconds for pump to be ON.
-  globalSettings.secsBetweenTurningPumpON = (DEBUG == 1) ? 20 :  60 * 30; //# mins between turning pump ON.
-  globalSettings.photoperiod = 20; //LED is off 4 hours of the 24 hours.
+  globalSettings.secsBetweenTurningPumpON = (DEBUG == 1) ? 20 :  30 * 60; //# secs between turning pump ON.
+  globalSettings.hourToTurnLightOff = 0; //Turn light off at midnight.
+  globalSettings.hourToTurnLightOn = 4; //Turn light on at 4AM.
+  eeprom_write_block(&globalSettings, (void *)0, sizeof(globalSettings)); //write settings to eeprom
 }
 /*
    print out the values that will be used to control the environment (GlobalSettings) when DEBUG is on.
@@ -111,46 +180,21 @@ void debugPrintGlobalSettings() {
   DEBUG_PRINTLN(globalSettings.amtSecsWaterPumpIsOn);
   DEBUG_PRINTF(" | Seconds between turning the pump ON: ");
   DEBUG_PRINTLN(globalSettings.secsBetweenTurningPumpON);
-  DEBUG_PRINTF(" | Photoperiod: ");
-  DEBUG_PRINTLN(  globalSettings.photoperiod);
+  DEBUG_PRINTF(" | Hour to turn light OFF: ");
+  DEBUG_PRINTLN(  globalSettings.hourToTurnLightOff);
+  DEBUG_PRINTF(" | Hour to turn light ON: ");
+  DEBUG_PRINTLN(  globalSettings.hourToTurnLightOn);
 }
 /*
-   initStuff() - initialize things needed to get sensors and logging working.
-*/
-void initStuff() {
-  initSD();
-  dht.begin();
-  CO2sensor.begin(9600);
-  pinMode(pumpPin, OUTPUT);
-  pinMode(LEDPin,OUTPUT);
-  digitalWrite(pumpPin, OFF);
-  digitalWrite(LEDPin,OFF);
-  DEBUG_PRINTF("Setting timer to read sensors every ");
-  DEBUG_PRINT(globalSettings.secsBtwnReadings);
-  DEBUG_PRINTLNF(" seconds.");
-  //set up reading the sensors
-  timer.every(globalSettings.secsBtwnReadings * 1000, doReading); //set the timer up to go off when it is time to take sensor readings.
-  doReading();
-  // set up turning the pump off and on.
-  timer.every(globalSettings.secsBetweenTurningPumpON * 1000, doPump);
-  doPump();
-  //set up LED photoperiod
-}
-/*
-   Initialize the SD card for logging
+   initSD() ...SD.begin() must be called before opening a file if the SD card has been removed and inserted...
 */
 bool initSD() {
-  if (TEST_ACTIONS) {
-    DEBUG_PRINTLNF("Not writing to the SD card in this test. ");
-  } else {
-    DEBUG_PRINTF("Initializing SD card...");
-    if (!SD.begin(chipSelect)) {
-      DEBUG_PRINTLNF("initialization failed. Things to check:");
-      DEBUG_PRINTLNF("* is a card inserted?");
-      DEBUG_PRINTLNF("* is your wiring correct?");
-      DEBUG_PRINTLNF("* did you change the chipSelect pin to match your shield or module?");
-      return false;
-    }
+  if (!SD.begin(chipSelect)) {
+    DEBUG_PRINTLNF("initialization failed. Things to check:");
+    DEBUG_PRINTLNF("* is a card inserted?");
+    DEBUG_PRINTLNF("* is your wiring correct?");
+    DEBUG_PRINTLNF("* did you change the chipSelect pin to match your shield or module?");
+    return false;
   }
   return true;
 }
@@ -174,18 +218,41 @@ void doReading() {
   DEBUG_PRINTF("% | CO2 reading: ");
   DEBUG_PRINT(sensorData.CO2Value);
   DEBUG_PRINTLNF(" PPM");
-  //TBD: Write to log file...
+  writeSensorDataToLogFile();
 }
 /*
-   doPump() turn the water pump on off
+   doPump() turn the water pump on and set a callback when the pump should be turned off.
 */
 void doPump() {
   //TBD: Log that pump was turned on for amtSecsWaterPumpIsOn
-  //TBD: Use a clock?
-  timer.pulse(pumpPin, globalSettings.amtSecsWaterPumpIsOn * 1000, OFF);
+  digitalWrite(pumpPin, ON);
+  Alarm.timerOnce((const unsigned long)globalSettings.amtSecsWaterPumpIsOn, turnPumpOff);
   DEBUG_PRINTF(" Pump ON for ");
   DEBUG_PRINT(globalSettings.amtSecsWaterPumpIsOn);
   DEBUG_PRINTLNF(" seconds.");
+}
+/*
+   turnPumpOff() - Turn the pump off after globalSettings.amtSecsWaterPumpIsOn.
+*/
+void turnPumpOff() {
+  DEBUG_PRINTLNF("Turned pump OFF");
+  digitalWrite(pumpPin, OFF);
+}
+void turnLightOnOrOff() {
+  //light is off between 00:00:00 and 3:59:59
+  if ( (hour() >= globalSettings.hourToTurnLightOff) && (hour() < globalSettings.hourToTurnLightOn) ) {
+    turnLightOff();
+  } else {
+    turnLightOn();
+  }
+}
+void turnLightOn() {
+  DEBUG_PRINTLNF("turnLightOn fired");
+  digitalWrite(LEDPin, ON);
+}
+void turnLightOff() {
+  DEBUG_PRINTLNF("turnLightOff fired");
+  digitalWrite(LEDPin, OFF);
 }
 /*
    takeCO2Reading() - use the code from the GroveCO2ArduinoSketch to get CO2 data.
@@ -221,9 +288,104 @@ int takeCO2Reading() {
   return CO2PPM;
 }
 void adjustCO2(int co2reading) {
-  if (fLEDsAreOn) {
-    
+  // TBD
+
+}
+/*
+   writeSensorDataToLogFile() puts the date, time, and sensor readings into a String sensorString
+   each property is separated by a common so the row can be read within a CSV file.
+   I decided to use String instead of an array of char because the code has enough room to support it.
+   Working with String is just a lot easier since I don't see coding as a strong skill of mine.
+*/
+void  writeSensorDataToLogFile() {
+  //Just make string to value simpler by using String instead of an array of char..also give
+  //enough room.
+  String sensorString = String(50);
+  File logFile = openFile();
+  if (!logFile) {
+    DEBUG_PRINTLNF("Log File could NOT be opened!");
+  } else {
+    DEBUG_PRINTLNF("Log File opened.");
+    sensorString = getDateTimeString() + ",";
+    sensorString += String(SensorData) + ",";
+    sensorString += String(sensorData.temperatureValue) + ",";
+    sensorString += String(sensorData.humidityValue) + ",";
+    sensorString += sensorData.CO2Value;
+    DEBUG_PRINTF("Sensor string: ");
+    DEBUG_PRINTLN(sensorString);
+    logFile.println(sensorString);
+    logFile.flush();
+    logFile.close();
+    DEBUG_PRINTLNF("Log File closed.");
   }
-  
+
+}
+String getDateTimeString() {
+  String dateTimeString = String(20);
+  dateTimeString = String(month());
+  dateTimeString += "/";
+  dateTimeString += String(day());
+  dateTimeString += "/";
+  dateTimeString += String(year());
+  dateTimeString += ",";
+  dateTimeString += String(hour());
+  dateTimeString += ":";
+  dateTimeString += String(minute());
+  dateTimeString += ":";
+  dateTimeString += String(second());
+  return dateTimeString;
+}
+String makeDateTimeString(time_t t) {
+  tmElements_t tm;
+  String dateTimeString = String(20);
+  breakTime(t, tm);
+  dateTimeString = String(tm.Month);
+  dateTimeString += "/";
+  dateTimeString += String(tm.Day);
+  dateTimeString += "/";
+  dateTimeString += String(tm.Year);
+  dateTimeString += ",";
+  dateTimeString += String(tm.Hour);
+  dateTimeString += ":";
+  dateTimeString += String(tm.Minute);
+  dateTimeString += ":";
+  dateTimeString += String(tm.Second);
+  return dateTimeString;
+
+}
+File openFile() {
+  currentCardState = (cardState_t)digitalRead(cardDetectPin);
+  cardState_t cardState = currentCardState;
+  cardState == prevCardState ? cardState = Unchanged : cardState = currentCardState;
+  DEBUG_PRINTF("Previous state: ");
+  DEBUG_PRINT(prevCardState);
+  DEBUG_PRINTF(" | Current State: ");
+  DEBUG_PRINT(currentCardState);
+  DEBUG_PRINTF(" | Card State: ");
+  DEBUG_PRINTLN(cardState);
+  prevCardState = currentCardState;
+  if (cardState == Inserted) {
+    DEBUG_PRINTLNF("Card state is Inserted.");
+    initSD();
+  }
+  //The file still needs to be opened if the cardState is Unchanged.  Writings will more likely
+  //occur when the SD Card is inserted, which means the majority of the time cardState will be
+  //UnChanged.
+  if (currentCardState == Inserted) {
+    DEBUG_PRINTLNF("Opening file");
+    return (SD.open(logFileName, FILE_WRITE));
+  }
+  //Couldn't open the file.
+  return File();
+}
+void closeSD() {
+  cardState_t cardState = (cardState_t)digitalRead(cardDetectPin);
+  if (cardState == Removed) {
+    DEBUG_PRINTLNF("Card state is Removed");
+    DEBUG_PRINTLNF("--> calling SD.end()");
+    SD.end();
+  } else {
+    DEBUG_PRINTLNF("Card state is Inserted");
+  }
 }
 
