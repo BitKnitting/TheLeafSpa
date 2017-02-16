@@ -77,7 +77,7 @@ enum logRow_t {
   CO2Off,
   CardInserted,
   CardRemoved,
-} logRowType;
+} ;
 const char *logFileName = "datalog.txt";
 
 /***********************************************************
@@ -224,7 +224,7 @@ void doReading() {
    doPump() turn the water pump on and set a callback when the pump should be turned off.
 */
 void doPump() {
-  //TBD: Log that pump was turned on for amtSecsWaterPumpIsOn
+  writeEventHappened(PumpOn);
   digitalWrite(pumpPin, ON);
   Alarm.timerOnce((const unsigned long)globalSettings.amtSecsWaterPumpIsOn, turnPumpOff);
   DEBUG_PRINTF(" Pump ON for ");
@@ -235,6 +235,7 @@ void doPump() {
    turnPumpOff() - Turn the pump off after globalSettings.amtSecsWaterPumpIsOn.
 */
 void turnPumpOff() {
+  writeEventHappened(PumpOff);
   DEBUG_PRINTLNF("Turned pump OFF");
   digitalWrite(pumpPin, OFF);
 }
@@ -247,10 +248,12 @@ void turnLightOnOrOff() {
   }
 }
 void turnLightOn() {
+  writeEventHappened(LEDOn);
   DEBUG_PRINTLNF("turnLightOn fired");
   digitalWrite(LEDPin, ON);
 }
 void turnLightOff() {
+  writeEventHappened(LEDOff);
   DEBUG_PRINTLNF("turnLightOff fired");
   digitalWrite(LEDPin, OFF);
 }
@@ -303,11 +306,10 @@ void  writeSensorDataToLogFile() {
   String sensorString = String(50);
   File logFile = openFile();
   if (!logFile) {
-    DEBUG_PRINTLNF("Log File could NOT be opened!");
+    DEBUG_PRINTLNF("Could not write sensor data. Log File could NOT be opened!");
   } else {
-    DEBUG_PRINTLNF("Log File opened.");
-    sensorString = getDateTimeString() + ",";
-    sensorString += String(SensorData) + ",";
+    sensorString = String(SensorData) + ",";
+    sensorString += getDateTimeString() + ",";
     sensorString += String(sensorData.temperatureValue) + ",";
     sensorString += String(sensorData.humidityValue) + ",";
     sensorString += sensorData.CO2Value;
@@ -316,9 +318,7 @@ void  writeSensorDataToLogFile() {
     logFile.println(sensorString);
     logFile.flush();
     logFile.close();
-    DEBUG_PRINTLNF("Log File closed.");
   }
-
 }
 String getDateTimeString() {
   String dateTimeString = String(20);
@@ -365,12 +365,13 @@ File openFile() {
   DEBUG_PRINTLN(cardState);
   prevCardState = currentCardState;
   if (cardState == Inserted) {
+    writeEventHappened(CardInserted);
     DEBUG_PRINTLNF("Card state is Inserted.");
     initSD();
   }
   //The file still needs to be opened if the cardState is Unchanged.  Writings will more likely
   //occur when the SD Card is inserted, which means the majority of the time cardState will be
-  //UnChanged.
+  //UnChanged.  However, the file needs to be opened every time a row is logged.
   if (currentCardState == Inserted) {
     DEBUG_PRINTLNF("Opening file");
     return (SD.open(logFileName, FILE_WRITE));
@@ -378,9 +379,16 @@ File openFile() {
   //Couldn't open the file.
   return File();
 }
+/*
+ * closeSD() is the function called when the attachInterrupt(...) fires when the state of the Card
+ * Detect pin changes.  During test, there seems to be more changes of Card Detect state than I
+ * expected (e.g.: removing might generate three changes of state).  So I liberally call SD.end()
+ * when it is detected the card has been removed.
+ */
 void closeSD() {
   cardState_t cardState = (cardState_t)digitalRead(cardDetectPin);
   if (cardState == Removed) {
+    writeEventHappened(CardRemoved);
     DEBUG_PRINTLNF("Card state is Removed");
     DEBUG_PRINTLNF("--> calling SD.end()");
     SD.end();
@@ -388,4 +396,19 @@ void closeSD() {
     DEBUG_PRINTLNF("Card state is Inserted");
   }
 }
-
+/*
+    writeEventHappened(...) log each of the events like turning the pump, LED, CO2 on or off.
+*/
+void writeEventHappened(logRow_t event) {
+  File logFile = openFile();
+  if (!logFile) {
+    DEBUG_PRINTLNF("Could not write sensor data. Log File could NOT be opened!");
+  } else {
+    String sensorString = String(30);
+    sensorString = String(event) + ",";
+    sensorString += getDateTimeString() + ",";
+    logFile.println(sensorString);
+    logFile.flush();
+    logFile.close();
+  }
+}
