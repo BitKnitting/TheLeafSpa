@@ -10,7 +10,7 @@
    Using the Grove Base Shield and Grove CO2 monitor plugged into the shield.
 */
 #include <SoftwareSerial.h>
-SoftwareSerial s_serial(7, 8);      // TX, RX
+SoftwareSerial s_serial(5, 6);      // TX, RX
 #define CO2Sensor s_serial
 bool fContinuouslyRead = false;
 // 1200ppm is the targeted CO2 level

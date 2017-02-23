@@ -2,7 +2,7 @@
 <export version="D">
   <design>
     <source>/Users/margaret/Documents/LettuceBuddyHW/LadyBugHydro/TheHerbSpa/GitHub/Kicad/GrowChamberSensorPuck.sch</source>
-    <date>Wednesday, February 15, 2017 'PMt' 01:24:28 PM</date>
+    <date>Monday, February 20, 2017 'AMt' 04:05:40 AM</date>
     <tool>Eeschema 4.0.5</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -40,7 +40,7 @@
       <tstamp>589E3A63</tstamp>
     </comp>
     <comp ref="R8">
-      <value>NTC100KΩ</value>
+      <value>NTC100K</value>
       <footprint>Resistors_SMD:R_0805</footprint>
       <fields>
         <field name="PN">NTCS0805E3104FXT</field>
@@ -60,7 +60,7 @@
       <tstamp>589F315D</tstamp>
     </comp>
     <comp ref="C2">
-      <value>4.7uF</value>
+      <value>4.7u</value>
       <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
       <fields>
         <field name="PN">C</field>
@@ -142,6 +142,9 @@
     <comp ref="P1">
       <value>CONN_01X07</value>
       <footprint>TheLeafSpa:7 POS Arduino Header</footprint>
+      <fields>
+        <field name="PN">X</field>
+      </fields>
       <libsource lib="conn" part="CONN_01X07"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>58A44EAE</tstamp>

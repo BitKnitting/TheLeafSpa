@@ -22,14 +22,14 @@ enum cardState_t {
 } prevCardState, currentCardState;
 
 #include <DHT.h>
-#define DHTPIN 5     // what pin we're connected to
+#define DHTPIN 7     // what pin we're connected to
 // Uncomment whatever type you're using!
 //#define DHTTYPE DHT11   // DHT 11
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)
 DHT dht(DHTPIN, DHTTYPE);
 #include <SoftwareSerial.h>
-SoftwareSerial CO2sensor(7, 8);  // TX, RX
+SoftwareSerial CO2sensor(5,6);  // TX, RX
 const unsigned char cmdGetCO2Reading[] =
 {
   0xff, 0x01, 0x86, 0x00, 0x00,
@@ -42,9 +42,15 @@ const unsigned char cmdGetCO2Reading[] =
 // RELAY pins
 #define ON LOW //I discuss relay ON / OFF in this blog post: https://bitknitting.wordpress.com/2017/02/03/build-log-for-february-2nd/
 #define OFF HIGH
-#define pumpPin 4 //put the pin for the relay that will control the pump into pin 4 of the Arduino.  Make sure the pump is plugged into the right socket.
-#define LEDPin  5 //same thing as for the pumpPin...
+#define pumpPin 5 //put the pin for the relay that will control the pump into pin 4 of the Arduino.  Make sure the pump is plugged into the right socket.
+#define LEDPin  4 //same thing as for the pumpPin...
 #define CO2Pin  6 //same things as for the other pins...
+//Use a flag to tell if the light is on.  Knowing if the light is on is important for adjusting CO2.
+bool fLEDon = false;
+//Define a warm up time for the CO2 sensor.  The Grove wiki says 3 minutes: https://seeeddoc.github.io/Grove-CO2_Sensor/
+const int secsWarmUp = 3 * 60;
+//Use a flag to tell the code when the warm up period is over so that readings can be taken and logged.
+bool fInWarmUp = true;
 // EEPROM is used to load/save global settings.  See resetGlobalSettings() to get a feel for what properties are stored.
 #define eepromWriteCheck 0x1234
 #include <avr/eeprom.h>
@@ -85,10 +91,6 @@ const char *logFileName = "datalog.txt";
  ***********************************************************/
 void setup() {
   initStuff();
-  //start things off
-  doReading();
-  doPump();
-  turnLightOnOrOff();
 }
 /***********************************************************
    loop()
@@ -140,11 +142,15 @@ void initStuff() {
   // Set up LED photoperiod through on and off alarms that fire every day.
   Alarm.alarmRepeat((const int)globalSettings.hourToTurnLightOff, 0, 0, turnLightOff);
   Alarm.alarmRepeat((const int)globalSettings.hourToTurnLightOn, 0, 0, turnLightOn);
+  // Set a timer for the number of minutes needed to warm up the CO2 sensor before taking readings
+  fInWarmUp = true;
+  DEBUG_PRINTLNF("Warming up.");
+  Alarm.timerOnce((const unsigned long)secsWarmUp, warmUpOver);
 }
 /*
    loadGlobalSettings() uses EEPROM to get the settings variables identified within the globalSettings structure.
    if the write check determines the settings are either not there or the write check itself is corrupt, the settings
-   are reset to default values.
+   are reset to default values.'
 */
 void loadGlobalSettings() {
   DEBUG_PRINTLNF("In loadGlobalSettings()");
@@ -160,10 +166,10 @@ void loadGlobalSettings() {
 void resetGlobalSettings() {
   DEBUG_PRINTLNF("In resetGlobalSettings()");
   globalSettings.writeCheck = eepromWriteCheck;
-  globalSettings.secsBtwnReadings = (DEBUG == 1) ? 2 : 15 * 60;  //if in debug mode, make the period between readings short.
+  globalSettings.secsBtwnReadings = (DEBUG == 1) ? 60 : 15 * 60;  //if in debug mode, make the period between readings short.
   globalSettings.targetCO2Level = 1200;
-  globalSettings.amtSecsWaterPumpIsOn = (DEBUG == 1) ? 3 :  60; //amount of seconds for pump to be ON.
-  globalSettings.secsBetweenTurningPumpON = (DEBUG == 1) ? 20 :  30 * 60; //# secs between turning pump ON.
+  globalSettings.amtSecsWaterPumpIsOn = (DEBUG == 1) ? 5 :  60; //amount of seconds for pump to be ON.
+  globalSettings.secsBetweenTurningPumpON = (DEBUG == 1) ? 60 :  30 * 60; //# secs between turning pump ON.
   globalSettings.hourToTurnLightOff = 0; //Turn light off at midnight.
   globalSettings.hourToTurnLightOn = 4; //Turn light on at 4AM.
   eeprom_write_block(&globalSettings, (void *)0, sizeof(globalSettings)); //write settings to eeprom
@@ -205,31 +211,37 @@ bool initSD() {
 */
 void doReading() {
   DEBUG_PRINTLNF("in DoReadings()");
-  sensorData.temperatureValue = dht.readTemperature();
-  sensorData.humidityValue = dht.readHumidity();
-  sensorData.CO2Value = takeCO2Reading();
-  DEBUG_PRINTF("Temperature reading: ");
-  DEBUG_PRINT(sensorData.temperatureValue);
-  DEBUG_PRINTF("˚C | ");
-  float farenheit = sensorData.temperatureValue * 1.8 + 32.;
-  DEBUG_PRINT(farenheit);
-  DEBUG_PRINTF("˚F | Humidity: ");
-  DEBUG_PRINT(sensorData.humidityValue);
-  DEBUG_PRINTF("% | CO2 reading: ");
-  DEBUG_PRINT(sensorData.CO2Value);
-  DEBUG_PRINTLNF(" PPM");
-  writeSensorDataToLogFile();
+  if (!fInWarmUp) {
+    sensorData.temperatureValue = dht.readTemperature();
+    sensorData.humidityValue = dht.readHumidity();
+    sensorData.CO2Value = takeCO2Reading();
+    DEBUG_PRINTF("Temperature reading: ");
+    DEBUG_PRINT(sensorData.temperatureValue);
+    DEBUG_PRINTF("˚C | ");
+    float farenheit = sensorData.temperatureValue * 1.8 + 32.;
+    DEBUG_PRINT(farenheit);
+    DEBUG_PRINTF("˚F | Humidity: ");
+    DEBUG_PRINT(sensorData.humidityValue);
+    DEBUG_PRINTF("% | CO2 reading: ");
+    DEBUG_PRINT(sensorData.CO2Value);
+    DEBUG_PRINTLNF(" PPM");
+    writeSensorDataToLogFile();
+  } else {
+    DEBUG_PRINTLNF("In warm up - no readings taken.");
+  }
 }
 /*
    doPump() turn the water pump on and set a callback when the pump should be turned off.
 */
 void doPump() {
-  writeEventHappened(PumpOn);
-  digitalWrite(pumpPin, ON);
-  Alarm.timerOnce((const unsigned long)globalSettings.amtSecsWaterPumpIsOn, turnPumpOff);
-  DEBUG_PRINTF(" Pump ON for ");
-  DEBUG_PRINT(globalSettings.amtSecsWaterPumpIsOn);
-  DEBUG_PRINTLNF(" seconds.");
+  if (!fInWarmUp) {
+    writeEventHappened(PumpOn);
+    digitalWrite(pumpPin, ON);
+    Alarm.timerOnce((const unsigned long)globalSettings.amtSecsWaterPumpIsOn, turnPumpOff);
+    DEBUG_PRINTF(" Pump ON for ");
+    DEBUG_PRINT(globalSettings.amtSecsWaterPumpIsOn);
+    DEBUG_PRINTLNF(" seconds.");
+  }
 }
 /*
    turnPumpOff() - Turn the pump off after globalSettings.amtSecsWaterPumpIsOn.
@@ -238,6 +250,14 @@ void turnPumpOff() {
   writeEventHappened(PumpOff);
   DEBUG_PRINTLNF("Turned pump OFF");
   digitalWrite(pumpPin, OFF);
+}
+/*
+   turnCO2Off() - turn off the CO2 valve.
+*/
+void turnCO2Off() {
+  writeEventHappened(CO2Off);
+  DEBUG_PRINTLNF("Turned CO2 OFF");
+  digitalWrite(CO2Pin, OFF);
 }
 void turnLightOnOrOff() {
   //light is off between 00:00:00 and 3:59:59
@@ -249,13 +269,22 @@ void turnLightOnOrOff() {
 }
 void turnLightOn() {
   writeEventHappened(LEDOn);
+  fLEDon = true;
   DEBUG_PRINTLNF("turnLightOn fired");
   digitalWrite(LEDPin, ON);
 }
 void turnLightOff() {
   writeEventHappened(LEDOff);
+  fLEDon = false;
   DEBUG_PRINTLNF("turnLightOff fired");
   digitalWrite(LEDPin, OFF);
+}
+/*
+   warmUpOver() - The CO2 sensor is now available to take readings, so start taking readings on all the sensors.
+*/
+void warmUpOver() {
+  fInWarmUp = false;
+  turnLightOnOrOff();
 }
 /*
    takeCO2Reading() - use the code from the GroveCO2ArduinoSketch to get CO2 data.
@@ -286,13 +315,30 @@ int takeCO2Reading() {
   }
   int CO2PPM = (int)data[2] * 256 + (int)data[3];
   //temperature = (int)data[4] - 40;  --> getting temperature from the DHT22.
-  //check to see if CO2 regulator needs to be turned on
-  adjustCO2(CO2PPM);
   return CO2PPM;
 }
-void adjustCO2(int co2reading) {
-  // TBD
-
+/*
+   adjustCO2() - if the LED is on, check to see if the CO2 is at 1200ppm.  If not, turn on the CO2 valve.
+*/
+void adjustCO2() {
+  if (!fLEDon) {
+    DEBUG_PRINTLNF("The LED is off - not need to adjust");
+  } else {
+    int CO2Value = takeCO2Reading();
+    if (CO2Value > 0) { // -1 is returned if the sensor isn't working correctly.
+      if (CO2Value < 800) {
+        writeEventHappened(CO2On);
+        digitalWrite(CO2Pin, ON);
+        //Turn the CO2 valve on for 5 seconds if the CO2 reading is < 800.
+        Alarm.timerOnce((const unsigned long)5, turnCO2Off);
+      } else if ((CO2Value >= 800) && (CO2Value <= 1200)) {
+        writeEventHappened(CO2On);
+        digitalWrite(CO2Pin, ON);
+        //Turn the CO2 valve on for 2 seconds if the CO2 reading is between 800 and 1200.
+        Alarm.timerOnce((const unsigned long)2, turnCO2Off);
+      }
+    }
+  }
 }
 /*
    writeSensorDataToLogFile() puts the date, time, and sensor readings into a String sensorString
@@ -380,11 +426,11 @@ File openFile() {
   return File();
 }
 /*
- * closeSD() is the function called when the attachInterrupt(...) fires when the state of the Card
- * Detect pin changes.  During test, there seems to be more changes of Card Detect state than I
- * expected (e.g.: removing might generate three changes of state).  So I liberally call SD.end()
- * when it is detected the card has been removed.
- */
+   closeSD() is the function called when the attachInterrupt(...) fires when the state of the Card
+   Detect pin changes.  During test, there seems to be more changes of Card Detect state than I
+   expected (e.g.: removing might generate three changes of state).  So I liberally call SD.end()
+   when it is detected the card has been removed.
+*/
 void closeSD() {
   cardState_t cardState = (cardState_t)digitalRead(cardDetectPin);
   if (cardState == Removed) {
