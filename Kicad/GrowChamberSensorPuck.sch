@@ -298,9 +298,9 @@ NINT
 Text GLabel 1200 1450 0    60   Input ~ 0
 NRESET
 Text GLabel 9400 2600 0    60   Input ~ 0
-SCL
-Text GLabel 9400 2700 0    60   Input ~ 0
 SDA
+Text GLabel 9400 2700 0    60   Input ~ 0
+SCL
 $Comp
 L GNDD #PWR010
 U 1 1 58AF0A5E

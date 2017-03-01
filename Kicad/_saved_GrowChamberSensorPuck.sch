@@ -215,7 +215,7 @@ U 1 1 58AEE132
 P 4950 2450
 F 0 "JP1" H 4950 2530 50  0000 C CNN
 F 1 "JMPR" H 4960 2390 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x02_Pitch2.54mm" H 4950 2450 50  0001 C CNN
+F 2 "TheLeafSpa:Jumper_2_Pad" H 4950 2450 50  0001 C CNN
 F 3 "" H 4950 2450 50  0000 C CNN
 F 4 "X" H 4950 2450 60  0001 C CNN "PN"
 	1    4950 2450
@@ -298,9 +298,9 @@ NINT
 Text GLabel 1200 1450 0    60   Input ~ 0
 NRESET
 Text GLabel 9400 2600 0    60   Input ~ 0
-SCL
-Text GLabel 9400 2700 0    60   Input ~ 0
 SDA
+Text GLabel 9400 2700 0    60   Input ~ 0
+SCL
 $Comp
 L GNDD #PWR010
 U 1 1 58AF0A5E
@@ -488,6 +488,4 @@ Wire Wire Line
 Wire Wire Line
 	9450 2500 9450 3300
 Connection ~ 9450 2500
-Text Label 3500 1350 0    60   ~ 0
-+3.3v
 $EndSCHEMATC

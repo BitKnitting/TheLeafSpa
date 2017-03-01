@@ -20,16 +20,29 @@ enum cardState_t {
   Unchanged = HIGH + 1,
   Initial = HIGH + 2
 } prevCardState, currentCardState;
-
+/******************************************************************
+   PIN MAP
+   2 - DHT temp/humidity
+   3 - SD card detect
+   4 - pump relay
+   5 - LED relay
+   6 - CO2 relay
+   7 - Software Serial
+   8 - Software Serial
+   10 - SDI chip select
+   11 - SDI DI pin
+   12 - SDI DO pin
+   13 - SDI CLK pin
+ *******************************************************************/
 #include <DHT.h>
-#define DHTPIN 7     // what pin we're connected to
+#define DHTPIN 2
 // Uncomment whatever type you're using!
 //#define DHTTYPE DHT11   // DHT 11
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)
 DHT dht(DHTPIN, DHTTYPE);
 #include <SoftwareSerial.h>
-SoftwareSerial CO2sensor(5,6);  // TX, RX
+SoftwareSerial CO2sensor(7, 8); // TX, RX
 const unsigned char cmdGetCO2Reading[] =
 {
   0xff, 0x01, 0x86, 0x00, 0x00,
@@ -42,8 +55,8 @@ const unsigned char cmdGetCO2Reading[] =
 // RELAY pins
 #define ON LOW //I discuss relay ON / OFF in this blog post: https://bitknitting.wordpress.com/2017/02/03/build-log-for-february-2nd/
 #define OFF HIGH
-#define pumpPin 5 //put the pin for the relay that will control the pump into pin 4 of the Arduino.  Make sure the pump is plugged into the right socket.
-#define LEDPin  4 //same thing as for the pumpPin...
+#define pumpPin 4 //put the pin for the relay that will control the pump into pin 4 of the Arduino.  Make sure the pump is plugged into the right socket.
+#define LEDPin  5 //same thing as for the pumpPin...
 #define CO2Pin  6 //same things as for the other pins...
 //Use a flag to tell if the light is on.  Knowing if the light is on is important for adjusting CO2.
 bool fLEDon = false;
@@ -54,7 +67,7 @@ bool fInWarmUp = true;
 // EEPROM is used to load/save global settings.  See resetGlobalSettings() to get a feel for what properties are stored.
 #define eepromWriteCheck 0x1234
 #include <avr/eeprom.h>
-struct globalSettings_T
+struct globalSettingsV1_T
 {
   unsigned int writeCheck;
   int32_t            secsBtwnReadings;
@@ -74,15 +87,19 @@ struct sensorData_T
 //The log file holds rows that are different types of data depending on what the activity is
 //reading the sensors, turning the pump, LED, or CO2 on/off
 enum logRow_t {
-  SensorData,
-  PumpOn,
-  PumpOff,
-  LEDOn,
-  LEDOff,
-  CO2On,
-  CO2Off,
-  CardInserted,
-  CardRemoved,
+  SensorData,   //0
+  PumpOn,       //1
+  PumpOff,      //2
+  LEDOn,        //3
+  LEDOff,       //4
+  CO2On,        //5
+  CO2Off,       //6
+  CardInserted, //7
+  CardRemoved,  //8
+  WarmupStart,  //9
+  WarmupEnd,     //10
+  Settings_V1 = 51 //51 will be the number used to identify the logfile contains sensor readings and actions
+                //based on globalSettingsV1_T variables
 } ;
 const char *logFileName = "datalog.txt";
 
@@ -105,8 +122,10 @@ void loop() {
 void initStuff() {
   DEBUG_BEGIN;
   DEBUG_WAIT;
-  DEBUG_PRINTF("The amount of available ram: ");
-  DEBUG_PRINTLN(freeRam());
+  DEBUG_PRINTF("\nThe amount of available ram: ");
+  DEBUG_PRINT(freeRam());
+  DEBUG_PRINTF(" | The amount of available SRAM: ");
+  DEBUG_PRINTLN(availableMemory());
   setSyncProvider(RTC.get);   // the function to sync the time from the RTC..from Paul's example.
   if (timeStatus() != timeSet)
     DEBUG_PRINTLNF("Unable to sync with the RTC");
@@ -145,6 +164,7 @@ void initStuff() {
   // Set a timer for the number of minutes needed to warm up the CO2 sensor before taking readings
   fInWarmUp = true;
   DEBUG_PRINTLNF("Warming up.");
+  writeEventHappened(WarmupStart);
   Alarm.timerOnce((const unsigned long)secsWarmUp, warmUpOver);
 }
 /*
@@ -159,6 +179,7 @@ void loadGlobalSettings() {
   if (globalSettings.writeCheck != eepromWriteCheck) {
     resetGlobalSettings();
   }
+  writeSettingsVersionToLogFile();
 }
 /*
    resetGlobalSettings() variables to default values.  See LoadGlobalSettings() to get an idea when this function is called.
@@ -226,6 +247,7 @@ void doReading() {
     DEBUG_PRINT(sensorData.CO2Value);
     DEBUG_PRINTLNF(" PPM");
     writeSensorDataToLogFile();
+    adjustCO2();
   } else {
     DEBUG_PRINTLNF("In warm up - no readings taken.");
   }
@@ -284,6 +306,7 @@ void turnLightOff() {
 */
 void warmUpOver() {
   fInWarmUp = false;
+  writeEventHappened(WarmupEnd);
   turnLightOnOrOff();
 }
 /*
@@ -321,109 +344,105 @@ int takeCO2Reading() {
    adjustCO2() - if the LED is on, check to see if the CO2 is at 1200ppm.  If not, turn on the CO2 valve.
 */
 void adjustCO2() {
-  if (!fLEDon) {
-    DEBUG_PRINTLNF("The LED is off - not need to adjust");
-  } else {
+  if (fLEDon) {
     int CO2Value = takeCO2Reading();
-    if (CO2Value > 0) { // -1 is returned if the sensor isn't working correctly.
-      if (CO2Value < 800) {
-        writeEventHappened(CO2On);
-        digitalWrite(CO2Pin, ON);
-        //Turn the CO2 valve on for 5 seconds if the CO2 reading is < 800.
-        Alarm.timerOnce((const unsigned long)5, turnCO2Off);
-      } else if ((CO2Value >= 800) && (CO2Value <= 1200)) {
-        writeEventHappened(CO2On);
-        digitalWrite(CO2Pin, ON);
-        //Turn the CO2 valve on for 2 seconds if the CO2 reading is between 800 and 1200.
-        Alarm.timerOnce((const unsigned long)2, turnCO2Off);
-      }
+    if (CO2Value > 0 && CO2Value <= 1200) { // -1 is returned if the sensor isn't working correctly.
+      //Got a good reading that is below 1200 ppm so turn on the CO2.  It is assume the valve is opened just
+      //a little bit. Leave the valve on for less time as the value gets closer to 1200
+      int nSecondsValveIsOpen=0;
+      CO2Value < 800 ? nSecondsValveIsOpen=10 : nSecondsValveIsOpen=5;
+      writeEventHappened(CO2On);
+      digitalWrite(CO2Pin, ON);
+      Alarm.timerOnce((const unsigned long)nSecondsValveIsOpen, turnCO2Off);
+    } else {
+      DEBUG_PRINTLNF("The LED is off - no need to adjust");
     }
   }
 }
 /*
-   writeSensorDataToLogFile() puts the date, time, and sensor readings into a String sensorString
-   each property is separated by a common so the row can be read within a CSV file.
-   I decided to use String instead of an array of char because the code has enough room to support it.
-   Working with String is just a lot easier since I don't see coding as a strong skill of mine.
+writeSensorDataToLogFile() puts the date, time, and sensor readings into a String sensorString
+each property is separated by a common so the row can be read within a CSV file.
+I decided to use String instead of an array of char because the code has enough room to support it.
+Working with String is just a lot easier since I don't see coding as a strong skill of mine.
 */
 void  writeSensorDataToLogFile() {
-  //Just make string to value simpler by using String instead of an array of char..also give
-  //enough room.
-  String sensorString = String(50);
-  File logFile = openFile();
-  if (!logFile) {
-    DEBUG_PRINTLNF("Could not write sensor data. Log File could NOT be opened!");
-  } else {
-    sensorString = String(SensorData) + ",";
-    sensorString += getDateTimeString() + ",";
-    sensorString += String(sensorData.temperatureValue) + ",";
-    sensorString += String(sensorData.humidityValue) + ",";
-    sensorString += sensorData.CO2Value;
-    DEBUG_PRINTF("Sensor string: ");
-    DEBUG_PRINTLN(sensorString);
-    logFile.println(sensorString);
-    logFile.flush();
-    logFile.close();
-  }
+//Just make string to value simpler by using String instead of an array of char..also give
+//enough room.
+String sensorString = String(50);
+File logFile = openFile();
+if (!logFile) {
+DEBUG_PRINTLNF("Could not write sensor data. Log File could NOT be opened!");
+} else {
+sensorString = String(SensorData) + ",";
+sensorString += getDateTimeString() + ",";
+sensorString += String(sensorData.temperatureValue) + ",";
+sensorString += String(sensorData.humidityValue) + ",";
+sensorString += sensorData.CO2Value;
+DEBUG_PRINTF("Sensor string: ");
+DEBUG_PRINTLN(sensorString);
+logFile.println(sensorString);
+logFile.flush();
+logFile.close();
+}
 }
 String getDateTimeString() {
-  String dateTimeString = String(20);
-  dateTimeString = String(month());
-  dateTimeString += "/";
-  dateTimeString += String(day());
-  dateTimeString += "/";
-  dateTimeString += String(year());
-  dateTimeString += ",";
-  dateTimeString += String(hour());
-  dateTimeString += ":";
-  dateTimeString += String(minute());
-  dateTimeString += ":";
-  dateTimeString += String(second());
-  return dateTimeString;
+String dateTimeString = String(20);
+dateTimeString = String(month());
+dateTimeString += "/";
+dateTimeString += String(day());
+dateTimeString += "/";
+dateTimeString += String(year());
+dateTimeString += ",";
+dateTimeString += String(hour());
+dateTimeString += ":";
+dateTimeString += String(minute());
+dateTimeString += ":";
+dateTimeString += String(second());
+return dateTimeString;
 }
 String makeDateTimeString(time_t t) {
-  tmElements_t tm;
-  String dateTimeString = String(20);
-  breakTime(t, tm);
-  dateTimeString = String(tm.Month);
-  dateTimeString += "/";
-  dateTimeString += String(tm.Day);
-  dateTimeString += "/";
-  dateTimeString += String(tm.Year);
-  dateTimeString += ",";
-  dateTimeString += String(tm.Hour);
-  dateTimeString += ":";
-  dateTimeString += String(tm.Minute);
-  dateTimeString += ":";
-  dateTimeString += String(tm.Second);
-  return dateTimeString;
+tmElements_t tm;
+String dateTimeString = String(20);
+breakTime(t, tm);
+dateTimeString = String(tm.Month);
+dateTimeString += "/";
+dateTimeString += String(tm.Day);
+dateTimeString += "/";
+dateTimeString += String(tm.Year);
+dateTimeString += ",";
+dateTimeString += String(tm.Hour);
+dateTimeString += ":";
+dateTimeString += String(tm.Minute);
+dateTimeString += ":";
+dateTimeString += String(tm.Second);
+return dateTimeString;
 
 }
 File openFile() {
-  currentCardState = (cardState_t)digitalRead(cardDetectPin);
-  cardState_t cardState = currentCardState;
-  cardState == prevCardState ? cardState = Unchanged : cardState = currentCardState;
-  DEBUG_PRINTF("Previous state: ");
-  DEBUG_PRINT(prevCardState);
-  DEBUG_PRINTF(" | Current State: ");
-  DEBUG_PRINT(currentCardState);
-  DEBUG_PRINTF(" | Card State: ");
-  DEBUG_PRINTLN(cardState);
-  prevCardState = currentCardState;
-  if (cardState == Inserted) {
-    writeEventHappened(CardInserted);
-    DEBUG_PRINTLNF("Card state is Inserted.");
-    initSD();
-  }
-  //The file still needs to be opened if the cardState is Unchanged.  Writings will more likely
-  //occur when the SD Card is inserted, which means the majority of the time cardState will be
-  //UnChanged.  However, the file needs to be opened every time a row is logged.
-  if (currentCardState == Inserted) {
-    DEBUG_PRINTLNF("Opening file");
-    return (SD.open(logFileName, FILE_WRITE));
-  }
-  //Couldn't open the file.
-  return File();
+currentCardState = (cardState_t)digitalRead(cardDetectPin);
+cardState_t cardState = currentCardState;
+cardState == prevCardState ? cardState = Unchanged : cardState = currentCardState;
+DEBUG_PRINTF("Previous state: ");
+DEBUG_PRINT(prevCardState);
+DEBUG_PRINTF(" | Current State: ");
+DEBUG_PRINT(currentCardState);
+DEBUG_PRINTF(" | Card State: ");
+DEBUG_PRINTLN(cardState);
+prevCardState = currentCardState;
+if (cardState == Inserted) {
+writeEventHappened(CardInserted);
+DEBUG_PRINTLNF("Card state is Inserted.");
+initSD();
+}
+//The file still needs to be opened if the cardState is Unchanged.  Writings will more likely
+//occur when the SD Card is inserted, which means the majority of the time cardState will be
+//UnChanged.  However, the file needs to be opened every time a row is logged.
+if (currentCardState == Inserted) {
+DEBUG_PRINTLNF("Opening file");
+return (SD.open(logFileName, FILE_WRITE));
+}
+//Couldn't open the file.
+return File();
 }
 /*
    closeSD() is the function called when the attachInterrupt(...) fires when the state of the Card
@@ -446,15 +465,45 @@ void closeSD() {
     writeEventHappened(...) log each of the events like turning the pump, LED, CO2 on or off.
 */
 void writeEventHappened(logRow_t event) {
+  if (event == CardInserted || event == CardRemoved) {
+    return;
+  }
   File logFile = openFile();
   if (!logFile) {
-    DEBUG_PRINTLNF("Could not write sensor data. Log File could NOT be opened!");
+    DEBUG_PRINTF("Could not write event data for event: ");
+    DEBUG_PRINT(event);
+    DEBUG_PRINTLNF(" Log File could NOT be opened!");
   } else {
-    String sensorString = String(30);
-    sensorString = String(event) + ",";
-    sensorString += getDateTimeString() + ",";
-    logFile.println(sensorString);
+    String eventString = String(30);
+    eventString = String(event) + ",";
+    eventString += getDateTimeString();
+    DEBUG_PRINTF("Event String: ");
+    DEBUG_PRINTLN(eventString);
+    logFile.println(eventString);
     logFile.flush();
     logFile.close();
   }
 }
+/*
+   writeSettingsVersionToLogFile() -   Settings_V1 = 51
+   51 will be the number used to identify the logfile contains sensor readings and actions
+   based on globalSettingsV1_T variables
+*/
+void writeSettingsVersionToLogFile() {
+  File logFile = openFile();
+  if (!logFile) {
+    DEBUG_PRINTLNF("Could not write settings data. Log File could NOT be opened!");
+  } else {
+    String settingsString = String(20);
+    settingsString = String(Settings_V1) + ",";
+    settingsString += getDateTimeString() ;
+    DEBUG_PRINTF("Settings String: ");
+    DEBUG_PRINTLN(settingsString);
+    logFile.println(settingsString);
+    logFile.flush();
+    logFile.close();
+  }
+}
+
+
+
