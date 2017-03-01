@@ -1,9 +1,0 @@
-Reference,Value,Quantity,Manf Part #,Digikey Part #,1,10,100,1000,Qty Avail,Link
-C2,4.7u,1,LMK212BJ475KD-T,587-1297-1-ND,0.18,0.128,0.0602,0.03497,216464,http://www.digikey.com/scripts/DkSearch/dksus.dll?WT.z_header=search_go&lang=en&keywords=587-1297-1-ND
-R7,100K,1,ERJ-6GEYJ104V,P100KACT-ND,0.1,0.025,0.01,0.00451,547481,http://www.digikey.com/scripts/DkSearch/dksus.dll?WT.z_header=search_go&lang=en&keywords=P100KACT-ND
-U1,Si7006,1,SI7006-A20-IM,336-3124-ND,2.08,2.08,1.7372,1.56551,2199,http://www.digikey.com/scripts/DkSearch/dksus.dll?WT.z_header=search_go&lang=en&keywords=336-3124-ND
-"R5,R6",4K7,2,RC0805FR-07100KL,311-100KCRCT-ND,0.1,0.019,0.0077,0.00345,6052592,http://www.digikey.com/scripts/DkSearch/dksus.dll?WT.z_header=search_go&lang=en&keywords=311-100KCRCT-ND
-"R4,R1,R2,R3",10K,4,C0805JR-0710KL,311-10KARCT-ND,0.1,0.016,0.0066,0.00297,2786699,http://www.digikey.com/scripts/DkSearch/dksus.dll?WT.z_header=search_go&lang=en&keywords=311-10KARCT-ND
-C1,.1u,1,CL21F104ZBCNNNC,1276-1007-1-ND,0.1,0.029,0.0128,0.00718,1026228,http://www.digikey.com/scripts/DkSearch/dksus.dll?WT.z_header=search_go&lang=en&keywords=1276-1007-1-ND
-U2,CCS811,1,CCS811CT-ND,CCS811CT-ND,15.5,12.65,9.8038,9.8038,,http://www.digikey.com/scripts/DkSearch/dksus.dll?WT.z_header=search_go&lang=en&keywords=CCS811CT-ND
-R8,NTC100K,1,NTCS0805E3104FXT,BC2562CT-ND,1.1,0.86,0.5823,0.43669,17108,http://www.digikey.com/scripts/DkSearch/dksus.dll?WT.z_header=search_go&lang=en&keywords=BC2562CT-ND
