@@ -65,7 +65,11 @@ const int secsWarmUp = 3 * 60;
 //Use a flag to tell the code when the warm up period is over so that readings can be taken and logged.
 bool fInWarmUp = true;
 // EEPROM is used to load/save global settings.  See resetGlobalSettings() to get a feel for what properties are stored.
+#ifdef DEBUG
 #define eepromWriteCheck 0x1234
+#else
+#define eepromWriteCheck 0x5678
+#endif
 #include <avr/eeprom.h>
 struct globalSettingsV1_T
 {
