@@ -68,7 +68,7 @@ bool fInWarmUp = true;
 #ifdef DEBUG
 #define eepromWriteCheck 0x1234
 #else
-#define eepromWriteCheck 0x5678
+#define eepromWriteCheck 0x8765
 #endif
 #include <avr/eeprom.h>
 struct globalSettingsV1_T
@@ -358,7 +358,7 @@ void adjustCO2() {
       //Got a good reading that is below 1200 ppm so turn on the CO2.  It is assume the valve is opened just
       //a little bit. Leave the valve on for less time as the value gets closer to 1200
       int nSecondsValveIsOpen = 0;
-      CO2Value < 800 ? nSecondsValveIsOpen = 10 : nSecondsValveIsOpen = 5;
+      CO2Value < 800 ? nSecondsValveIsOpen = 13 : nSecondsValveIsOpen = 8;
       writeEventHappened(CO2On);
       digitalWrite(CO2Pin, ON);
       Alarm.timerOnce((const unsigned long)nSecondsValveIsOpen, turnCO2Off);
