@@ -1,5 +1,5 @@
-// Set DEBUG to 0 if NOT connected to serial monitor (for debugging)
-#define DEBUG 1
+// Comment out #define DEBUG if not in debug mode
+//#define DEBUG 
 #include <DebugLib.h>
 /* The SD code I got from the SD card file dump - I got from somewhere. From the file.....
 
@@ -185,12 +185,16 @@ void loadGlobalSettings() {
    resetGlobalSettings() variables to default values.  See LoadGlobalSettings() to get an idea when this function is called.
 */
 void resetGlobalSettings() {
+  bool debug = true;
+#ifndef DEBUG
+  debug = false;
+#endif
   DEBUG_PRINTLNF("In resetGlobalSettings()");
   globalSettings.writeCheck = eepromWriteCheck;
-  globalSettings.secsBtwnReadings = (DEBUG == 1) ? 60 : 15 * 60;  //if in debug mode, make the period between readings short.
+  globalSettings.secsBtwnReadings = (debug == 1) ? 60 : 2 * 60;  //if in debug mode, make the period between readings short.
   globalSettings.targetCO2Level = 1200;
-  globalSettings.amtSecsWaterPumpIsOn = (DEBUG == 1) ? 5 :  60; //amount of seconds for pump to be ON.
-  globalSettings.secsBetweenTurningPumpON = (DEBUG == 1) ? 60 :  30 * 60; //# secs between turning pump ON.
+  globalSettings.amtSecsWaterPumpIsOn = (debug == 1) ? 5 :  60; //amount of seconds for pump to be ON.
+  globalSettings.secsBetweenTurningPumpON = (debug == 1) ? 60 :  15 * 60; //# secs between turning pump ON.
   globalSettings.hourToTurnLightOff = 0; //Turn light off at midnight.
   globalSettings.hourToTurnLightOn = 4; //Turn light on at 4AM.
   eeprom_write_block(&globalSettings, (void *)0, sizeof(globalSettings)); //write settings to eeprom
@@ -349,8 +353,8 @@ void adjustCO2() {
     if (CO2Value > 0 && CO2Value <= 1200) { // -1 is returned if the sensor isn't working correctly.
       //Got a good reading that is below 1200 ppm so turn on the CO2.  It is assume the valve is opened just
       //a little bit. Leave the valve on for less time as the value gets closer to 1200
-      int nSecondsValveIsOpen=0;
-      CO2Value < 800 ? nSecondsValveIsOpen=10 : nSecondsValveIsOpen=5;
+      int nSecondsValveIsOpen = 0;
+      CO2Value < 800 ? nSecondsValveIsOpen = 10 : nSecondsValveIsOpen = 5;
       writeEventHappened(CO2On);
       digitalWrite(CO2Pin, ON);
       Alarm.timerOnce((const unsigned long)nSecondsValveIsOpen, turnCO2Off);
@@ -360,89 +364,89 @@ void adjustCO2() {
   }
 }
 /*
-writeSensorDataToLogFile() puts the date, time, and sensor readings into a String sensorString
-each property is separated by a common so the row can be read within a CSV file.
-I decided to use String instead of an array of char because the code has enough room to support it.
-Working with String is just a lot easier since I don't see coding as a strong skill of mine.
+  writeSensorDataToLogFile() puts the date, time, and sensor readings into a String sensorString
+  each property is separated by a common so the row can be read within a CSV file.
+  I decided to use String instead of an array of char because the code has enough room to support it.
+  Working with String is just a lot easier since I don't see coding as a strong skill of mine.
 */
 void  writeSensorDataToLogFile() {
-//Just make string to value simpler by using String instead of an array of char..also give
-//enough room.
-String sensorString = String(50);
-File logFile = openFile();
-if (!logFile) {
-DEBUG_PRINTLNF("Could not write sensor data. Log File could NOT be opened!");
-} else {
-sensorString = String(SensorData) + ",";
-sensorString += getDateTimeString() + ",";
-sensorString += String(sensorData.temperatureValue) + ",";
-sensorString += String(sensorData.humidityValue) + ",";
-sensorString += sensorData.CO2Value;
-DEBUG_PRINTF("Sensor string: ");
-DEBUG_PRINTLN(sensorString);
-logFile.println(sensorString);
-logFile.flush();
-logFile.close();
-}
+  //Just make string to value simpler by using String instead of an array of char..also give
+  //enough room.
+  String sensorString = String(50);
+  File logFile = openFile();
+  if (!logFile) {
+    DEBUG_PRINTLNF("Could not write sensor data. Log File could NOT be opened!");
+  } else {
+    sensorString = String(SensorData) + ",";
+    sensorString += getDateTimeString() + ",";
+    sensorString += String(sensorData.temperatureValue) + ",";
+    sensorString += String(sensorData.humidityValue) + ",";
+    sensorString += sensorData.CO2Value;
+    DEBUG_PRINTF("Sensor string: ");
+    DEBUG_PRINTLN(sensorString);
+    logFile.println(sensorString);
+    logFile.flush();
+    logFile.close();
+  }
 }
 String getDateTimeString() {
-String dateTimeString = String(20);
-dateTimeString = String(month());
-dateTimeString += "/";
-dateTimeString += String(day());
-dateTimeString += "/";
-dateTimeString += String(year());
-dateTimeString += ",";
-dateTimeString += String(hour());
-dateTimeString += ":";
-dateTimeString += String(minute());
-dateTimeString += ":";
-dateTimeString += String(second());
-return dateTimeString;
+  String dateTimeString = String(20);
+  dateTimeString = String(month());
+  dateTimeString += "/";
+  dateTimeString += String(day());
+  dateTimeString += "/";
+  dateTimeString += String(year());
+  dateTimeString += ",";
+  dateTimeString += String(hour());
+  dateTimeString += ":";
+  dateTimeString += String(minute());
+  dateTimeString += ":";
+  dateTimeString += String(second());
+  return dateTimeString;
 }
 String makeDateTimeString(time_t t) {
-tmElements_t tm;
-String dateTimeString = String(20);
-breakTime(t, tm);
-dateTimeString = String(tm.Month);
-dateTimeString += "/";
-dateTimeString += String(tm.Day);
-dateTimeString += "/";
-dateTimeString += String(tm.Year);
-dateTimeString += ",";
-dateTimeString += String(tm.Hour);
-dateTimeString += ":";
-dateTimeString += String(tm.Minute);
-dateTimeString += ":";
-dateTimeString += String(tm.Second);
-return dateTimeString;
+  tmElements_t tm;
+  String dateTimeString = String(20);
+  breakTime(t, tm);
+  dateTimeString = String(tm.Month);
+  dateTimeString += "/";
+  dateTimeString += String(tm.Day);
+  dateTimeString += "/";
+  dateTimeString += String(tm.Year);
+  dateTimeString += ",";
+  dateTimeString += String(tm.Hour);
+  dateTimeString += ":";
+  dateTimeString += String(tm.Minute);
+  dateTimeString += ":";
+  dateTimeString += String(tm.Second);
+  return dateTimeString;
 
 }
 File openFile() {
-currentCardState = (cardState_t)digitalRead(cardDetectPin);
-cardState_t cardState = currentCardState;
-cardState == prevCardState ? cardState = Unchanged : cardState = currentCardState;
-DEBUG_PRINTF("Previous state: ");
-DEBUG_PRINT(prevCardState);
-DEBUG_PRINTF(" | Current State: ");
-DEBUG_PRINT(currentCardState);
-DEBUG_PRINTF(" | Card State: ");
-DEBUG_PRINTLN(cardState);
-prevCardState = currentCardState;
-if (cardState == Inserted) {
-writeEventHappened(CardInserted);
-DEBUG_PRINTLNF("Card state is Inserted.");
-initSD();
-}
-//The file still needs to be opened if the cardState is Unchanged.  Writings will more likely
-//occur when the SD Card is inserted, which means the majority of the time cardState will be
-//UnChanged.  However, the file needs to be opened every time a row is logged.
-if (currentCardState == Inserted) {
-DEBUG_PRINTLNF("Opening file");
-return (SD.open(logFileName, FILE_WRITE));
-}
-//Couldn't open the file.
-return File();
+  currentCardState = (cardState_t)digitalRead(cardDetectPin);
+  cardState_t cardState = currentCardState;
+  cardState == prevCardState ? cardState = Unchanged : cardState = currentCardState;
+  DEBUG_PRINTF("Previous state: ");
+  DEBUG_PRINT(prevCardState);
+  DEBUG_PRINTF(" | Current State: ");
+  DEBUG_PRINT(currentCardState);
+  DEBUG_PRINTF(" | Card State: ");
+  DEBUG_PRINTLN(cardState);
+  prevCardState = currentCardState;
+  if (cardState == Inserted) {
+    writeEventHappened(CardInserted);
+    DEBUG_PRINTLNF("Card state is Inserted.");
+    initSD();
+  }
+  //The file still needs to be opened if the cardState is Unchanged.  Writings will more likely
+  //occur when the SD Card is inserted, which means the majority of the time cardState will be
+  //UnChanged.  However, the file needs to be opened every time a row is logged.
+  if (currentCardState == Inserted) {
+    DEBUG_PRINTLNF("Opening file");
+    return (SD.open(logFileName, FILE_WRITE));
+  }
+  //Couldn't open the file.
+  return File();
 }
 /*
    closeSD() is the function called when the attachInterrupt(...) fires when the state of the Card
