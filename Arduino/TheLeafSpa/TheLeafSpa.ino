@@ -255,7 +255,7 @@ void doReading() {
     DEBUG_PRINT(sensorData.CO2Value);
     DEBUG_PRINTLNF(" PPM");
     writeSensorDataToLogFile();
-    adjustCO2();
+    adjustCO2(sensorData.CO2Value);
   } else {
     DEBUG_PRINTLNF("In warm up - no readings taken.");
   }
@@ -349,12 +349,15 @@ int takeCO2Reading() {
   return CO2PPM;
 }
 /*
-   adjustCO2() - if the LED is on, check to see if the CO2 is at 1200ppm.  If not, turn on the CO2 valve.
+   adjustCO2() - if the LED is on, check to see if the CO2 is below 1200ppm but not -1.  If not, turn on the CO2 valve.
 */
-void adjustCO2() {
+void adjustCO2(int CO2Value) {
   if (fLEDon) {
-    int CO2Value = takeCO2Reading();
-    if (CO2Value > 0 && CO2Value <= 1200) { // -1 is returned if the sensor isn't working correctly.
+    if (CO2Value < 0) { // The MH-Z16 returns a -1 when it couldn't get a valid reading.
+      DEBUG_PRINTLNF("Could not get a valid CO2 reading - no adjustment made");
+      return;
+    }
+    if (CO2Value <= 1200) { 
       //Got a good reading that is below 1200 ppm so turn on the CO2.  It is assume the valve is opened just
       //a little bit. Leave the valve on for less time as the value gets closer to 1200
       int nSecondsValveIsOpen = 0;
@@ -362,9 +365,9 @@ void adjustCO2() {
       writeEventHappened(CO2On);
       digitalWrite(CO2Pin, ON);
       Alarm.timerOnce((const unsigned long)nSecondsValveIsOpen, turnCO2Off);
-    } else {
-      DEBUG_PRINTLNF("The LED is off - no need to adjust");
-    }
+    } 
+  }else {
+      DEBUG_PRINTLNF("The LED is off - no adjustment made");    
   }
 }
 /*
