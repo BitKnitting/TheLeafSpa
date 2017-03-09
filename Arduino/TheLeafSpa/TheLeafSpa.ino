@@ -68,7 +68,7 @@ bool fInWarmUp = true;
 #ifdef DEBUG
 #define eepromWriteCheck 0x1234
 #else
-#define eepromWriteCheck 0x8765
+#define eepromWriteCheck 0x5678
 #endif
 #include <avr/eeprom.h>
 struct globalSettingsV1_T

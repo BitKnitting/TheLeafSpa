@@ -1,0 +1,7 @@
+architecture=cortex-m0
+bitbuttons=true
+board=---  none ---
+chip=nrf51
+combolength=5
+eclipse.preferences.version=1
+vendor=Nordic

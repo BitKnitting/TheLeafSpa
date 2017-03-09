@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="SearchIndexPage">
+		<item value="1" key="HISTORY_SIZE"/>
+		<section name="HISTORY0">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="1" key="scope"/>
+			<item value="false" key="isWholeWord"/>
+			<item value="AvgTempHumidityAndCO2" key="scopeData"/>
+			<item value="print" key="textPattern"/>
+			<item value="*" key="filenamePattern"/>
+		</section>
+	</section>
+</section>

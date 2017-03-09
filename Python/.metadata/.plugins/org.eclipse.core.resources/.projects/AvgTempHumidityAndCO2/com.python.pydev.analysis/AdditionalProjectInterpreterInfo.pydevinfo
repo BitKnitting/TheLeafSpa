@@ -1,0 +1,26 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/Users/margaret/Documents/LettuceBuddyHW/LadyBugHydro/TheHerbSpa/GitHub/Python/.metadata/.plugins/org.eclipse.core.resources/.projects/AvgTempHumidityAndCO2/com.python.pydev.analysis/v2_indexcache
+__main__|1489016009000000000|/Users/margaret/Documents/LettuceBuddyHW/LadyBugHydro/TheHerbSpa/GitHub/Python/TheLeafSpa - Avg Temp, Humidity, and CO2/AvgTempHumidityAndCO2/__main__.py
+WriteAveragesToLogFile|1489066050000000000|/Users/margaret/Documents/LettuceBuddyHW/LadyBugHydro/TheHerbSpa/GitHub/Python/TheLeafSpa - Avg Temp, Humidity, and CO2/AvgTempHumidityAndCO2/WriteAveragesToLogFile.py
+GetAvgTempHumidityAndCO2|1489015590000000000|/Users/margaret/Documents/LettuceBuddyHW/LadyBugHydro/TheHerbSpa/GitHub/Python/TheLeafSpa - Avg Temp, Humidity, and CO2/AvgTempHumidityAndCO2/GetAvgTempHumidityAndCO2.py
+__init__|1488977666000000000|/Users/margaret/Documents/LettuceBuddyHW/LadyBugHydro/TheHerbSpa/GitHub/Python/TheLeafSpa - Avg Temp, Humidity, and CO2/AvgTempHumidityAndCO2/__init__.py
+-- END DISKCACHE
+-- START DICTIONARY
+3
+1=__main__
+3=WriteAveragesToLogFile
+2=GetAvgTempHumidityAndCO2
+-- END DICTIONARY
+-- START TREE 1
+6
+get|3|getUserInput!10@getAverage!18@getAvgTempHumidityAndCO2!18@
+log|2|logger!19@logger!11@
+mai|1|main!10@
+num|1|NUM_PROCESSES!11@
+ope|1|openInputFile!10@
+wri|1|writeAveragesToLogFile!26@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE
