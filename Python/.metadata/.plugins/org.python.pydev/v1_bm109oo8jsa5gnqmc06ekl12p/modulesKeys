@@ -911,7 +911,6 @@ gestalt|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/l
 getopt|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/getopt.py
 getpass|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/getpass.py
 gettext|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/gettext.py
-gi
 glob|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/glob.py
 grp|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload/grp.so
 gzip|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/gzip.py
@@ -1607,7 +1606,6 @@ mimetools|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7
 mimetypes|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/mimetypes.py
 mimify|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/mimify.py
 mmap|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload/mmap.so
-mock
 modulefinder|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/modulefinder.py
 modulegraph.__init__|/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/modulegraph/__init__.py
 modulegraph.__main__|/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/modulegraph/__main__.py
@@ -1618,7 +1616,6 @@ modulegraph.util|/System/Library/Frameworks/Python.framework/Versions/2.7/Extras
 modulegraph.zipio|/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/modulegraph/zipio.py
 msvcrt
 multifile|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/multifile.py
-multiprocessing
 multiprocessing.__init__|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/multiprocessing/__init__.py
 multiprocessing.connection|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/multiprocessing/connection.py
 multiprocessing.dummy.__init__|/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/multiprocessing/dummy/__init__.py
