@@ -1,16 +1,15 @@
 // Comment out #define DEBUG if not in debug mode
-//#define DEBUG 
+//#define DEBUG
 #include <DebugLib.h>
 /*******************************************************************
- * Arduino Firmware for The Leaf Spa.  I have been documenting this
- * project on the bitknitting blog.  The intent is to control variables such
- * as CO2 level, photoperiod, providing nutrients as well as monitor variables
- * such as temperature, humidity, and CO2.
- * 
- * If you find the code useful, it would be awesome
- */
+   Arduino Firmware for The Leaf Spa.  I have been documenting this
+   project on the bitknitting blog.  The intent is to control variables such
+   as CO2 level, photoperiod, providing nutrients as well as monitor variables
+   such as temperature, humidity, and CO2.
 
-
+   If you find the code useful, it would be awesome if you could reference this work as
+   you evolve yours.
+*/
 #include <SPI.h>
 #include <SD.h>
 //     Adafruit SD shields and modules: pin 10
@@ -24,20 +23,21 @@ enum cardState_t {
 } prevCardState, currentCardState;
 /******************************************************************
    PIN MAP
-   2 - DHT temp/humidity
+   2 - Flow Meter
    3 - SD card detect
-   4 - pump relay
+   4 - DHT temp/humidity
    5 - LED relay
    6 - CO2 relay
    7 - Software Serial
    8 - Software Serial
+   9 - Pump relay
    10 - SDI chip select
    11 - SDI DI pin
    12 - SDI DO pin
    13 - SDI CLK pin
  *******************************************************************/
 #include <DHT.h>
-#define DHTPIN 2
+#define DHTPIN 4
 // Uncomment whatever type you're using!
 //#define DHTTYPE DHT11   // DHT 11
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
@@ -57,9 +57,11 @@ const unsigned char cmdGetCO2Reading[] =
 // RELAY pins
 #define ON LOW //I discuss relay ON / OFF in this blog post: https://bitknitting.wordpress.com/2017/02/03/build-log-for-february-2nd/
 #define OFF HIGH
-#define pumpPin 4 //put the pin for the relay that will control the pump into pin 4 of the Arduino.  Make sure the pump is plugged into the right socket.
+#define pumpPin 9 //put the pin for the relay that will control the pump into this pin.
 #define LEDPin  5 //same thing as for the pumpPin...
 #define CO2Pin  6 //same things as for the other pins...
+#define FlowMeterPin 2
+volatile uint16_t pulses = 0;
 //Use a flag to tell if the light is on.  Knowing if the light is on is important for adjusting CO2.
 bool fLEDon = false;
 //Define a warm up time for the CO2 sensor.  The Grove wiki says 3 minutes: https://seeeddoc.github.io/Grove-CO2_Sensor/
@@ -78,8 +80,8 @@ struct globalSettingsV1_T
   unsigned int writeCheck;
   int32_t            secsBtwnReadings;
   int16_t            targetCO2Level;
-  int16_t            amtSecsWaterPumpIsOn;
-  unsigned long      secsBetweenTurningPumpON;
+  int                amtSecsWaterPumpIsOn;
+  int                secsBetweenTurningPumpON;
   int                hourToTurnLightOff;
   int                hourToTurnLightOn;
   time_t             timeCardWasRemoved;
@@ -104,8 +106,11 @@ enum logRow_t {
   CardRemoved,  //8
   WarmupStart,  //9
   WarmupEnd,     //10
-  Settings_V1 = 51 //51 will be the number used to identify the logfile contains sensor readings and actions
-                //based on globalSettingsV1_T variables
+  //Settings_V1 did not include FlowRate within PumpOff event.  See this GitHub version of TheLeafSpa:
+  // https://github.com/BitKnitting/TheLeafSpa/blob/8767e1d8ce863d0410f8f1d130abc79acc4fb78f/Arduino/TheLeafSpa/TheLeafSpa.ino 
+  // The 8767e1d version is the last check-in prior to making changes to incorporate the flow meter.
+  Settings_V2 = 52 
+  
 } ;
 const char *logFileName = "datalog.txt";
 
@@ -155,6 +160,8 @@ void initStuff() {
   digitalWrite(pumpPin, OFF);
   digitalWrite(LEDPin, OFF);
   digitalWrite(CO2Pin, OFF);
+  pinMode(FlowMeterPin, INPUT);
+  attachInterrupt(digitalPinToInterrupt(FlowMeterPin), addPulse, RISING);
   loadGlobalSettings();
   debugPrintGlobalSettings();
   DEBUG_PRINTF("Setting timer to read sensors every ");
@@ -170,7 +177,7 @@ void initStuff() {
   // Set a timer for the number of minutes needed to warm up the CO2 sensor before taking readings
   fInWarmUp = true;
   DEBUG_PRINTLNF("Warming up.");
-  writeEventHappened(WarmupStart);
+  writeEventHappened(WarmupStart,"");
   Alarm.timerOnce((const unsigned long)secsWarmUp, warmUpOver);
 }
 /*
@@ -185,7 +192,7 @@ void loadGlobalSettings() {
   if (globalSettings.writeCheck != eepromWriteCheck) {
     resetGlobalSettings();
   }
-  writeSettingsVersionToLogFile();
+  writeEventHappened(Settings_V2,"");
 }
 /*
    resetGlobalSettings() variables to default values.  See LoadGlobalSettings() to get an idea when this function is called.
@@ -267,7 +274,8 @@ void doReading() {
 */
 void doPump() {
   if (!fInWarmUp) {
-    writeEventHappened(PumpOn);
+    pulses = 0;
+    writeEventHappened(PumpOn,"");
     digitalWrite(pumpPin, ON);
     Alarm.timerOnce((const unsigned long)globalSettings.amtSecsWaterPumpIsOn, turnPumpOff);
     DEBUG_PRINTF(" Pump ON for ");
@@ -279,15 +287,17 @@ void doPump() {
    turnPumpOff() - Turn the pump off after globalSettings.amtSecsWaterPumpIsOn.
 */
 void turnPumpOff() {
-  writeEventHappened(PumpOff);
-  DEBUG_PRINTLNF("Turned pump OFF");
+  float flowRate = pulses/7.5;
+  writeEventHappened(PumpOff,String(flowRate));
+  DEBUG_PRINTF("Turned pump OFF.  Flow rate: ");
+  DEBUG_PRINTLN(flowRate);  
   digitalWrite(pumpPin, OFF);
 }
 /*
    turnCO2Off() - turn off the CO2 valve.
 */
 void turnCO2Off() {
-  writeEventHappened(CO2Off);
+  writeEventHappened(CO2Off,"");
   DEBUG_PRINTLNF("Turned CO2 OFF");
   digitalWrite(CO2Pin, OFF);
 }
@@ -300,13 +310,13 @@ void turnLightOnOrOff() {
   }
 }
 void turnLightOn() {
-  writeEventHappened(LEDOn);
+  writeEventHappened(LEDOn,"");
   fLEDon = true;
   DEBUG_PRINTLNF("turnLightOn fired");
   digitalWrite(LEDPin, ON);
 }
 void turnLightOff() {
-  writeEventHappened(LEDOff);
+  writeEventHappened(LEDOff,"");
   fLEDon = false;
   DEBUG_PRINTLNF("turnLightOff fired");
   digitalWrite(LEDPin, OFF);
@@ -316,7 +326,7 @@ void turnLightOff() {
 */
 void warmUpOver() {
   fInWarmUp = false;
-  writeEventHappened(WarmupEnd);
+  writeEventHappened(WarmupEnd,"");
   turnLightOnOrOff();
 }
 /*
@@ -359,17 +369,17 @@ void adjustCO2(int CO2Value) {
       DEBUG_PRINTLNF("Could not get a valid CO2 reading - no adjustment made");
       return;
     }
-    if (CO2Value <= 1200) { 
+    if (CO2Value <= 1200) {
       //Got a good reading that is below 1200 ppm so turn on the CO2.  It is assume the valve is opened just
       //a little bit. Leave the valve on for less time as the value gets closer to 1200
       int nSecondsValveIsOpen = 0;
       CO2Value < 800 ? nSecondsValveIsOpen = 13 : nSecondsValveIsOpen = 8;
-      writeEventHappened(CO2On);
+      writeEventHappened(CO2On,"");
       digitalWrite(CO2Pin, ON);
       Alarm.timerOnce((const unsigned long)nSecondsValveIsOpen, turnCO2Off);
-    } 
-  }else {
-      DEBUG_PRINTLNF("The LED is off - no adjustment made");    
+    }
+  } else {
+    DEBUG_PRINTLNF("The LED is off - no adjustment made");
   }
 }
 /*
@@ -443,7 +453,7 @@ File openFile() {
   DEBUG_PRINTLN(cardState);
   prevCardState = currentCardState;
   if (cardState == Inserted) {
-    writeEventHappened(CardInserted);
+    writeEventHappened(CardInserted,"");
     DEBUG_PRINTLNF("Card state is Inserted.");
     initSD();
   }
@@ -466,7 +476,7 @@ File openFile() {
 void closeSD() {
   cardState_t cardState = (cardState_t)digitalRead(cardDetectPin);
   if (cardState == Removed) {
-    writeEventHappened(CardRemoved);
+    writeEventHappened(CardRemoved,"");
     DEBUG_PRINTLNF("Card state is Removed");
     DEBUG_PRINTLNF("--> calling SD.end()");
     SD.end();
@@ -476,8 +486,9 @@ void closeSD() {
 }
 /*
     writeEventHappened(...) log each of the events like turning the pump, LED, CO2 on or off.
+    BE CAREFUL NOT TO OVERFILL THE String BUFFER.
 */
-void writeEventHappened(logRow_t event) {
+void writeEventHappened(logRow_t event,String additionalInfo) {
   if (event == CardInserted || event == CardRemoved) {
     return;
   }
@@ -487,9 +498,11 @@ void writeEventHappened(logRow_t event) {
     DEBUG_PRINT(event);
     DEBUG_PRINTLNF(" Log File could NOT be opened!");
   } else {
-    String eventString = String(30);
-    eventString = String(event) + ",";
+    String eventString = String(event) + ",";
     eventString += getDateTimeString();
+    if (additionalInfo.length() > 0) {
+      eventString += "," + additionalInfo;
+    }
     DEBUG_PRINTF("Event String: ");
     DEBUG_PRINTLN(eventString);
     logFile.println(eventString);
@@ -498,24 +511,12 @@ void writeEventHappened(logRow_t event) {
   }
 }
 /*
-   writeSettingsVersionToLogFile() -   Settings_V1 = 51
-   51 will be the number used to identify the logfile contains sensor readings and actions
-   based on globalSettingsV1_T variables
-*/
-void writeSettingsVersionToLogFile() {
-  File logFile = openFile();
-  if (!logFile) {
-    DEBUG_PRINTLNF("Could not write settings data. Log File could NOT be opened!");
-  } else {
-    String settingsString = String(20);
-    settingsString = String(Settings_V1) + ",";
-    settingsString += getDateTimeString() ;
-    DEBUG_PRINTF("Settings String: ");
-    DEBUG_PRINTLN(settingsString);
-    logFile.println(settingsString);
-    logFile.flush();
-    logFile.close();
-  }
+ * addPulse() is a callback that happens when the (interrupt driven) digial pin assigned to the
+ * flow meter detects a pulse.  A pulse occurs when the flow meter's pinwheel sensor makes a 
+ * revolution - which happens when water is moving through it.
+ */
+void addPulse() {
+  pulses++;
 }
 
 
