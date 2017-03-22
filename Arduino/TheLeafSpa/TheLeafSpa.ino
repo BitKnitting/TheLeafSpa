@@ -1,14 +1,16 @@
 // Comment out #define DEBUG if not in debug mode
 //#define DEBUG 
 #include <DebugLib.h>
-/* The SD code I got from the SD card file dump - I got from somewhere. From the file.....
+/*******************************************************************
+ * Arduino Firmware for The Leaf Spa.  I have been documenting this
+ * project on the bitknitting blog.  The intent is to control variables such
+ * as CO2 level, photoperiod, providing nutrients as well as monitor variables
+ * such as temperature, humidity, and CO2.
+ * 
+ * If you find the code useful, it would be awesome
+ */
 
-  created  22 December 2010  by Limor Fried
-  modified 9 Apr 2012  by Tom Igoe
 
-  This example code is in the public domain.
-
-*/
 #include <SPI.h>
 #include <SD.h>
 //     Adafruit SD shields and modules: pin 10
@@ -66,9 +68,9 @@ const int secsWarmUp = 3 * 60;
 bool fInWarmUp = true;
 // EEPROM is used to load/save global settings.  See resetGlobalSettings() to get a feel for what properties are stored.
 #ifdef DEBUG
-#define eepromWriteCheck 0x1234
-#else
 #define eepromWriteCheck 0x5678
+#else
+#define eepromWriteCheck 0x1234
 #endif
 #include <avr/eeprom.h>
 struct globalSettingsV1_T
@@ -200,7 +202,7 @@ void resetGlobalSettings() {
   globalSettings.amtSecsWaterPumpIsOn = (debug == 1) ? 5 :  60; //amount of seconds for pump to be ON.
   globalSettings.secsBetweenTurningPumpON = (debug == 1) ? 60 :  15 * 60; //# secs between turning pump ON.
   globalSettings.hourToTurnLightOff = 0; //Turn light off at midnight.
-  globalSettings.hourToTurnLightOn = 4; //Turn light on at 4AM.
+  globalSettings.hourToTurnLightOn = 8; //Turn light on at 8AM. (16 hour daylight)
   eeprom_write_block(&globalSettings, (void *)0, sizeof(globalSettings)); //write settings to eeprom
 }
 /*
