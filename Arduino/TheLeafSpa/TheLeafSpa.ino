@@ -1,6 +1,4 @@
-// Comment out #define DEBUG if not in debug mode
-//#define DEBUG
-#include <DebugLib.h>
+
 /*******************************************************************
    Arduino Firmware for The Leaf Spa.  I have been documenting this
    project on the bitknitting blog.  The intent is to control variables such
@@ -28,7 +26,7 @@ enum cardState_t {
    4 - DHT temp/humidity
    5 - LED relay
    6 - CO2 relay
-   7 - Software Serial
+   7 - Software
    8 - Software Serial
    9 - Pump relay
    10 - SDI chip select
@@ -54,6 +52,7 @@ const unsigned char cmdGetCO2Reading[] =
 #include <TimeLib.h>
 #include <TimeAlarms.h>
 #include <DS1307RTC.h>  // a basic DS1307 library that returns time as a time_t
+tmElements_t tm;
 // RELAY pins
 #define ON LOW //I discuss relay ON / OFF in this blog post: https://bitknitting.wordpress.com/2017/02/03/build-log-for-february-2nd/
 #define OFF HIGH
@@ -65,26 +64,21 @@ volatile uint16_t pulses = 0;
 //Use a flag to tell if the light is on.  Knowing if the light is on is important for adjusting CO2.
 bool fLEDon = false;
 //Define a warm up time for the CO2 sensor.  The Grove wiki says 3 minutes: https://seeeddoc.github.io/Grove-CO2_Sensor/
-const int secsWarmUp = 3 * 60;
+const int secsWarmUp = 3 * 60 ;
 //Use a flag to tell the code when the warm up period is over so that readings can be taken and logged.
 bool fInWarmUp = true;
 // EEPROM is used to load/save global settings.  See resetGlobalSettings() to get a feel for what properties are stored.
-#ifdef DEBUG
-#define eepromWriteCheck 0x5678
-#else
 #define eepromWriteCheck 0x1234
-#endif
 #include <avr/eeprom.h>
 struct globalSettingsV1_T
 {
   unsigned int writeCheck;
-  int32_t            secsBtwnReadings;
-  int16_t            targetCO2Level;
-  int                amtSecsWaterPumpIsOn;
-  int                secsBetweenTurningPumpON;
-  int                hourToTurnLightOff;
-  int                hourToTurnLightOn;
-  time_t             timeCardWasRemoved;
+  unsigned int       secsBtwnReadings;
+  unsigned int       targetCO2Level;
+  unsigned int       amtSecsWaterPumpIsOn;
+  unsigned int       secsBetweenTurningPumpON;
+  byte               hourToTurnLightOff;
+  byte               hourToTurnLightOn;
 } globalSettings;
 struct sensorData_T
 {
@@ -106,13 +100,27 @@ enum logRow_t {
   CardRemoved,  //8
   WarmupStart,  //9
   WarmupEnd,     //10
-  //Settings_V1 did not include FlowRate within PumpOff event.  See this GitHub version of TheLeafSpa:
-  // https://github.com/BitKnitting/TheLeafSpa/blob/8767e1d8ce863d0410f8f1d130abc79acc4fb78f/Arduino/TheLeafSpa/TheLeafSpa.ino 
-  // The 8767e1d version is the last check-in prior to making changes to incorporate the flow meter.
-  Settings_V2 = 52 
-  
+  // Additional info for RTCInit -> 0 means RTC initialized , 1 means error talking to the RTC chip, 2 means error getting date/time from source
+  RTCInit,       //11
+  // Additional info for RTCSync -> 0 means clock synchronized, 1 means clock did not synchronize.
+  RTCSync,       //12
+  // Initial Settings_V = 51
+  //-> 52 added  FlowRate within PumpOff event.  Last checking of V51:
+  // https://github.com/BitKnitting/TheLeafSpa/blob/8767e1d8ce863d0410f8f1d130abc79acc4fb78f/Arduino/TheLeafSpa/TheLeafSpa.ino
+  // GitHub V = 8767e1d
+  // -> 53 added RTCInit and setup events
+  // Last check-in of V 52 -> https://github.com/BitKnitting/TheLeafSpa/blob/9eef66b64dd92caf9d721929ef88f9607e245f69/Arduino/TheLeafSpa/TheLeafSpa.ino
+  // GitHub V = 873655b
+  Settings_V = 53
 } ;
 const char *logFileName = "datalog.txt";
+/*
+   These two char arrays are used to hold logging info....I measured out the strings, and the full
+   number of bytes is a bit less than 50 (around 45).  This is why stringBuffer is set to have 50 bytes.
+   additionalInfo topped out at 18 bytes. This is why there are 20 bytes assigned to additionalInfo.
+*/
+char stringBuffer[50]={0};
+char additionalInfo[20];  // stringBuffer and additionalInfo are used for holding logging info.
 
 /***********************************************************
    setup()
@@ -131,17 +139,7 @@ void loop() {
    initStuff()
 */
 void initStuff() {
-  DEBUG_BEGIN;
-  DEBUG_WAIT;
-  DEBUG_PRINTF("\nThe amount of available ram: ");
-  DEBUG_PRINT(freeRam());
-  DEBUG_PRINTF(" | The amount of available SRAM: ");
-  DEBUG_PRINTLN(availableMemory());
-  setSyncProvider(RTC.get);   // the function to sync the time from the RTC..from Paul's example.
-  if (timeStatus() != timeSet)
-    DEBUG_PRINTLNF("Unable to sync with the RTC");
-  else
-    DEBUG_PRINTLNF("RTC has set the system time");
+  setSyncProvider(RTC.get);
   dht.begin();
   CO2sensor.begin(9600);
   // The cardDetectPin is used to figure out if the SD card is in the slot...
@@ -152,8 +150,6 @@ void initStuff() {
   attachInterrupt(digitalPinToInterrupt(cardDetectPin), closeSD, CHANGE);
   //call in init to set whether the SD Card was in the reader when script started (or not).
   prevCardState = Initial;
-  DEBUG_PRINTF("Previous card state on init: ");
-  DEBUG_PRINTLN(prevCardState);
   pinMode(pumpPin, OUTPUT);
   pinMode(LEDPin, OUTPUT);
   pinMode(CO2Pin, OUTPUT);
@@ -163,10 +159,6 @@ void initStuff() {
   pinMode(FlowMeterPin, INPUT);
   attachInterrupt(digitalPinToInterrupt(FlowMeterPin), addPulse, RISING);
   loadGlobalSettings();
-  debugPrintGlobalSettings();
-  DEBUG_PRINTF("Setting timer to read sensors every ");
-  DEBUG_PRINT(globalSettings.secsBtwnReadings);
-  DEBUG_PRINTLNF(" seconds.");
   // Set up reading the sensors.
   Alarm.timerRepeat((const int)globalSettings.secsBtwnReadings, doReading); //set the timer up to go off when it is time to take sensor readings.
   // Set up turning the pump off and on.
@@ -176,8 +168,7 @@ void initStuff() {
   Alarm.alarmRepeat((const int)globalSettings.hourToTurnLightOn, 0, 0, turnLightOn);
   // Set a timer for the number of minutes needed to warm up the CO2 sensor before taking readings
   fInWarmUp = true;
-  DEBUG_PRINTLNF("Warming up.");
-  writeEventHappened(WarmupStart,"");
+  writeEventHappened(WarmupStart, "");
   Alarm.timerOnce((const unsigned long)secsWarmUp, warmUpOver);
 }
 /*
@@ -186,58 +177,34 @@ void initStuff() {
    are reset to default values.'
 */
 void loadGlobalSettings() {
-  DEBUG_PRINTLNF("In loadGlobalSettings()");
   eeprom_read_block(&globalSettings, (void *)0, sizeof(globalSettings));
   //if its a first time setup or our magic number in eeprom is wrong reset to default
-  if (globalSettings.writeCheck != eepromWriteCheck) {
-    resetGlobalSettings();
-  }
-  writeEventHappened(Settings_V2,"");
+  //NOTE: Not doing this check.  Always use what it is resetGlobalSettings() since at this point there is no user interaction...
+  //if (globalSettings.writeCheck != eepromWriteCheck) {
+  resetGlobalSettings();
+  // }
+  // Write the settings to the log file.  This way we'll know when lights, pump, CO2 should turn
+  // on and off, etc.
+  writeSettings();
 }
 /*
    resetGlobalSettings() variables to default values.  See LoadGlobalSettings() to get an idea when this function is called.
 */
 void resetGlobalSettings() {
-  bool debug = true;
-#ifndef DEBUG
-  debug = false;
-#endif
-  DEBUG_PRINTLNF("In resetGlobalSettings()");
   globalSettings.writeCheck = eepromWriteCheck;
-  globalSettings.secsBtwnReadings = (debug == 1) ? 60 : 2 * 60;  //if in debug mode, make the period between readings short.
+  globalSettings.secsBtwnReadings = 120;
   globalSettings.targetCO2Level = 1200;
-  globalSettings.amtSecsWaterPumpIsOn = (debug == 1) ? 5 :  60; //amount of seconds for pump to be ON.
-  globalSettings.secsBetweenTurningPumpON = (debug == 1) ? 60 :  15 * 60; //# secs between turning pump ON.
-  globalSettings.hourToTurnLightOff = 0; //Turn light off at midnight.
-  globalSettings.hourToTurnLightOn = 8; //Turn light on at 8AM. (16 hour daylight)
+  globalSettings.amtSecsWaterPumpIsOn = 60; //amount of seconds for pump to be ON.
+  globalSettings.secsBetweenTurningPumpON = 15 * 60; //# secs between turning pump ON.
+  globalSettings.hourToTurnLightOff = 0;
+  globalSettings.hourToTurnLightOn = 8;
   eeprom_write_block(&globalSettings, (void *)0, sizeof(globalSettings)); //write settings to eeprom
-}
-/*
-   print out the values that will be used to control the environment (GlobalSettings) when DEBUG is on.
-*/
-void debugPrintGlobalSettings() {
-  DEBUG_PRINTF("Seconds Between Readings: ");
-  DEBUG_PRINT(globalSettings.secsBtwnReadings);
-  DEBUG_PRINTF(" | Target CO2 Level: ");
-  DEBUG_PRINTLN(globalSettings.targetCO2Level);
-  DEBUG_PRINTF(" | # secs water pump will be on: ");
-  DEBUG_PRINTLN(globalSettings.amtSecsWaterPumpIsOn);
-  DEBUG_PRINTF(" | Seconds between turning the pump ON: ");
-  DEBUG_PRINTLN(globalSettings.secsBetweenTurningPumpON);
-  DEBUG_PRINTF(" | Hour to turn light OFF: ");
-  DEBUG_PRINTLN(  globalSettings.hourToTurnLightOff);
-  DEBUG_PRINTF(" | Hour to turn light ON: ");
-  DEBUG_PRINTLN(  globalSettings.hourToTurnLightOn);
 }
 /*
    initSD() ...SD.begin() must be called before opening a file if the SD card has been removed and inserted...
 */
 bool initSD() {
   if (!SD.begin(chipSelect)) {
-    DEBUG_PRINTLNF("initialization failed. Things to check:");
-    DEBUG_PRINTLNF("* is a card inserted?");
-    DEBUG_PRINTLNF("* is your wiring correct?");
-    DEBUG_PRINTLNF("* did you change the chipSelect pin to match your shield or module?");
     return false;
   }
   return true;
@@ -248,25 +215,12 @@ bool initSD() {
    turning the LED lighting on/off) should happen.
 */
 void doReading() {
-  DEBUG_PRINTLNF("in DoReadings()");
   if (!fInWarmUp) {
     sensorData.temperatureValue = dht.readTemperature();
     sensorData.humidityValue = dht.readHumidity();
     sensorData.CO2Value = takeCO2Reading();
-    DEBUG_PRINTF("Temperature reading: ");
-    DEBUG_PRINT(sensorData.temperatureValue);
-    DEBUG_PRINTF("˚C | ");
-    float farenheit = sensorData.temperatureValue * 1.8 + 32.;
-    DEBUG_PRINT(farenheit);
-    DEBUG_PRINTF("˚F | Humidity: ");
-    DEBUG_PRINT(sensorData.humidityValue);
-    DEBUG_PRINTF("% | CO2 reading: ");
-    DEBUG_PRINT(sensorData.CO2Value);
-    DEBUG_PRINTLNF(" PPM");
     writeSensorDataToLogFile();
     adjustCO2(sensorData.CO2Value);
-  } else {
-    DEBUG_PRINTLNF("In warm up - no readings taken.");
   }
 }
 /*
@@ -275,34 +229,29 @@ void doReading() {
 void doPump() {
   if (!fInWarmUp) {
     pulses = 0;
-    writeEventHappened(PumpOn,"");
+    writeEventHappened(PumpOn, "");
     digitalWrite(pumpPin, ON);
     Alarm.timerOnce((const unsigned long)globalSettings.amtSecsWaterPumpIsOn, turnPumpOff);
-    DEBUG_PRINTF(" Pump ON for ");
-    DEBUG_PRINT(globalSettings.amtSecsWaterPumpIsOn);
-    DEBUG_PRINTLNF(" seconds.");
   }
 }
 /*
    turnPumpOff() - Turn the pump off after globalSettings.amtSecsWaterPumpIsOn.
 */
 void turnPumpOff() {
-  float flowRate = pulses/7.5;
-  writeEventHappened(PumpOff,String(flowRate));
-  DEBUG_PRINTF("Turned pump OFF.  Flow rate: ");
-  DEBUG_PRINTLN(flowRate);  
+  float flowRate = pulses / 7.5;
+  char flowRateStr[6];
+  dtostrf(flowRate, 5, 1, flowRateStr);
+  writeEventHappened(PumpOff, flowRateStr);
   digitalWrite(pumpPin, OFF);
 }
 /*
    turnCO2Off() - turn off the CO2 valve.
 */
 void turnCO2Off() {
-  writeEventHappened(CO2Off,"");
-  DEBUG_PRINTLNF("Turned CO2 OFF");
+  writeEventHappened(CO2Off, "");
   digitalWrite(CO2Pin, OFF);
 }
 void turnLightOnOrOff() {
-  //light is off between 00:00:00 and 3:59:59
   if ( (hour() >= globalSettings.hourToTurnLightOff) && (hour() < globalSettings.hourToTurnLightOn) ) {
     turnLightOff();
   } else {
@@ -310,15 +259,13 @@ void turnLightOnOrOff() {
   }
 }
 void turnLightOn() {
-  writeEventHappened(LEDOn,"");
+  writeEventHappened(LEDOn, "");
   fLEDon = true;
-  DEBUG_PRINTLNF("turnLightOn fired");
   digitalWrite(LEDPin, ON);
 }
 void turnLightOff() {
-  writeEventHappened(LEDOff,"");
+  writeEventHappened(LEDOff, "");
   fLEDon = false;
-  DEBUG_PRINTLNF("turnLightOff fired");
   digitalWrite(LEDPin, OFF);
 }
 /*
@@ -326,7 +273,7 @@ void turnLightOff() {
 */
 void warmUpOver() {
   fInWarmUp = false;
-  writeEventHappened(WarmupEnd,"");
+  writeEventHappened(WarmupEnd, "");
   turnLightOnOrOff();
 }
 /*
@@ -366,102 +313,37 @@ int takeCO2Reading() {
 void adjustCO2(int CO2Value) {
   if (fLEDon) {
     if (CO2Value < 0) { // The MH-Z16 returns a -1 when it couldn't get a valid reading.
-      DEBUG_PRINTLNF("Could not get a valid CO2 reading - no adjustment made");
       return;
     }
     if (CO2Value <= 1200) {
       //Got a good reading that is below 1200 ppm so turn on the CO2.  It is assume the valve is opened just
       //a little bit. Leave the valve on for less time as the value gets closer to 1200
       int nSecondsValveIsOpen = 0;
-      CO2Value < 800 ? nSecondsValveIsOpen = 13 : nSecondsValveIsOpen = 8;
-      writeEventHappened(CO2On,"");
+      CO2Value < 800 ? nSecondsValveIsOpen = 8 : nSecondsValveIsOpen = 5;
+      writeEventHappened(CO2On, "");
       digitalWrite(CO2Pin, ON);
       Alarm.timerOnce((const unsigned long)nSecondsValveIsOpen, turnCO2Off);
     }
-  } else {
-    DEBUG_PRINTLNF("The LED is off - no adjustment made");
   }
 }
 /*
-  writeSensorDataToLogFile() puts the date, time, and sensor readings into a String sensorString
-  each property is separated by a common so the row can be read within a CSV file.
-  I decided to use String instead of an array of char because the code has enough room to support it.
-  Working with String is just a lot easier since I don't see coding as a strong skill of mine.
+   openFile() -> open the log file for writing out events...deals with the SD card being inserted/removed...something I wanted
+   to support so the card can be removed while the firmware is running and then reinserted after the contents of the card are transfered
+   to my mac.  Note: In the future I'd rather do this over some form of wireless.
 */
-void  writeSensorDataToLogFile() {
-  //Just make string to value simpler by using String instead of an array of char..also give
-  //enough room.
-  String sensorString = String(50);
-  File logFile = openFile();
-  if (!logFile) {
-    DEBUG_PRINTLNF("Could not write sensor data. Log File could NOT be opened!");
-  } else {
-    sensorString = String(SensorData) + ",";
-    sensorString += getDateTimeString() + ",";
-    sensorString += String(sensorData.temperatureValue) + ",";
-    sensorString += String(sensorData.humidityValue) + ",";
-    sensorString += sensorData.CO2Value;
-    DEBUG_PRINTF("Sensor string: ");
-    DEBUG_PRINTLN(sensorString);
-    logFile.println(sensorString);
-    logFile.flush();
-    logFile.close();
-  }
-}
-String getDateTimeString() {
-  String dateTimeString = String(20);
-  dateTimeString = String(month());
-  dateTimeString += "/";
-  dateTimeString += String(day());
-  dateTimeString += "/";
-  dateTimeString += String(year());
-  dateTimeString += ",";
-  dateTimeString += String(hour());
-  dateTimeString += ":";
-  dateTimeString += String(minute());
-  dateTimeString += ":";
-  dateTimeString += String(second());
-  return dateTimeString;
-}
-String makeDateTimeString(time_t t) {
-  tmElements_t tm;
-  String dateTimeString = String(20);
-  breakTime(t, tm);
-  dateTimeString = String(tm.Month);
-  dateTimeString += "/";
-  dateTimeString += String(tm.Day);
-  dateTimeString += "/";
-  dateTimeString += String(tm.Year);
-  dateTimeString += ",";
-  dateTimeString += String(tm.Hour);
-  dateTimeString += ":";
-  dateTimeString += String(tm.Minute);
-  dateTimeString += ":";
-  dateTimeString += String(tm.Second);
-  return dateTimeString;
-
-}
 File openFile() {
   currentCardState = (cardState_t)digitalRead(cardDetectPin);
   cardState_t cardState = currentCardState;
   cardState == prevCardState ? cardState = Unchanged : cardState = currentCardState;
-  DEBUG_PRINTF("Previous state: ");
-  DEBUG_PRINT(prevCardState);
-  DEBUG_PRINTF(" | Current State: ");
-  DEBUG_PRINT(currentCardState);
-  DEBUG_PRINTF(" | Card State: ");
-  DEBUG_PRINTLN(cardState);
   prevCardState = currentCardState;
   if (cardState == Inserted) {
-    writeEventHappened(CardInserted,"");
-    DEBUG_PRINTLNF("Card state is Inserted.");
+    writeEventHappened(CardInserted, "");
     initSD();
   }
   //The file still needs to be opened if the cardState is Unchanged.  Writings will more likely
   //occur when the SD Card is inserted, which means the majority of the time cardState will be
   //UnChanged.  However, the file needs to be opened every time a row is logged.
   if (currentCardState == Inserted) {
-    DEBUG_PRINTLNF("Opening file");
     return (SD.open(logFileName, FILE_WRITE));
   }
   //Couldn't open the file.
@@ -476,48 +358,102 @@ File openFile() {
 void closeSD() {
   cardState_t cardState = (cardState_t)digitalRead(cardDetectPin);
   if (cardState == Removed) {
-    writeEventHappened(CardRemoved,"");
-    DEBUG_PRINTLNF("Card state is Removed");
-    DEBUG_PRINTLNF("--> calling SD.end()");
+    writeEventHappened(CardRemoved, "");
     SD.end();
-  } else {
-    DEBUG_PRINTLNF("Card state is Inserted");
   }
+}
+
+/*
+   addPulse() is a callback that happens when the (interrupt driven) digial pin assigned to the
+   flow meter detects a pulse.  A pulse occurs when the flow meter's pinwheel sensor makes a
+   revolution - which happens when water is moving through it.
+*/
+void addPulse() {
+  pulses++;
+}
+
+/*
+   Write a record to the log file that contains the current Leaf Spa settings
+*/
+void writeSettings() {
+  itoa(globalSettings.secsBtwnReadings, additionalInfo, 10);
+  char *idx = additionalInfo + strlen(additionalInfo);
+  *idx++ = ',';
+  itoa(globalSettings.targetCO2Level, idx, 10);
+  idx = additionalInfo + strlen(additionalInfo);
+  *idx++ = ',';
+  itoa(globalSettings.amtSecsWaterPumpIsOn, idx, 10);
+  idx = additionalInfo + strlen(additionalInfo);
+  *idx++ = ',';
+  itoa(globalSettings.secsBetweenTurningPumpON, idx, 10);
+  idx = additionalInfo + strlen(additionalInfo);
+  *idx++ = ',';
+  itoa(globalSettings.hourToTurnLightOff, idx, 10);
+  idx = additionalInfo + strlen(additionalInfo);
+  *idx++ = ',';
+  itoa(globalSettings.hourToTurnLightOn, idx, 10);
+  writeEventHappened(Settings_V, additionalInfo);
+}
+/*
+  writeSensorDataToLogFile() puts the date, time, and sensor readings into a String sensorString
+  each property is separated by a common so the row can be read within a CSV file.
+  I decided to use String instead of an array of char because the code has enough room to support it.
+  Working with String is just a lot easier since I don't see coding as a strong skill of mine.
+*/
+void  writeSensorDataToLogFile() {
+  File logFile = openFile();
+  if (!logFile) {
+    return;
+  }
+  dtostrf(sensorData.temperatureValue, 4, 1, additionalInfo);
+  char *idx = additionalInfo + strlen(additionalInfo);
+  *idx++ = ',';
+  dtostrf(sensorData.humidityValue, 5, 1, idx);
+  idx = additionalInfo + strlen(additionalInfo);
+  *idx++ = ',';
+  itoa(sensorData.CO2Value, idx, 10);
+  writeEventHappened(SensorData, additionalInfo);
 }
 /*
     writeEventHappened(...) log each of the events like turning the pump, LED, CO2 on or off.
     BE CAREFUL NOT TO OVERFILL THE String BUFFER.
 */
-void writeEventHappened(logRow_t event,String additionalInfo) {
+void writeEventHappened(logRow_t event, char * additionalInfo) {
   if (event == CardInserted || event == CardRemoved) {
     return;
   }
   File logFile = openFile();
   if (!logFile) {
-    DEBUG_PRINTF("Could not write event data for event: ");
-    DEBUG_PRINT(event);
-    DEBUG_PRINTLNF(" Log File could NOT be opened!");
-  } else {
-    String eventString = String(event) + ",";
-    eventString += getDateTimeString();
-    if (additionalInfo.length() > 0) {
-      eventString += "," + additionalInfo;
-    }
-    DEBUG_PRINTF("Event String: ");
-    DEBUG_PRINTLN(eventString);
-    logFile.println(eventString);
-    logFile.flush();
-    logFile.close();
+    return;
   }
+  // an event has a log row type followed by date/time followed by additonal info.
+  itoa(event, stringBuffer, 10);
+  char *idx = stringBuffer + strlen(stringBuffer);
+  *idx++ = ',';
+  makeDateTimeString(idx);
+  idx = stringBuffer + strlen(stringBuffer);
+  *idx++ = ',';
+  strcpy(idx, additionalInfo);
+  logFile.println(stringBuffer);
+  logFile.flush();
+  logFile.close();
 }
-/*
- * addPulse() is a callback that happens when the (interrupt driven) digial pin assigned to the
- * flow meter detects a pulse.  A pulse occurs when the flow meter's pinwheel sensor makes a 
- * revolution - which happens when water is moving through it.
- */
-void addPulse() {
-  pulses++;
+void makeDateTimeString(char *dateAndTime) {
+  itoa(month(), dateAndTime, 10);
+  char *idx = dateAndTime + strlen(dateAndTime);
+  *idx++ = '/';
+  itoa(day(), idx, 10);
+  idx = dateAndTime + strlen(dateAndTime);
+  *idx++ = '/';
+  itoa(year(), idx, 10);
+  idx = dateAndTime + strlen(dateAndTime);
+  *idx++ = ',';
+  itoa(hour(), idx, 10);
+  idx = dateAndTime + strlen(dateAndTime);
+  *idx++ = ':';
+  itoa(minute(), idx, 10);
+  idx = dateAndTime + strlen(dateAndTime);
+  *idx++ = ':';
+  itoa(second(), idx, 10);
 }
-
-
 

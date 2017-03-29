@@ -1,0 +1,9 @@
+INSTUP__main__
+/Users/margaret/Documents/LettuceBuddyHW/LadyBugHydro/TheHerbSpa/GitHub/Python/TheLeafSpa - Avg Temp, Humidity, and CO2/AvgTempHumidityAndCO2/__main__.py
+INFOS:&&3|1|2|0&&3|3|2|0&&2|4|2|0&&2|5|2|0&&2|6|2|0
+__main__=2
+logger=3
+openInputFile=4
+getUserInput=5
+main=6
+NUM_PROCESSES=1

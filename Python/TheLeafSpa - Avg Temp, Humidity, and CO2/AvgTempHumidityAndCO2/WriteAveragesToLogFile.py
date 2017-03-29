@@ -1,12 +1,10 @@
-'''
-Created on Mar 8, 2017
-
-@author: margaret
-'''
+#
+#Created on Mar 8, 2017
+#
 import csv
 def writeAveragesToLogFile(logFile,averages):
     rowToWrite = []
-    with open(logFile, 'ab') as csvfile:
+    with open(logFile, 'wb') as csvfile:
         writer = csv.writer(csvfile,delimiter=',')
         writer.writerow(['Average Values'])
         writer.writerow(['LED ON',' ',' ','LED OFF'])

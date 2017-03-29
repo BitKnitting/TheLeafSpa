@@ -6,6 +6,7 @@
 #
 from GetAvgTempHumidityAndCO2 import getAvgTempHumidityAndCO2
 from WriteAveragesToLogFile import writeAveragesToLogFile
+import os
 # See documetation at https://docs.python.org/3/library/argparse.html
 import argparse as ap
 # See documentation at https://docs.python.org/2/library/logging.html
@@ -15,16 +16,16 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 def openInputFile(inputFilename):
     if inputFilename == None:
-        logging.error('You must enter the path and name of the Leaf Spa log file') 
+        logging.error('Error! You must enter the path and name of the Leaf Spa log file')
         exit
     else:
         try:
             return open(inputFilename)
         except:
-            logging.error('ERROR! could not open the Leaf Spa log file')
-            exit        
-    
-  
+            logging.error('ERROR! The Logfile could not be opened')
+            exit
+
+
 def getUserInput():
     logger.debug('---> getUserInput()')
     parser = ap.ArgumentParser(
@@ -48,12 +49,14 @@ def getUserInput():
 def main():
     logger.debug('at beginning of main....')
     args = getUserInput()
+    splitPath = os.path.splitext(args.input)
+    outputFilename = splitPath[0]+'_analysis.csv'
     theLogFile = openInputFile(args.input)
-    # it has been verified a file exists..not verified if the contents is a 
+    # it has been verified a file exists..not verified if the contents is a
     # logfile.  That is content specific, so figure this out when reading the
     # contents.
     listOfAverages = getAvgTempHumidityAndCO2(theLogFile)
-    writeAveragesToLogFile(args.input,listOfAverages)
+    writeAveragesToLogFile(outputFilename,listOfAverages)
 
 if __name__ == '__main__':
     main()
