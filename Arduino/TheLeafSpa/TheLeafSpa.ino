@@ -425,8 +425,8 @@ void writeEventHappened(logRow_t event, char * additionalInfo) {
   if (!logFile) {
     return;
   }
-  writeFreeRamtoStringBuffer();
-  logFile.println(stringBuffer);
+//  writeFreeRamtoStringBuffer();
+//  logFile.println(stringBuffer);
   ////////////////////////////////////////////////////////////////////////////
   //
   // an event has a log row type followed by date/time followed by additonal info.
@@ -438,9 +438,8 @@ void writeEventHappened(logRow_t event, char * additionalInfo) {
   *idx++ = ',';
   strcpy(idx, additionalInfo);
   logFile.println(stringBuffer);
-
-  writeFreeRamtoStringBuffer();
-  logFile.println(stringBuffer);
+//  writeFreeRamtoStringBuffer();
+//  logFile.println(stringBuffer);
   ////////////////////////////////////////////////////////////////////////////
   logFile.flush();
   logFile.close();
