@@ -1,7 +1,6 @@
 #define DEBUG 1
 #include <DebugLib.h>
 const int relayPin = 4; //arbitrarily use GPIO pin 4
-#define CO2Sensor s_serial
 #define ON LOW
 #define OFF HIGH
 

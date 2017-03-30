@@ -100,10 +100,7 @@ enum logRow_t {
   CardRemoved,  //8
   WarmupStart,  //9
   WarmupEnd,     //10
-  // Additional info for RTCInit -> 0 means RTC initialized , 1 means error talking to the RTC chip, 2 means error getting date/time from source
-  RTCInit,       //11
-  // Additional info for RTCSync -> 0 means clock synchronized, 1 means clock did not synchronize.
-  RTCSync,       //12
+  AmtSRAM,       //11
   // Initial Settings_V = 51
   //-> 52 added  FlowRate within PumpOff event.  Last checking of V51:
   // https://github.com/BitKnitting/TheLeafSpa/blob/8767e1d8ce863d0410f8f1d130abc79acc4fb78f/Arduino/TheLeafSpa/TheLeafSpa.ino
@@ -119,7 +116,7 @@ const char *logFileName = "datalog.txt";
    number of bytes is a bit less than 50 (around 45).  This is why stringBuffer is set to have 50 bytes.
    additionalInfo topped out at 18 bytes. This is why there are 20 bytes assigned to additionalInfo.
 */
-char stringBuffer[50]={0};
+char stringBuffer[50] = {0};
 char additionalInfo[20];  // stringBuffer and additionalInfo are used for holding logging info.
 
 /***********************************************************
@@ -169,7 +166,8 @@ void initStuff() {
   // Set a timer for the number of minutes needed to warm up the CO2 sensor before taking readings
   fInWarmUp = true;
   writeEventHappened(WarmupStart, "");
-  Alarm.timerOnce((const unsigned long)secsWarmUp, warmUpOver);
+
+  Alarm.timerOnce(secsWarmUp, warmUpOver);
 }
 /*
    loadGlobalSettings() uses EEPROM to get the settings variables identified within the globalSettings structure.
@@ -192,7 +190,7 @@ void loadGlobalSettings() {
 */
 void resetGlobalSettings() {
   globalSettings.writeCheck = eepromWriteCheck;
-  globalSettings.secsBtwnReadings = 120;
+  globalSettings.secsBtwnReadings = 120  ;
   globalSettings.targetCO2Level = 1200;
   globalSettings.amtSecsWaterPumpIsOn = 60; //amount of seconds for pump to be ON.
   globalSettings.secsBetweenTurningPumpON = 15 * 60; //# secs between turning pump ON.
@@ -259,6 +257,7 @@ void turnLightOnOrOff() {
   }
 }
 void turnLightOn() {
+  writeFreeRamtoStringBuffer();
   writeEventHappened(LEDOn, "");
   fLEDon = true;
   digitalWrite(LEDPin, ON);
@@ -401,10 +400,10 @@ void writeSettings() {
   Working with String is just a lot easier since I don't see coding as a strong skill of mine.
 */
 void  writeSensorDataToLogFile() {
-  File logFile = openFile();
-  if (!logFile) {
-    return;
-  }
+  //  File logFile = openFile();
+  //  if (!logFile) {
+  //    return;
+  //  }
   dtostrf(sensorData.temperatureValue, 4, 1, additionalInfo);
   char *idx = additionalInfo + strlen(additionalInfo);
   *idx++ = ',';
@@ -426,6 +425,10 @@ void writeEventHappened(logRow_t event, char * additionalInfo) {
   if (!logFile) {
     return;
   }
+  writeFreeRamtoStringBuffer();
+  logFile.println(stringBuffer);
+  ////////////////////////////////////////////////////////////////////////////
+  //
   // an event has a log row type followed by date/time followed by additonal info.
   itoa(event, stringBuffer, 10);
   char *idx = stringBuffer + strlen(stringBuffer);
@@ -435,6 +438,10 @@ void writeEventHappened(logRow_t event, char * additionalInfo) {
   *idx++ = ',';
   strcpy(idx, additionalInfo);
   logFile.println(stringBuffer);
+
+  writeFreeRamtoStringBuffer();
+  logFile.println(stringBuffer);
+  ////////////////////////////////////////////////////////////////////////////
   logFile.flush();
   logFile.close();
 }
@@ -456,4 +463,28 @@ void makeDateTimeString(char *dateAndTime) {
   *idx++ = ':';
   itoa(second(), idx, 10);
 }
-
+/*
+   free_ram()
+*/
+int freeRam () {
+  extern int __heap_start, *__brkval;
+  int v;
+  return (int)&v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+}
+/*
+  Write the amount of SRAM available after the record has been written.  If there is a change, it's of interest
+  to know the length of stringBuffer and additionalInfo.  Are they what I expect them to be?
+*/
+void writeFreeRamtoStringBuffer() {
+  int sram = freeRam();
+  itoa(AmtSRAM, stringBuffer, 10);
+  char *idx = stringBuffer + strlen(stringBuffer);
+  *idx++ = ',';
+  itoa(sram, idx, 10);
+  idx = stringBuffer + strlen(stringBuffer);
+  *idx++ = ',';
+  itoa(strlen(stringBuffer), idx, 10);
+  idx = stringBuffer + strlen(stringBuffer);
+  *idx++ = ',';
+  itoa(strlen(additionalInfo), idx, 10);
+}
