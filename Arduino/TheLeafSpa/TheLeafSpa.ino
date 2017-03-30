@@ -193,7 +193,7 @@ void resetGlobalSettings() {
   globalSettings.secsBtwnReadings = 120  ;
   globalSettings.targetCO2Level = 1200;
   globalSettings.amtSecsWaterPumpIsOn = 60; //amount of seconds for pump to be ON.
-  globalSettings.secsBetweenTurningPumpON = 15 * 60; //# secs between turning pump ON.
+  globalSettings.secsBetweenTurningPumpON = 30 * 60; //# secs between turning pump ON.
   globalSettings.hourToTurnLightOff = 0;
   globalSettings.hourToTurnLightOn = 8;
   eeprom_write_block(&globalSettings, (void *)0, sizeof(globalSettings)); //write settings to eeprom
