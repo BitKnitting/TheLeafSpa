@@ -63,12 +63,11 @@ tmElements_t tm;
 volatile uint16_t pulses = 0;
 //Use a flag to tell if the light is on.  Knowing if the light is on is important for adjusting CO2.
 bool fLEDon = false;
-//Define a warm up time for the CO2 sensor.  The Grove wiki says 3 minutes: https://seeeddoc.github.io/Grove-CO2_Sensor/
-const int secsWarmUp = 3 * 60 ;
+
 //Use a flag to tell the code when the warm up period is over so that readings can be taken and logged.
 bool fInWarmUp = true;
 // EEPROM is used to load/save global settings.  See resetGlobalSettings() to get a feel for what properties are stored.
-#define eepromWriteCheck 0x1234
+#define eepromWriteCheck 0x5678
 #include <avr/eeprom.h>
 struct globalSettingsV1_T
 {
@@ -77,6 +76,7 @@ struct globalSettingsV1_T
   unsigned int       targetCO2Level;
   unsigned int       amtSecsWaterPumpIsOn;
   unsigned int       secsBetweenTurningPumpON;
+  unsigned int       secsWarmUp;
   byte               hourToTurnLightOff;
   byte               hourToTurnLightOn;
 } globalSettings;
@@ -116,8 +116,8 @@ const char *logFileName = "datalog.txt";
    number of bytes is a bit less than 50 (around 45).  This is why stringBuffer is set to have 50 bytes.
    additionalInfo topped out at 18 bytes. This is why there are 20 bytes assigned to additionalInfo.
 */
-char stringBuffer[50] = {0};
-char additionalInfo[20];  // stringBuffer and additionalInfo are used for holding logging info.
+char stringBuffer[60] = {0};
+char additionalInfo[30];  // stringBuffer and additionalInfo are used for holding logging info.
 
 /***********************************************************
    setup()
@@ -166,8 +166,7 @@ void initStuff() {
   // Set a timer for the number of minutes needed to warm up the CO2 sensor before taking readings
   fInWarmUp = true;
   writeEventHappened(WarmupStart, "");
-
-  Alarm.timerOnce(secsWarmUp, warmUpOver);
+  Alarm.timerOnce((const int)globalSettings.secsWarmUp, warmUpOver);
 }
 /*
    loadGlobalSettings() uses EEPROM to get the settings variables identified within the globalSettings structure.
@@ -190,8 +189,9 @@ void loadGlobalSettings() {
 */
 void resetGlobalSettings() {
   globalSettings.writeCheck = eepromWriteCheck;
-  globalSettings.secsBtwnReadings = 120  ;
+  globalSettings.secsBtwnReadings = 60  ;
   globalSettings.targetCO2Level = 1200;
+  globalSettings.secsWarmUp = 180 ; //The Grove wiki states CO2 sensor should warm up for 3 minutes:https://seeeddoc.github.io/Grove-CO2_Sensor/
   globalSettings.amtSecsWaterPumpIsOn = 60; //amount of seconds for pump to be ON.
   globalSettings.secsBetweenTurningPumpON = 30 * 60; //# secs between turning pump ON.
   globalSettings.hourToTurnLightOff = 0;
@@ -257,7 +257,6 @@ void turnLightOnOrOff() {
   }
 }
 void turnLightOn() {
-  writeFreeRamtoStringBuffer();
   writeEventHappened(LEDOn, "");
   fLEDon = true;
   digitalWrite(LEDPin, ON);
@@ -381,6 +380,9 @@ void writeSettings() {
   itoa(globalSettings.targetCO2Level, idx, 10);
   idx = additionalInfo + strlen(additionalInfo);
   *idx++ = ',';
+  itoa(globalSettings.secsWarmUp, idx,10);
+  idx = additionalInfo + strlen(additionalInfo);
+  *idx++ = ',';  
   itoa(globalSettings.amtSecsWaterPumpIsOn, idx, 10);
   idx = additionalInfo + strlen(additionalInfo);
   *idx++ = ',';
@@ -425,8 +427,8 @@ void writeEventHappened(logRow_t event, char * additionalInfo) {
   if (!logFile) {
     return;
   }
-//  writeFreeRamtoStringBuffer();
-//  logFile.println(stringBuffer);
+  //  writeFreeRamtoStringBuffer();
+  //  logFile.println(stringBuffer);
   ////////////////////////////////////////////////////////////////////////////
   //
   // an event has a log row type followed by date/time followed by additonal info.
@@ -438,8 +440,8 @@ void writeEventHappened(logRow_t event, char * additionalInfo) {
   *idx++ = ',';
   strcpy(idx, additionalInfo);
   logFile.println(stringBuffer);
-//  writeFreeRamtoStringBuffer();
-//  logFile.println(stringBuffer);
+  //  writeFreeRamtoStringBuffer();
+  //  logFile.println(stringBuffer);
   ////////////////////////////////////////////////////////////////////////////
   logFile.flush();
   logFile.close();
@@ -463,14 +465,6 @@ void makeDateTimeString(char *dateAndTime) {
   itoa(second(), idx, 10);
 }
 /*
-   free_ram()
-*/
-int freeRam () {
-  extern int __heap_start, *__brkval;
-  int v;
-  return (int)&v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
-}
-/*
   Write the amount of SRAM available after the record has been written.  If there is a change, it's of interest
   to know the length of stringBuffer and additionalInfo.  Are they what I expect them to be?
 */
@@ -486,4 +480,12 @@ void writeFreeRamtoStringBuffer() {
   idx = stringBuffer + strlen(stringBuffer);
   *idx++ = ',';
   itoa(strlen(additionalInfo), idx, 10);
+}
+/*
+   free_ram()
+*/
+int freeRam () {
+  extern int __heap_start, *__brkval;
+  int v;
+  return (int)&v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
 }
