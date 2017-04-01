@@ -2,9 +2,9 @@
 #Created on Mar 8, 2017
 #
 import csv
-def writeAveragesToLogFile(logFile,averages):
+def writeAveragesToSummaryFile(logFile,averages):
     rowToWrite = []
-    with open(logFile, 'wb') as csvfile:
+    with open(logFile, 'ab') as csvfile:
         writer = csv.writer(csvfile,delimiter=',')
         writer.writerow(['Average Values'])
         writer.writerow(['LED ON',' ',' ','LED OFF'])
@@ -20,3 +20,4 @@ def writeAveragesToLogFile(logFile,averages):
                 #see http://stackoverflow.com/questions/12240662/write-list-of-comma-separate-strings-to-csv-file-in-python
                 writer.writerow(rowToWrite[i].split(','))
             break;
+def writeSettingsToSummaryFile(logfile,)

@@ -4,8 +4,7 @@
 # from running the Leaf Spa and determine the average temperature and
 # humidity when the LED is ON and then when the LED is OFF
 #
-from GetAvgTempHumidityAndCO2 import getAvgTempHumidityAndCO2
-from WriteAveragesToLogFile import writeAveragesToLogFile
+from ReadLogfileAndWriteSummary import readLogfileAndWriteSummary
 import os
 # See documetation at https://docs.python.org/3/library/argparse.html
 import argparse as ap
@@ -14,6 +13,9 @@ import logging
 NUM_PROCESSES = 30  # Maximum number of parallel web-scraping processes.
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+#
+# Check to make sure the input filename exists...ready for reading...
+#
 def openInputFile(inputFilename):
     if inputFilename == None:
         logging.error('Error! You must enter the path and name of the Leaf Spa log file')
@@ -50,13 +52,14 @@ def main():
     logger.debug('at beginning of main....')
     args = getUserInput()
     splitPath = os.path.splitext(args.input)
-    outputFilename = splitPath[0]+'_analysis.csv'
+    summaryFilename = splitPath[0]+'_summary.csv'
+    # validate the input for the filename will provide a log file to parse through
     theLogFile = openInputFile(args.input)
     # it has been verified a file exists..not verified if the contents is a
     # logfile.  That is content specific, so figure this out when reading the
     # contents.
-    listOfAverages = getAvgTempHumidityAndCO2(theLogFile)
-    writeAveragesToLogFile(outputFilename,listOfAverages)
+    readLogfileAndWriteSummary(theLogFile,summaryFilename)
+    theLogFile.close()
 
 if __name__ == '__main__':
     main()
