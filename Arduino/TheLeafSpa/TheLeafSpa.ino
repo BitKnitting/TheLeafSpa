@@ -356,7 +356,6 @@ File openFile() {
 void closeSD() {
   cardState_t cardState = (cardState_t)digitalRead(cardDetectPin);
   if (cardState == Removed) {
-    writeEventHappened(CardRemoved, "");
     SD.end();
   }
 }
@@ -380,9 +379,9 @@ void writeSettings() {
   itoa(globalSettings.targetCO2Level, idx, 10);
   idx = additionalInfo + strlen(additionalInfo);
   *idx++ = ',';
-  itoa(globalSettings.secsWarmUp, idx,10);
+  itoa(globalSettings.secsWarmUp, idx, 10);
   idx = additionalInfo + strlen(additionalInfo);
-  *idx++ = ',';  
+  *idx++ = ',';
   itoa(globalSettings.amtSecsWaterPumpIsOn, idx, 10);
   idx = additionalInfo + strlen(additionalInfo);
   *idx++ = ',';
