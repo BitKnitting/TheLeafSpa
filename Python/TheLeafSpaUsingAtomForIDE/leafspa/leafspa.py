@@ -45,6 +45,7 @@ def main():
     permanentLogFilename = permanentLogFilePath + newFilename + '.csv'
     try:
         copyfile(SDfilename,permanentLogFilename)
+        print("Log filename: "+permanentLogFilename)
     except:
         logger.error('ERROR! '+SDfilename+' could not be copied to '+permanentLogFilename+'. Does '+SDfilename+' exist? Is it possible for a file named '+permanentLogFilename+' to exist?')
         sys.exit(0)

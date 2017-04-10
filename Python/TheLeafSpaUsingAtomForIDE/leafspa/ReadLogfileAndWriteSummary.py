@@ -34,6 +34,7 @@ def setSummaryFilepath(logFileHandle):
     global gSummaryFilename # modifying gSummaryFilename so global is needed.
     splitPath = os.path.splitext(logFileHandle.name)
     gSummaryFilename = splitPath[0]+'_summary.csv'
+    print("Summary filename: "+gSummaryFilename)
 #
 # Write out what settings (e.g.: such as target CO2, etc.) the Leaf Spa is set at.  This Function
 # gets called when a Settings_V record is found in the log file.
@@ -127,6 +128,8 @@ SETTINGS_ROW = 50
 switcher = {
     SETTINGS_ROW: settingsRow,
     0:sensorRow,
+    1:noAction,
+    2:noAction,
     3:lightTurnedOn,
     4:lightTurnedOff,
     5:noAction,
