@@ -67,7 +67,7 @@ bool fLEDon = false;
 //Use a flag to tell the code when the warm up period is over so that readings can be taken and logged.
 bool fInWarmUp = true;
 // EEPROM is used to load/save global settings.  See resetGlobalSettings() to get a feel for what properties are stored.
-#define eepromWriteCheck 0x5678
+#define eepromWriteCheck 0x1234
 #include <avr/eeprom.h>
 struct globalSettingsV1_T
 {
@@ -195,7 +195,7 @@ void resetGlobalSettings() {
   globalSettings.amtSecsWaterPumpIsOn = 60; //amount of seconds for pump to be ON.
   globalSettings.secsBetweenTurningPumpON = 30 * 60; //# secs between turning pump ON.
   globalSettings.hourToTurnLightOff = 0;
-  globalSettings.hourToTurnLightOn = 8;
+  globalSettings.hourToTurnLightOn = 4;
   eeprom_write_block(&globalSettings, (void *)0, sizeof(globalSettings)); //write settings to eeprom
 }
 /*
