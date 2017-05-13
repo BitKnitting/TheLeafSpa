@@ -1,0 +1,326 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F08D09F91EACB3AD006488B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08D09F81EACB3AD006488B6 /* AppDelegate.swift */; };
+		F08D09FB1EACB3AD006488B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08D09FA1EACB3AD006488B6 /* ViewController.swift */; };
+		F08D09FE1EACB3AD006488B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F08D09FC1EACB3AD006488B6 /* Main.storyboard */; };
+		F08D0A001EACB3AD006488B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F08D09FF1EACB3AD006488B6 /* Assets.xcassets */; };
+		F08D0A031EACB3AD006488B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F08D0A011EACB3AD006488B6 /* LaunchScreen.storyboard */; };
+		F08D0A0C1EACC87E006488B6 /* LogHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08D0A0B1EACC87E006488B6 /* LogHelper.swift */; };
+		F08D0A0E1EACE479006488B6 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08D0A0D1EACE479006488B6 /* BLEManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F08D09F51EACB3AD006488B6 /* BLELeafSpaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLELeafSpaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F08D09F81EACB3AD006488B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F08D09FA1EACB3AD006488B6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F08D09FD1EACB3AD006488B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F08D09FF1EACB3AD006488B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F08D0A021EACB3AD006488B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F08D0A041EACB3AD006488B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F08D0A0B1EACC87E006488B6 /* LogHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogHelper.swift; sourceTree = "<group>"; };
+		F08D0A0D1EACE479006488B6 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F08D09F21EACB3AD006488B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F08D09EC1EACB3AC006488B6 = {
+			isa = PBXGroup;
+			children = (
+				F08D09F71EACB3AD006488B6 /* BLELeafSpaTest */,
+				F08D09F61EACB3AD006488B6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F08D09F61EACB3AD006488B6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F08D09F51EACB3AD006488B6 /* BLELeafSpaTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F08D09F71EACB3AD006488B6 /* BLELeafSpaTest */ = {
+			isa = PBXGroup;
+			children = (
+				F08D0A0B1EACC87E006488B6 /* LogHelper.swift */,
+				F08D09FA1EACB3AD006488B6 /* ViewController.swift */,
+				F08D09FC1EACB3AD006488B6 /* Main.storyboard */,
+				F08D0A0A1EACB3EC006488B6 /* Supporting Files */,
+				F08D0A0D1EACE479006488B6 /* BLEManager.swift */,
+			);
+			path = BLELeafSpaTest;
+			sourceTree = "<group>";
+		};
+		F08D0A0A1EACB3EC006488B6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F08D09F81EACB3AD006488B6 /* AppDelegate.swift */,
+				F08D09FF1EACB3AD006488B6 /* Assets.xcassets */,
+				F08D0A011EACB3AD006488B6 /* LaunchScreen.storyboard */,
+				F08D0A041EACB3AD006488B6 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F08D09F41EACB3AD006488B6 /* BLELeafSpaTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F08D0A071EACB3AD006488B6 /* Build configuration list for PBXNativeTarget "BLELeafSpaTest" */;
+			buildPhases = (
+				F08D09F11EACB3AD006488B6 /* Sources */,
+				F08D09F21EACB3AD006488B6 /* Frameworks */,
+				F08D09F31EACB3AD006488B6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BLELeafSpaTest;
+			productName = BLELeafSpaTest;
+			productReference = F08D09F51EACB3AD006488B6 /* BLELeafSpaTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F08D09ED1EACB3AC006488B6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Margaret Johnson";
+				TargetAttributes = {
+					F08D09F41EACB3AD006488B6 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = V4856XU2X6;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F08D09F01EACB3AC006488B6 /* Build configuration list for PBXProject "BLELeafSpaTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F08D09EC1EACB3AC006488B6;
+			productRefGroup = F08D09F61EACB3AD006488B6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F08D09F41EACB3AD006488B6 /* BLELeafSpaTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F08D09F31EACB3AD006488B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F08D0A031EACB3AD006488B6 /* LaunchScreen.storyboard in Resources */,
+				F08D0A001EACB3AD006488B6 /* Assets.xcassets in Resources */,
+				F08D09FE1EACB3AD006488B6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F08D09F11EACB3AD006488B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F08D09FB1EACB3AD006488B6 /* ViewController.swift in Sources */,
+				F08D0A0E1EACE479006488B6 /* BLEManager.swift in Sources */,
+				F08D0A0C1EACC87E006488B6 /* LogHelper.swift in Sources */,
+				F08D09F91EACB3AD006488B6 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F08D09FC1EACB3AD006488B6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F08D09FD1EACB3AD006488B6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F08D0A011EACB3AD006488B6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F08D0A021EACB3AD006488B6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F08D0A051EACB3AD006488B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F08D0A061EACB3AD006488B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F08D0A081EACB3AD006488B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V4856XU2X6;
+				INFOPLIST_FILE = BLELeafSpaTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = us.are.HappyAndKind.BLELeafSpaTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F08D0A091EACB3AD006488B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V4856XU2X6;
+				INFOPLIST_FILE = BLELeafSpaTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = us.are.HappyAndKind.BLELeafSpaTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F08D09F01EACB3AC006488B6 /* Build configuration list for PBXProject "BLELeafSpaTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F08D0A051EACB3AD006488B6 /* Debug */,
+				F08D0A061EACB3AD006488B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F08D0A071EACB3AD006488B6 /* Build configuration list for PBXNativeTarget "BLELeafSpaTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F08D0A081EACB3AD006488B6 /* Debug */,
+				F08D0A091EACB3AD006488B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F08D09ED1EACB3AC006488B6 /* Project object */;
+}

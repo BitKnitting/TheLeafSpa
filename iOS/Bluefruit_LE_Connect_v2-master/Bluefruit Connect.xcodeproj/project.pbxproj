@@ -1,0 +1,2012 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		54FBFC10591C03DA5C0D9568 /* Pods_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DADD3EE2F104E4EAEC8BF080 /* Pods_watchOS.framework */; };
+		63B47532EB88090E3B90C584 /* Pods_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FA7A96714D3B161B31CFD27 /* Pods_OSX.framework */; };
+		A903A5DA1CA3622C004077DE /* HelpExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903A5D91CA3622C004077DE /* HelpExportViewController.swift */; };
+		A90D29CA1C7E108E003EB6D4 /* NeopixelModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90D29C91C7E108E003EB6D4 /* NeopixelModuleViewController.swift */; };
+		A90F88771D3D0AEB009A71CF /* InfoModuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F88761D3D0AEB009A71CF /* InfoModuleManager.swift */; };
+		A90F88781D3D0C24009A71CF /* InfoModuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F88761D3D0AEB009A71CF /* InfoModuleManager.swift */; };
+		A91F839D1C68F06C0023C168 /* UartModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F83911C68EDE80023C168 /* UartModuleViewController.swift */; };
+		A91F839E1C68F0760023C168 /* UartMqttSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F83921C68EDE80023C168 /* UartMqttSettingsViewController.swift */; };
+		A91F839F1C68F0790023C168 /* UartSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F83931C68EDE80023C168 /* UartSettingsViewController.swift */; };
+		A91F83A01C68F07C0023C168 /* UartTimetampTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F83941C68EDE80023C168 /* UartTimetampTableViewCell.swift */; };
+		A91F83A21C68F4B40023C168 /* UartSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F83A11C68F4B40023C168 /* UartSettingTableViewCell.swift */; };
+		A91F9E8D1C650C31007656B7 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F9E8C1C650C31007656B7 /* LocalizationManager.swift */; };
+		A91F9E8E1C650C31007656B7 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F9E8C1C650C31007656B7 /* LocalizationManager.swift */; };
+		A91F9E921C65179E007656B7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A91F9E901C65179E007656B7 /* Localizable.strings */; };
+		A91F9E931C65179E007656B7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A91F9E901C65179E007656B7 /* Localizable.strings */; };
+		A91F9E9D1C657856007656B7 /* EmptyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F9E9C1C657856007656B7 /* EmptyDetailsViewController.swift */; };
+		A91F9EAD1C663939007656B7 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F9EAC1C663939007656B7 /* SeparatorView.swift */; };
+		A91F9EB01C663999007656B7 /* RssiUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F9EAF1C663999007656B7 /* RssiUI.swift */; };
+		A91F9EB11C663999007656B7 /* RssiUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F9EAF1C663999007656B7 /* RssiUI.swift */; };
+		A91F9EBB1C666E6B007656B7 /* MqttManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2FF821C3EEA9D0039D188 /* MqttManager.swift */; };
+		A91F9EBC1C666E6D007656B7 /* MqttSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2FF801C3EEA6B0039D188 /* MqttSettings.swift */; };
+		A91F9ED41C667CA6007656B7 /* NSColor+hex.m in Sources */ = {isa = PBXBuildFile; fileRef = A91F9ED31C667CA6007656B7 /* NSColor+hex.m */; };
+		A92088AD1C72692B002FF8E8 /* BleUUIDNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92088AC1C72692B002FF8E8 /* BleUUIDNames.swift */; };
+		A92088AE1C72692B002FF8E8 /* BleUUIDNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92088AC1C72692B002FF8E8 /* BleUUIDNames.swift */; };
+		A92088B01C726DDD002FF8E8 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92088AF1C726DDD002FF8E8 /* HelpViewController.swift */; };
+		A92088B21C727CD5002FF8E8 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92088B11C727CD5002FF8E8 /* StyledButton.swift */; };
+		A92088B41C7357D5002FF8E8 /* StyleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92088B31C7357D5002FF8E8 /* StyleConfig.swift */; };
+		A92088B61C73910D002FF8E8 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92088B51C73910D002FF8E8 /* UIImage+Color.swift */; };
+		A92D91B71D01ABC500CAB0E5 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE75721BB9CF1000F7A5BF /* XMLDictionary.m */; };
+		A92E06761C6D136100BECBBA /* MqttSettingsStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E06751C6D136100BECBBA /* MqttSettingsStatusCell.swift */; };
+		A92E06781C6D15A300BECBBA /* MqttSettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E06771C6D15A300BECBBA /* MqttSettingsHeaderCell.swift */; };
+		A92E067A1C6D18DF00BECBBA /* MqttSettingsValueAndSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E06791C6D18DF00BECBBA /* MqttSettingsValueAndSelector.swift */; };
+		A92E067E1C6D20D000BECBBA /* MqttSettingPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E067D1C6D20D000BECBBA /* MqttSettingPickerCell.swift */; };
+		A92E06861C6D5EF900BECBBA /* ControllerModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E06841C6D5EF900BECBBA /* ControllerModuleViewController.swift */; };
+		A92E06871C6D5EF900BECBBA /* ControllerSensorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E06851C6D5EF900BECBBA /* ControllerSensorTableViewCell.swift */; };
+		A93EF7C21CE5243100706942 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A93EF7C01CE5243100706942 /* Settings.bundle */; };
+		A94201F51C6A65B500C87989 /* DfuDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94201F41C6A65B500C87989 /* DfuDialogViewController.swift */; };
+		A94370A71BB6384B002521F7 /* GattUUIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = A94370A61BB6384B002521F7 /* GattUUIDs.plist */; };
+		A94370BA1BB6493A002521F7 /* BleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94370AB1BB6493A002521F7 /* BleManager.swift */; };
+		A94370BB1BB6493A002521F7 /* BlePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94370AC1BB6493A002521F7 /* BlePeripheral.swift */; };
+		A94370CF1BB64959002521F7 /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370C51BB64959002521F7 /* BLEOperations.m */; };
+		A94370D01BB64959002521F7 /* DFUOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370C71BB64959002521F7 /* DFUOperations.m */; };
+		A94370D11BB64959002521F7 /* DFUOperationsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370C91BB64959002521F7 /* DFUOperationsDetails.m */; };
+		A94370D21BB64959002521F7 /* FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370CB1BB64959002521F7 /* FileOperations.m */; };
+		A94370D31BB64959002521F7 /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370CE1BB64959002521F7 /* IntelHex2BinConverter.m */; };
+		A94370D71BB649AE002521F7 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370D61BB649AE002521F7 /* Utility.m */; };
+		A94535811C8540DB00DF49D7 /* ModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945357D1C8540DB00DF49D7 /* ModuleViewController.swift */; };
+		A94535821C8540DB00DF49D7 /* PeripheralDetailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945357E1C8540DB00DF49D7 /* PeripheralDetailsCollectionViewCell.swift */; };
+		A94535831C8540DB00DF49D7 /* PeripheralDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945357F1C8540DB00DF49D7 /* PeripheralDetailsViewController.swift */; };
+		A94535841C8540DB00DF49D7 /* ScrollingTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94535801C8540DB00DF49D7 /* ScrollingTabBarViewController.swift */; };
+		A949AA611C5AC85A002F960B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A949AA601C5AC85A002F960B /* Images.xcassets */; };
+		A949AA641C5AC8C3002F960B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A949AA621C5AC8C3002F960B /* Main.storyboard */; };
+		A949AA671C5AC912002F960B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA651C5AC912002F960B /* AppDelegate.swift */; };
+		A949AA761C5AC977002F960B /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA6A1C5AC977002F960B /* DetailsViewController.swift */; };
+		A949AA771C5AC977002F960B /* FirmwareUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA6B1C5AC977002F960B /* FirmwareUpdateViewController.swift */; };
+		A949AA781C5AC977002F960B /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA6C1C5AC977002F960B /* InfoViewController.swift */; };
+		A949AA791C5AC977002F960B /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA6D1C5AC977002F960B /* MainSplitViewController.swift */; };
+		A949AA7A1C5AC977002F960B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA6E1C5AC977002F960B /* MainWindowController.swift */; };
+		A949AA7C1C5AC977002F960B /* PeripheralListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA701C5AC977002F960B /* PeripheralListViewController.swift */; };
+		A949AA7D1C5AC977002F960B /* PeripheralTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA711C5AC977002F960B /* PeripheralTableCellView.swift */; };
+		A949AA7E1C5AC977002F960B /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA721C5AC977002F960B /* PreferencesViewController.swift */; };
+		A949AA7F1C5AC977002F960B /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA731C5AC977002F960B /* StatusViewController.swift */; };
+		A949AA801C5AC977002F960B /* UartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA741C5AC977002F960B /* UartViewController.swift */; };
+		A949AA811C5AC977002F960B /* UpdateDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA751C5AC977002F960B /* UpdateDialogViewController.swift */; };
+		A949AAA51C5ACFAB002F960B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA9B1C5ACFAB002F960B /* AppDelegate.swift */; };
+		A949AAA61C5ACFAB002F960B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A949AA9C1C5ACFAB002F960B /* Assets.xcassets */; };
+		A94A46D61CD6DEA100561A70 /* HexColorConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F5D8BF1CD6D7F500C6A468 /* HexColorConversions.swift */; };
+		A94B85101BB65C48007B88C7 /* FirmwareUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = A94B850F1BB65C48007B88C7 /* FirmwareUpdater.m */; };
+		A94B85131BB65C71007B88C7 /* ReleasesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A94B85121BB65C71007B88C7 /* ReleasesParser.m */; };
+		A94B851E1BB704BC007B88C7 /* HexConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B851D1BB704BC007B88C7 /* HexConversions.swift */; };
+		A94F5A371C5AD41A009CC9B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A94F5A331C5AD41A009CC9B8 /* LaunchScreen.storyboard */; };
+		A94F5A381C5AD41A009CC9B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A94F5A351C5AD41A009CC9B8 /* Main.storyboard */; };
+		A94F5A3C1C5AE24D009CC9B8 /* LogHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982968A1BB222D700DD478C /* LogHelper.swift */; };
+		A94F5A3D1C5AE252009CC9B8 /* HexConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B851D1BB704BC007B88C7 /* HexConversions.swift */; };
+		A94F5A3E1C5AE25B009CC9B8 /* UartDataExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AE3AC1C42AB5000FA8E80 /* UartDataExport.swift */; };
+		A94F5A3F1C5AE279009CC9B8 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE75721BB9CF1000F7A5BF /* XMLDictionary.m */; };
+		A94F5A401C5AE282009CC9B8 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370D61BB649AE002521F7 /* Utility.m */; };
+		A94F5A411C5AE287009CC9B8 /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370C51BB64959002521F7 /* BLEOperations.m */; };
+		A94F5A421C5AE28A009CC9B8 /* DFUOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370C71BB64959002521F7 /* DFUOperations.m */; };
+		A94F5A431C5AE28C009CC9B8 /* DFUOperationsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370C91BB64959002521F7 /* DFUOperationsDetails.m */; };
+		A94F5A441C5AE28F009CC9B8 /* FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370CB1BB64959002521F7 /* FileOperations.m */; };
+		A94F5A451C5AE294009CC9B8 /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370CE1BB64959002521F7 /* IntelHex2BinConverter.m */; };
+		A94F5A461C5AE2A1009CC9B8 /* GattUUIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = A94370A61BB6384B002521F7 /* GattUUIDs.plist */; };
+		A94F5A471C5AE2A4009CC9B8 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = A98E03A41BBA406700F8924C /* DefaultPreferences.plist */; };
+		A94F5A481C5AE3D5009CC9B8 /* FirmwareUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = A94B850F1BB65C48007B88C7 /* FirmwareUpdater.m */; };
+		A94F5A491C5AE3D8009CC9B8 /* ReleasesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A94B85121BB65C71007B88C7 /* ReleasesParser.m */; };
+		A94F5A511C5AF098009CC9B8 /* BleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94370AB1BB6493A002521F7 /* BleManager.swift */; };
+		A94F5A521C5AF09B009CC9B8 /* BlePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94370AC1BB6493A002521F7 /* BlePeripheral.swift */; };
+		A94F5A591C5AF1CA009CC9B8 /* StatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94F5A581C5AF1CA009CC9B8 /* StatusManager.swift */; };
+		A9627AC71CD617B800B93737 /* watchOS Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A9627AC61CD617B800B93737 /* watchOS Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A9627AD81CD617B800B93737 /* watchOS.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A9627ABA1CD617B800B93737 /* watchOS.app */; };
+		A9627AEE1CD6183D00B93737 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9627AEA1CD6183D00B93737 /* Assets.xcassets */; };
+		A9627AEF1CD6183D00B93737 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9627AEB1CD6183D00B93737 /* Interface.storyboard */; };
+		A9627AF81CD6184500B93737 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9627AF21CD6184500B93737 /* Assets.xcassets */; };
+		A9627AF91CD6184500B93737 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9627AF31CD6184500B93737 /* ExtensionDelegate.swift */; };
+		A9627AFB1CD6184500B93737 /* MainInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9627AF51CD6184500B93737 /* MainInterfaceController.swift */; };
+		A9627AFC1CD6184500B93737 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9627AF61CD6184500B93737 /* NotificationController.swift */; };
+		A9627AFD1CD6184500B93737 /* PushNotificationPayload.apns in Resources */ = {isa = PBXBuildFile; fileRef = A9627AF71CD6184500B93737 /* PushNotificationPayload.apns */; };
+		A9627AFE1CD61D1A00B93737 /* LogHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982968A1BB222D700DD478C /* LogHelper.swift */; };
+		A9627B001CD6205600B93737 /* ScanningInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9627AFF1CD6205600B93737 /* ScanningInterfaceController.swift */; };
+		A965674F1C7E25B0009DB0F4 /* NeopixelModuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A965674E1C7E25B0009DB0F4 /* NeopixelModuleManager.swift */; };
+		A96567501C7E25B0009DB0F4 /* NeopixelModuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A965674E1C7E25B0009DB0F4 /* NeopixelModuleManager.swift */; };
+		A9675D711CFD13920041A6F0 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370D61BB649AE002521F7 /* Utility.m */; };
+		A9675D721CFD13970041A6F0 /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370C51BB64959002521F7 /* BLEOperations.m */; };
+		A9675D731CFD139B0041A6F0 /* DFUOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370C71BB64959002521F7 /* DFUOperations.m */; };
+		A9675D741CFD139D0041A6F0 /* DFUOperationsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370C91BB64959002521F7 /* DFUOperationsDetails.m */; };
+		A9675D751CFD13A00041A6F0 /* FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370CB1BB64959002521F7 /* FileOperations.m */; };
+		A9675D761CFD13A50041A6F0 /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = A94370CE1BB64959002521F7 /* IntelHex2BinConverter.m */; };
+		A9675D771CFD13B60041A6F0 /* DfuUpdateProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8C1C6E99BF0019790F /* DfuUpdateProcess.swift */; };
+		A9675D7B1CFD16B00041A6F0 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F9E8C1C650C31007656B7 /* LocalizationManager.swift */; };
+		A9675D841CFD19250041A6F0 /* DataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A9675D831CFD19250041A6F0 /* DataDownloader.m */; };
+		A9675D851CFD19250041A6F0 /* DataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A9675D831CFD19250041A6F0 /* DataDownloader.m */; };
+		A9675D861CFD19250041A6F0 /* DataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A9675D831CFD19250041A6F0 /* DataDownloader.m */; };
+		A9675D891CFD19E60041A6F0 /* DeviceInfoData.m in Sources */ = {isa = PBXBuildFile; fileRef = A9675D881CFD19E60041A6F0 /* DeviceInfoData.m */; };
+		A9675D8A1CFD19E60041A6F0 /* DeviceInfoData.m in Sources */ = {isa = PBXBuildFile; fileRef = A9675D881CFD19E60041A6F0 /* DeviceInfoData.m */; };
+		A9675D8B1CFD19E60041A6F0 /* DeviceInfoData.m in Sources */ = {isa = PBXBuildFile; fileRef = A9675D881CFD19E60041A6F0 /* DeviceInfoData.m */; };
+		A96A7A031C74F02F000C37E3 /* NSObject+ENHThrottledReloading.m in Sources */ = {isa = PBXBuildFile; fileRef = A96A79FE1C74F02F000C37E3 /* NSObject+ENHThrottledReloading.m */; };
+		A96A7A071C74F329000C37E3 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96A7A061C74F329000C37E3 /* Synchronize.swift */; };
+		A96A7A081C74F329000C37E3 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96A7A061C74F329000C37E3 /* Synchronize.swift */; };
+		A982968B1BB222D700DD478C /* LogHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982968A1BB222D700DD478C /* LogHelper.swift */; };
+		A984FEED1D943BF1001C5951 /* SeparatorLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A984FEEC1D943BF1001C5951 /* SeparatorLineView.swift */; };
+		A987F3121C66AFA00007C58D /* KeyboardPositionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987F3111C66AFA00007C58D /* KeyboardPositionNotifier.swift */; };
+		A98AE3AD1C42AB5000FA8E80 /* UartDataExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AE3AC1C42AB5000FA8E80 /* UartDataExport.swift */; };
+		A98E03951BBA2A0300F8924C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A98E03941BBA2A0300F8924C /* Credits.rtf */; };
+		A98E03A51BBA406700F8924C /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = A98E03A41BBA406700F8924C /* DefaultPreferences.plist */; };
+		A9941C131C80F31000AD4016 /* NeopixelBoardSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9941C121C80F31000AD4016 /* NeopixelBoardSelectorViewController.swift */; };
+		A9941C151C80F41300AD4016 /* NeopixelBoards.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9941C141C80F41300AD4016 /* NeopixelBoards.plist */; };
+		A9941C161C80F41300AD4016 /* NeopixelBoards.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9941C141C80F41300AD4016 /* NeopixelBoards.plist */; };
+		A9941C181C812A9D00AD4016 /* NeopixelDefaultPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9941C171C812A9D00AD4016 /* NeopixelDefaultPalette.plist */; };
+		A9941C191C812A9D00AD4016 /* NeopixelDefaultPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9941C171C812A9D00AD4016 /* NeopixelDefaultPalette.plist */; };
+		A9941C1B1C812D6600AD4016 /* Color+DarkerLighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9941C1A1C812D6600AD4016 /* Color+DarkerLighter.swift */; };
+		A9941C1C1C812D6600AD4016 /* Color+DarkerLighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9941C1A1C812D6600AD4016 /* Color+DarkerLighter.swift */; };
+		A9941C1E1C813EF700AD4016 /* NeopixelColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9941C1D1C813EF700AD4016 /* NeopixelColorPickerViewController.swift */; };
+		A99CE0571C6D62AC0051C818 /* ControllerPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99CE0561C6D62AC0051C818 /* ControllerPadViewController.swift */; };
+		A99CE05E1C6E1EE10051C818 /* UIImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99CE05D1C6E1EE10051C818 /* UIImage+Tint.swift */; };
+		A99CE0601C6E4F000051C818 /* ControllerComponentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99CE05F1C6E4F000051C818 /* ControllerComponentsTableViewCell.swift */; };
+		A99CE0641C6E69090051C818 /* ISColorWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = A99CE0631C6E69090051C818 /* ISColorWheel.m */; };
+		A99CE0661C6E699C0051C818 /* ControllerColorWheelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99CE0651C6E699C0051C818 /* ControllerColorWheelViewController.swift */; };
+		A99FBF401D01D6D200140647 /* CommandLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99FBF3E1D01D6D200140647 /* CommandLine.swift */; };
+		A99FBF411D01D6D200140647 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99FBF3F1D01D6D200140647 /* main.swift */; };
+		A9A2FF811C3EEA6B0039D188 /* MqttSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2FF801C3EEA6B0039D188 /* MqttSettings.swift */; };
+		A9A2FF831C3EEA9D0039D188 /* MqttManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2FF821C3EEA9D0039D188 /* MqttManager.swift */; };
+		A9A37C181CD6336C00008136 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A37C171CD6336C00008136 /* WatchSessionManager.swift */; };
+		A9A37C191CD6336C00008136 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A37C171CD6336C00008136 /* WatchSessionManager.swift */; };
+		A9A644271CEB747300C762BA /* BleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94370AB1BB6493A002521F7 /* BleManager.swift */; };
+		A9A644281CEB747600C762BA /* BlePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94370AC1BB6493A002521F7 /* BlePeripheral.swift */; };
+		A9A644291CEB78E800C762BA /* LogHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982968A1BB222D700DD478C /* LogHelper.swift */; };
+		A9A6442A1CEB790B00C762BA /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96A7A061C74F329000C37E3 /* Synchronize.swift */; };
+		A9A82E491D0180740086DB1F /* FirmwareUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = A94B850F1BB65C48007B88C7 /* FirmwareUpdater.m */; };
+		A9A82E4C1D019C0B0086DB1F /* ReleasesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A94B85121BB65C71007B88C7 /* ReleasesParser.m */; };
+		A9AEF90F1C7560C100E381C0 /* PinTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AEF90E1C7560C100E381C0 /* PinTableCellView.swift */; };
+		A9AF4E0F1CC63496002C1C12 /* NeopixelTypeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AF4E0E1CC63496002C1C12 /* NeopixelTypeSelectorViewController.swift */; };
+		A9AF4E111CC63562002C1C12 /* NeopixelTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9AF4E101CC63562002C1C12 /* NeopixelTypes.plist */; };
+		A9AF4E121CC63562002C1C12 /* NeopixelTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9AF4E101CC63562002C1C12 /* NeopixelTypes.plist */; };
+		A9AF4E141CC641E2002C1C12 /* NeopixelTypeValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AF4E131CC641E2002C1C12 /* NeopixelTypeValueTableViewCell.swift */; };
+		A9AF4E261CC7E8C0002C1C12 /* Neopixel in Resources */ = {isa = PBXBuildFile; fileRef = A9AF4E251CC7E8C0002C1C12 /* Neopixel */; };
+		A9B1FA4D1CD6D55B00911FDB /* HexConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B851D1BB704BC007B88C7 /* HexConversions.swift */; };
+		A9B41F891C69675400E4A666 /* DfuModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B41F871C69675400E4A666 /* DfuModuleViewController.swift */; };
+		A9BEA6421C6690E6005F54D6 /* CocoaCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEA6411C6690E6005F54D6 /* CocoaCompatibility.swift */; };
+		A9BEA6431C6690E6005F54D6 /* CocoaCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEA6411C6690E6005F54D6 /* CocoaCompatibility.swift */; };
+		A9D04AD81CD655C10061DC74 /* HandoffManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D04AD71CD655C10061DC74 /* HandoffManager.swift */; };
+		A9D04AD91CD655C10061DC74 /* HandoffManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D04AD71CD655C10061DC74 /* HandoffManager.swift */; };
+		A9D7205D1C73C32F001321D3 /* PinIOModuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7205C1C73C32F001321D3 /* PinIOModuleManager.swift */; };
+		A9D7205E1C73C32F001321D3 /* PinIOModuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7205C1C73C32F001321D3 /* PinIOModuleManager.swift */; };
+		A9D720601C73D5E9001321D3 /* PinIOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7205F1C73D5E9001321D3 /* PinIOViewController.swift */; };
+		A9DA5CA01D9D696F00C11469 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA5C9C1D9D696F00C11469 /* AboutViewController.swift */; };
+		A9DA5CA11D9D696F00C11469 /* PeripheralTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA5C9D1D9D696F00C11469 /* PeripheralTableViewCell.swift */; };
+		A9DA5CA21D9D696F00C11469 /* PeripheralTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA5C9E1D9D696F00C11469 /* PeripheralTableViewController.swift */; };
+		A9DA5CA31D9D696F00C11469 /* ScanningAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA5C9F1D9D696F00C11469 /* ScanningAnimationViewController.swift */; };
+		A9DA5CA51D9D69B100C11469 /* FilterTextSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA5CA41D9D69B100C11469 /* FilterTextSettingsViewController.swift */; };
+		A9DDAA441CD66A35007C8A6F /* ConnectedInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DDAA431CD66A35007C8A6F /* ConnectedInterfaceController.swift */; };
+		A9DDAA461CD67B6B007C8A6F /* ControlModeInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DDAA451CD67B6B007C8A6F /* ControlModeInterfaceController.swift */; };
+		A9DDAA481CD67E3E007C8A6F /* PickerModeInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DDAA471CD67E3E007C8A6F /* PickerModeInterfaceController.swift */; };
+		A9DDAA4A1CD68793007C8A6F /* ControlPadInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DDAA491CD68793007C8A6F /* ControlPadInterfaceController.swift */; };
+		A9DDAA4C1CD6AF74007C8A6F /* ColorPaletteInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DDAA4B1CD6AF74007C8A6F /* ColorPaletteInterfaceController.swift */; };
+		A9DDAA4E1CD6C30D007C8A6F /* ColorRGBInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DDAA4D1CD6C30D007C8A6F /* ColorRGBInterfaceController.swift */; };
+		A9E016C21C70D72900CEB54C /* StyledSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E016C11C70D72900CEB54C /* StyledSubview.swift */; };
+		A9E8AE571C7B0A3A00DFEFB0 /* NeopixelViewControllerOSX.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949AA6F1C5AC977002F960B /* NeopixelViewControllerOSX.swift */; };
+		A9EC0F891C6E87120019790F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F881C6E87120019790F /* GradientView.swift */; };
+		A9EC0F931C6E99BF0019790F /* ControllerModuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8B1C6E99BF0019790F /* ControllerModuleManager.swift */; };
+		A9EC0F941C6E99BF0019790F /* DfuUpdateProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8C1C6E99BF0019790F /* DfuUpdateProcess.swift */; };
+		A9EC0F951C6E99BF0019790F /* DfuUpdateProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8C1C6E99BF0019790F /* DfuUpdateProcess.swift */; };
+		A9EC0F961C6E99BF0019790F /* PeripheralList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8D1C6E99BF0019790F /* PeripheralList.swift */; };
+		A9EC0F971C6E99BF0019790F /* PeripheralList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8D1C6E99BF0019790F /* PeripheralList.swift */; };
+		A9EC0F981C6E99BF0019790F /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8E1C6E99BF0019790F /* Preferences.swift */; };
+		A9EC0F991C6E99BF0019790F /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8E1C6E99BF0019790F /* Preferences.swift */; };
+		A9EC0F9A1C6E99BF0019790F /* UartDataChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8F1C6E99BF0019790F /* UartDataChunk.swift */; };
+		A9EC0F9B1C6E99BF0019790F /* UartDataChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F8F1C6E99BF0019790F /* UartDataChunk.swift */; };
+		A9EC0F9C1C6E99BF0019790F /* UartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F901C6E99BF0019790F /* UartManager.swift */; };
+		A9EC0F9D1C6E99BF0019790F /* UartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F901C6E99BF0019790F /* UartManager.swift */; };
+		A9EC0F9E1C6E99BF0019790F /* UartModuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F911C6E99BF0019790F /* UartModuleManager.swift */; };
+		A9EC0F9F1C6E99BF0019790F /* UartModuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0F911C6E99BF0019790F /* UartModuleManager.swift */; };
+		A9EC0FA31C6EC1240019790F /* InfoCharacteristicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0FA11C6EC1240019790F /* InfoCharacteristicTableViewCell.swift */; };
+		A9EC0FA41C6EC1240019790F /* InfoModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0FA21C6EC1240019790F /* InfoModuleViewController.swift */; };
+		A9EC0FAC1C6EDBE10019790F /* PinIOModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0FAA1C6EDBE10019790F /* PinIOModuleViewController.swift */; };
+		A9EC0FAD1C6EDBE10019790F /* PinIOTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0FAB1C6EDBE10019790F /* PinIOTableViewCell.swift */; };
+		A9EC0FB01C6F519D0019790F /* DfuFilesPickerDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0FAF1C6F519D0019790F /* DfuFilesPickerDialogViewController.swift */; };
+		A9EC0FB21C6F5CF60019790F /* DfuFilesPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC0FB11C6F5CF60019790F /* DfuFilesPickerTableViewCell.swift */; };
+		A9EE1ADD1C6FB54900195028 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EE1ADC1C6FB54900195028 /* Config.swift */; };
+		A9EE1ADE1C6FB54900195028 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EE1ADC1C6FB54900195028 /* Config.swift */; };
+		A9F5D8C01CD6D7F500C6A468 /* HexColorConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F5D8BF1CD6D7F500C6A468 /* HexColorConversions.swift */; };
+		A9FE75731BB9CF1000F7A5BF /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE75721BB9CF1000F7A5BF /* XMLDictionary.m */; };
+		E16D7F0BA37D59D34718276E /* Pods_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A61E38A345CBA9806C9D40E /* Pods_iOS.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A9627AC81CD617B800B93737 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A98296601BB1F5E600DD478C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9627AC51CD617B800B93737;
+			remoteInfo = "watchOS Extension";
+		};
+		A9627AD61CD617B800B93737 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A98296601BB1F5E600DD478C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9627AB91CD617B800B93737;
+			remoteInfo = watchOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A9627ADC1CD617B800B93737 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A9627AC71CD617B800B93737 /* watchOS Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9627AE01CD617B800B93737 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				A9627AD81CD617B800B93737 /* watchOS.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9A6441E1CEB721900C762BA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		306E0D3C0B775E80704140AB /* Pods-OSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OSX/Pods-OSX.debug.xcconfig"; sourceTree = "<group>"; };
+		3FA7A96714D3B161B31CFD27 /* Pods_OSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AC1184E322E9E9A527BB7F2 /* Pods-OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-OSX/Pods-OSX.release.xcconfig"; sourceTree = "<group>"; };
+		7A61E38A345CBA9806C9D40E /* Pods_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84D89B88F76BCB31A1B27F96 /* Pods-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS/Pods-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		A903A5D91CA3622C004077DE /* HelpExportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpExportViewController.swift; sourceTree = "<group>"; };
+		A90D29C91C7E108E003EB6D4 /* NeopixelModuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeopixelModuleViewController.swift; sourceTree = "<group>"; };
+		A90F88761D3D0AEB009A71CF /* InfoModuleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoModuleManager.swift; sourceTree = "<group>"; };
+		A91F83911C68EDE80023C168 /* UartModuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartModuleViewController.swift; sourceTree = "<group>"; };
+		A91F83921C68EDE80023C168 /* UartMqttSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartMqttSettingsViewController.swift; sourceTree = "<group>"; };
+		A91F83931C68EDE80023C168 /* UartSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartSettingsViewController.swift; sourceTree = "<group>"; };
+		A91F83941C68EDE80023C168 /* UartTimetampTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartTimetampTableViewCell.swift; sourceTree = "<group>"; };
+		A91F83A11C68F4B40023C168 /* UartSettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartSettingTableViewCell.swift; sourceTree = "<group>"; };
+		A91F9E8C1C650C31007656B7 /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
+		A91F9E911C65179E007656B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A91F9E9C1C657856007656B7 /* EmptyDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyDetailsViewController.swift; sourceTree = "<group>"; };
+		A91F9EAC1C663939007656B7 /* SeparatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
+		A91F9EAF1C663999007656B7 /* RssiUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RssiUI.swift; sourceTree = "<group>"; };
+		A91F9ED21C667CA6007656B7 /* NSColor+hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+hex.h"; sourceTree = "<group>"; };
+		A91F9ED31C667CA6007656B7 /* NSColor+hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+hex.m"; sourceTree = "<group>"; };
+		A92088AC1C72692B002FF8E8 /* BleUUIDNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BleUUIDNames.swift; sourceTree = "<group>"; };
+		A92088AF1C726DDD002FF8E8 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		A92088B11C727CD5002FF8E8 /* StyledButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
+		A92088B31C7357D5002FF8E8 /* StyleConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleConfig.swift; sourceTree = "<group>"; };
+		A92088B51C73910D002FF8E8 /* UIImage+Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
+		A92E06751C6D136100BECBBA /* MqttSettingsStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttSettingsStatusCell.swift; sourceTree = "<group>"; };
+		A92E06771C6D15A300BECBBA /* MqttSettingsHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttSettingsHeaderCell.swift; sourceTree = "<group>"; };
+		A92E06791C6D18DF00BECBBA /* MqttSettingsValueAndSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttSettingsValueAndSelector.swift; sourceTree = "<group>"; };
+		A92E067D1C6D20D000BECBBA /* MqttSettingPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttSettingPickerCell.swift; sourceTree = "<group>"; };
+		A92E06841C6D5EF900BECBBA /* ControllerModuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerModuleViewController.swift; sourceTree = "<group>"; };
+		A92E06851C6D5EF900BECBBA /* ControllerSensorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerSensorTableViewCell.swift; sourceTree = "<group>"; };
+		A93EF7C01CE5243100706942 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		A94201F41C6A65B500C87989 /* DfuDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DfuDialogViewController.swift; sourceTree = "<group>"; };
+		A94370A61BB6384B002521F7 /* GattUUIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GattUUIDs.plist; sourceTree = "<group>"; };
+		A94370AB1BB6493A002521F7 /* BleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BleManager.swift; sourceTree = "<group>"; };
+		A94370AC1BB6493A002521F7 /* BlePeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlePeripheral.swift; sourceTree = "<group>"; };
+		A94370C41BB64959002521F7 /* BLEOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEOperations.h; sourceTree = "<group>"; };
+		A94370C51BB64959002521F7 /* BLEOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEOperations.m; sourceTree = "<group>"; };
+		A94370C61BB64959002521F7 /* DFUOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFUOperations.h; sourceTree = "<group>"; };
+		A94370C71BB64959002521F7 /* DFUOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUOperations.m; sourceTree = "<group>"; };
+		A94370C81BB64959002521F7 /* DFUOperationsDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFUOperationsDetails.h; sourceTree = "<group>"; };
+		A94370C91BB64959002521F7 /* DFUOperationsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUOperationsDetails.m; sourceTree = "<group>"; };
+		A94370CA1BB64959002521F7 /* FileOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileOperations.h; sourceTree = "<group>"; };
+		A94370CB1BB64959002521F7 /* FileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileOperations.m; sourceTree = "<group>"; };
+		A94370CD1BB64959002521F7 /* IntelHex2BinConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntelHex2BinConverter.h; sourceTree = "<group>"; };
+		A94370CE1BB64959002521F7 /* IntelHex2BinConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntelHex2BinConverter.m; sourceTree = "<group>"; };
+		A94370D51BB649AE002521F7 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		A94370D61BB649AE002521F7 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		A945357D1C8540DB00DF49D7 /* ModuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleViewController.swift; sourceTree = "<group>"; };
+		A945357E1C8540DB00DF49D7 /* PeripheralDetailsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralDetailsCollectionViewCell.swift; sourceTree = "<group>"; };
+		A945357F1C8540DB00DF49D7 /* PeripheralDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralDetailsViewController.swift; sourceTree = "<group>"; };
+		A94535801C8540DB00DF49D7 /* ScrollingTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingTabBarViewController.swift; sourceTree = "<group>"; };
+		A949AA601C5AC85A002F960B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A949AA631C5AC8C3002F960B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A949AA651C5AC912002F960B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A949AA661C5AC912002F960B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A949AA6A1C5AC977002F960B /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		A949AA6B1C5AC977002F960B /* FirmwareUpdateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareUpdateViewController.swift; sourceTree = "<group>"; };
+		A949AA6C1C5AC977002F960B /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		A949AA6D1C5AC977002F960B /* MainSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
+		A949AA6E1C5AC977002F960B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		A949AA6F1C5AC977002F960B /* NeopixelViewControllerOSX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeopixelViewControllerOSX.swift; sourceTree = "<group>"; };
+		A949AA701C5AC977002F960B /* PeripheralListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralListViewController.swift; sourceTree = "<group>"; };
+		A949AA711C5AC977002F960B /* PeripheralTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralTableCellView.swift; sourceTree = "<group>"; };
+		A949AA721C5AC977002F960B /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		A949AA731C5AC977002F960B /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
+		A949AA741C5AC977002F960B /* UartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartViewController.swift; sourceTree = "<group>"; };
+		A949AA751C5AC977002F960B /* UpdateDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateDialogViewController.swift; sourceTree = "<group>"; };
+		A949AA821C5ACAA7002F960B /* BluefruitConnect-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BluefruitConnect-Bridging-Header.h"; sourceTree = "<group>"; };
+		A949AA871C5ACF19002F960B /* Adafruit Bluefruit LE Connect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Adafruit Bluefruit LE Connect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A949AA9B1C5ACFAB002F960B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A949AA9C1C5ACFAB002F960B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A949AAA31C5ACFAB002F960B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A94B850E1BB65C48007B88C7 /* FirmwareUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmwareUpdater.h; sourceTree = "<group>"; };
+		A94B850F1BB65C48007B88C7 /* FirmwareUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmwareUpdater.m; sourceTree = "<group>"; };
+		A94B85111BB65C70007B88C7 /* ReleasesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReleasesParser.h; sourceTree = "<group>"; };
+		A94B85121BB65C71007B88C7 /* ReleasesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReleasesParser.m; sourceTree = "<group>"; };
+		A94B85141BB65CA3007B88C7 /* LogHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogHelper.h; sourceTree = "<group>"; };
+		A94B851D1BB704BC007B88C7 /* HexConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexConversions.swift; sourceTree = "<group>"; };
+		A94F5A341C5AD41A009CC9B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A94F5A361C5AD41A009CC9B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A94F5A4D1C5AE501009CC9B8 /* BluefruitConnect-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BluefruitConnect-Bridging-Header.h"; sourceTree = "<group>"; };
+		A94F5A581C5AF1CA009CC9B8 /* StatusManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusManager.swift; sourceTree = "<group>"; };
+		A9627ABA1CD617B800B93737 /* watchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = watchOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9627AC61CD617B800B93737 /* watchOS Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "watchOS Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9627AEA1CD6183D00B93737 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9627AEC1CD6183D00B93737 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		A9627AED1CD6183D00B93737 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9627AF21CD6184500B93737 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9627AF31CD6184500B93737 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		A9627AF41CD6184500B93737 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9627AF51CD6184500B93737 /* MainInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainInterfaceController.swift; sourceTree = "<group>"; };
+		A9627AF61CD6184500B93737 /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		A9627AF71CD6184500B93737 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		A9627AFF1CD6205600B93737 /* ScanningInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanningInterfaceController.swift; sourceTree = "<group>"; };
+		A965674E1C7E25B0009DB0F4 /* NeopixelModuleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeopixelModuleManager.swift; sourceTree = "<group>"; };
+		A9675D821CFD19250041A6F0 /* DataDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownloader.h; sourceTree = "<group>"; };
+		A9675D831CFD19250041A6F0 /* DataDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloader.m; sourceTree = "<group>"; };
+		A9675D871CFD19E60041A6F0 /* DeviceInfoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfoData.h; sourceTree = "<group>"; };
+		A9675D881CFD19E60041A6F0 /* DeviceInfoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInfoData.m; sourceTree = "<group>"; };
+		A96A79FD1C74F02F000C37E3 /* NSObject+ENHThrottledReloading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ENHThrottledReloading.h"; sourceTree = "<group>"; };
+		A96A79FE1C74F02F000C37E3 /* NSObject+ENHThrottledReloading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ENHThrottledReloading.m"; sourceTree = "<group>"; };
+		A96A7A061C74F329000C37E3 /* Synchronize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronize.swift; sourceTree = "<group>"; };
+		A98296681BB1F5E600DD478C /* Adafruit Bluefruit LE Connect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Adafruit Bluefruit LE Connect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A982968A1BB222D700DD478C /* LogHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogHelper.swift; sourceTree = "<group>"; };
+		A984FEEC1D943BF1001C5951 /* SeparatorLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLineView.swift; sourceTree = "<group>"; };
+		A987F3111C66AFA00007C58D /* KeyboardPositionNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardPositionNotifier.swift; sourceTree = "<group>"; };
+		A98AE3AC1C42AB5000FA8E80 /* UartDataExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartDataExport.swift; sourceTree = "<group>"; };
+		A98E03941BBA2A0300F8924C /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		A98E03A41BBA406700F8924C /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
+		A9941C121C80F31000AD4016 /* NeopixelBoardSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeopixelBoardSelectorViewController.swift; sourceTree = "<group>"; };
+		A9941C141C80F41300AD4016 /* NeopixelBoards.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NeopixelBoards.plist; sourceTree = "<group>"; };
+		A9941C171C812A9D00AD4016 /* NeopixelDefaultPalette.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NeopixelDefaultPalette.plist; sourceTree = "<group>"; };
+		A9941C1A1C812D6600AD4016 /* Color+DarkerLighter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+DarkerLighter.swift"; sourceTree = "<group>"; };
+		A9941C1D1C813EF700AD4016 /* NeopixelColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeopixelColorPickerViewController.swift; sourceTree = "<group>"; };
+		A99C4DD21CF380B600B10FE2 /* Bluefruit_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Bluefruit_iOS.entitlements; sourceTree = "<group>"; };
+		A99C4DD31CF380BE00B10FE2 /* Bluefruit_OSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Bluefruit_OSX.entitlements; sourceTree = "<group>"; };
+		A99CE0561C6D62AC0051C818 /* ControllerPadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerPadViewController.swift; sourceTree = "<group>"; };
+		A99CE05D1C6E1EE10051C818 /* UIImage+Tint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Tint.swift"; sourceTree = "<group>"; };
+		A99CE05F1C6E4F000051C818 /* ControllerComponentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerComponentsTableViewCell.swift; sourceTree = "<group>"; };
+		A99CE0621C6E69090051C818 /* ISColorWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISColorWheel.h; sourceTree = "<group>"; };
+		A99CE0631C6E69090051C818 /* ISColorWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISColorWheel.m; sourceTree = "<group>"; };
+		A99CE0651C6E699C0051C818 /* ControllerColorWheelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerColorWheelViewController.swift; sourceTree = "<group>"; };
+		A99FBF3D1D01D6D200140647 /* BluefruitConnect-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BluefruitConnect-Bridging-Header.h"; sourceTree = "<group>"; };
+		A99FBF3E1D01D6D200140647 /* CommandLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLine.swift; sourceTree = "<group>"; };
+		A99FBF3F1D01D6D200140647 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		A9A2FF801C3EEA6B0039D188 /* MqttSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttSettings.swift; sourceTree = "<group>"; };
+		A9A2FF821C3EEA9D0039D188 /* MqttManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttManager.swift; sourceTree = "<group>"; };
+		A9A37C171CD6336C00008136 /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
+		A9A644201CEB721900C762BA /* Adafruit Bluefruit LE Connect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Adafruit Bluefruit LE Connect"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9AEF90E1C7560C100E381C0 /* PinTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinTableCellView.swift; sourceTree = "<group>"; };
+		A9AF4E0E1CC63496002C1C12 /* NeopixelTypeSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeopixelTypeSelectorViewController.swift; sourceTree = "<group>"; };
+		A9AF4E101CC63562002C1C12 /* NeopixelTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NeopixelTypes.plist; sourceTree = "<group>"; };
+		A9AF4E131CC641E2002C1C12 /* NeopixelTypeValueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeopixelTypeValueTableViewCell.swift; sourceTree = "<group>"; };
+		A9AF4E251CC7E8C0002C1C12 /* Neopixel */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Neopixel; path = bluefruitconnect/Platform/Arduino/Neopixel; sourceTree = SOURCE_ROOT; };
+		A9B41F871C69675400E4A666 /* DfuModuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DfuModuleViewController.swift; sourceTree = "<group>"; };
+		A9BEA6411C6690E6005F54D6 /* CocoaCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaCompatibility.swift; sourceTree = "<group>"; };
+		A9D04AD71CD655C10061DC74 /* HandoffManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandoffManager.swift; sourceTree = "<group>"; };
+		A9D7205C1C73C32F001321D3 /* PinIOModuleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIOModuleManager.swift; sourceTree = "<group>"; };
+		A9D7205F1C73D5E9001321D3 /* PinIOViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIOViewController.swift; sourceTree = "<group>"; };
+		A9DA5C9C1D9D696F00C11469 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		A9DA5C9D1D9D696F00C11469 /* PeripheralTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewCell.swift; sourceTree = "<group>"; };
+		A9DA5C9E1D9D696F00C11469 /* PeripheralTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewController.swift; sourceTree = "<group>"; };
+		A9DA5C9F1D9D696F00C11469 /* ScanningAnimationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanningAnimationViewController.swift; sourceTree = "<group>"; };
+		A9DA5CA41D9D69B100C11469 /* FilterTextSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTextSettingsViewController.swift; sourceTree = "<group>"; };
+		A9DDAA431CD66A35007C8A6F /* ConnectedInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedInterfaceController.swift; sourceTree = "<group>"; };
+		A9DDAA451CD67B6B007C8A6F /* ControlModeInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlModeInterfaceController.swift; sourceTree = "<group>"; };
+		A9DDAA471CD67E3E007C8A6F /* PickerModeInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerModeInterfaceController.swift; sourceTree = "<group>"; };
+		A9DDAA491CD68793007C8A6F /* ControlPadInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPadInterfaceController.swift; sourceTree = "<group>"; };
+		A9DDAA4B1CD6AF74007C8A6F /* ColorPaletteInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPaletteInterfaceController.swift; sourceTree = "<group>"; };
+		A9DDAA4D1CD6C30D007C8A6F /* ColorRGBInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorRGBInterfaceController.swift; sourceTree = "<group>"; };
+		A9E016C11C70D72900CEB54C /* StyledSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledSubview.swift; sourceTree = "<group>"; };
+		A9EC0F881C6E87120019790F /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		A9EC0F8B1C6E99BF0019790F /* ControllerModuleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerModuleManager.swift; sourceTree = "<group>"; };
+		A9EC0F8C1C6E99BF0019790F /* DfuUpdateProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DfuUpdateProcess.swift; sourceTree = "<group>"; };
+		A9EC0F8D1C6E99BF0019790F /* PeripheralList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralList.swift; sourceTree = "<group>"; };
+		A9EC0F8E1C6E99BF0019790F /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		A9EC0F8F1C6E99BF0019790F /* UartDataChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartDataChunk.swift; sourceTree = "<group>"; };
+		A9EC0F901C6E99BF0019790F /* UartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartManager.swift; sourceTree = "<group>"; };
+		A9EC0F911C6E99BF0019790F /* UartModuleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UartModuleManager.swift; sourceTree = "<group>"; };
+		A9EC0FA11C6EC1240019790F /* InfoCharacteristicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoCharacteristicTableViewCell.swift; sourceTree = "<group>"; };
+		A9EC0FA21C6EC1240019790F /* InfoModuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoModuleViewController.swift; sourceTree = "<group>"; };
+		A9EC0FAA1C6EDBE10019790F /* PinIOModuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIOModuleViewController.swift; sourceTree = "<group>"; };
+		A9EC0FAB1C6EDBE10019790F /* PinIOTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIOTableViewCell.swift; sourceTree = "<group>"; };
+		A9EC0FAF1C6F519D0019790F /* DfuFilesPickerDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DfuFilesPickerDialogViewController.swift; sourceTree = "<group>"; };
+		A9EC0FB11C6F5CF60019790F /* DfuFilesPickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DfuFilesPickerTableViewCell.swift; sourceTree = "<group>"; };
+		A9EE1ADC1C6FB54900195028 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		A9F5D8BF1CD6D7F500C6A468 /* HexColorConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexColorConversions.swift; sourceTree = "<group>"; };
+		A9FC04711D04575800519722 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9FE75711BB9CF1000F7A5BF /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		A9FE75721BB9CF1000F7A5BF /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
+		B86FF3BB211A024B2AE48AD1 /* Pods-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-watchOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-watchOS/Pods-watchOS.release.xcconfig"; sourceTree = "<group>"; };
+		C1A38E2241235B1ED6C49AA4 /* Pods-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS/Pods-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		DADD3EE2F104E4EAEC8BF080 /* Pods_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBA828893B1A8F67C4BBEE0F /* Pods-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-watchOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-watchOS/Pods-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6C126D6432382EB0582772B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54FBFC10591C03DA5C0D9568 /* Pods_watchOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A949AA841C5ACF19002F960B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E16D7F0BA37D59D34718276E /* Pods_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9627AC31CD617B800B93737 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A98296651BB1F5E600DD478C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63B47532EB88090E3B90C584 /* Pods_OSX.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9A6441D1CEB721900C762BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		926C071A3DEA82E4401AE93A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3FA7A96714D3B161B31CFD27 /* Pods_OSX.framework */,
+				7A61E38A345CBA9806C9D40E /* Pods_iOS.framework */,
+				DADD3EE2F104E4EAEC8BF080 /* Pods_watchOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A903A5DB1CA364F7004077DE /* sketchs */ = {
+			isa = PBXGroup;
+			children = (
+				A9AF4E251CC7E8C0002C1C12 /* Neopixel */,
+			);
+			path = sketchs;
+			sourceTree = "<group>";
+		};
+		A90D29C81C7E0F6D003EB6D4 /* NeoPixel */ = {
+			isa = PBXGroup;
+			children = (
+				A90D29C91C7E108E003EB6D4 /* NeopixelModuleViewController.swift */,
+				A9941C121C80F31000AD4016 /* NeopixelBoardSelectorViewController.swift */,
+				A9941C1D1C813EF700AD4016 /* NeopixelColorPickerViewController.swift */,
+				A903A5D91CA3622C004077DE /* HelpExportViewController.swift */,
+				A9AF4E0E1CC63496002C1C12 /* NeopixelTypeSelectorViewController.swift */,
+				A9AF4E131CC641E2002C1C12 /* NeopixelTypeValueTableViewCell.swift */,
+			);
+			path = NeoPixel;
+			sourceTree = "<group>";
+		};
+		A91F838F1C68EDE80023C168 /* Uart */ = {
+			isa = PBXGroup;
+			children = (
+				A91F83911C68EDE80023C168 /* UartModuleViewController.swift */,
+				A91F83931C68EDE80023C168 /* UartSettingsViewController.swift */,
+				A91F83941C68EDE80023C168 /* UartTimetampTableViewCell.swift */,
+				A91F83A11C68F4B40023C168 /* UartSettingTableViewCell.swift */,
+				A91F83921C68EDE80023C168 /* UartMqttSettingsViewController.swift */,
+				A91F83901C68EDE80023C168 /* Mqtt */,
+			);
+			path = Uart;
+			sourceTree = "<group>";
+		};
+		A91F83901C68EDE80023C168 /* Mqtt */ = {
+			isa = PBXGroup;
+			children = (
+				A92E06751C6D136100BECBBA /* MqttSettingsStatusCell.swift */,
+				A92E06771C6D15A300BECBBA /* MqttSettingsHeaderCell.swift */,
+				A92E06791C6D18DF00BECBBA /* MqttSettingsValueAndSelector.swift */,
+				A92E067D1C6D20D000BECBBA /* MqttSettingPickerCell.swift */,
+			);
+			path = Mqtt;
+			sourceTree = "<group>";
+		};
+		A91F9E8F1C65179E007656B7 /* localization */ = {
+			isa = PBXGroup;
+			children = (
+				A91F9E901C65179E007656B7 /* Localizable.strings */,
+			);
+			path = localization;
+			sourceTree = "<group>";
+		};
+		A91F9EAE1C663999007656B7 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				A91F9EAF1C663999007656B7 /* RssiUI.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		A91F9ED11C667CA6007656B7 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				A91F9ED21C667CA6007656B7 /* NSColor+hex.h */,
+				A91F9ED31C667CA6007656B7 /* NSColor+hex.m */,
+				A9941C1A1C812D6600AD4016 /* Color+DarkerLighter.swift */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		A92E06831C6D5EF900BECBBA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A92E06841C6D5EF900BECBBA /* ControllerModuleViewController.swift */,
+				A92E06851C6D5EF900BECBBA /* ControllerSensorTableViewCell.swift */,
+				A99CE0561C6D62AC0051C818 /* ControllerPadViewController.swift */,
+				A99CE05F1C6E4F000051C818 /* ControllerComponentsTableViewCell.swift */,
+				A99CE0651C6E699C0051C818 /* ControllerColorWheelViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A94370A51BB6384B002521F7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A94370A61BB6384B002521F7 /* GattUUIDs.plist */,
+				A98E03941BBA2A0300F8924C /* Credits.rtf */,
+				A98E03A41BBA406700F8924C /* DefaultPreferences.plist */,
+				A91F9E8F1C65179E007656B7 /* localization */,
+				A903A5DB1CA364F7004077DE /* sketchs */,
+				A9941C141C80F41300AD4016 /* NeopixelBoards.plist */,
+				A9AF4E101CC63562002C1C12 /* NeopixelTypes.plist */,
+				A9941C171C812A9D00AD4016 /* NeopixelDefaultPalette.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A94370AA1BB6493A002521F7 /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+				A94370AB1BB6493A002521F7 /* BleManager.swift */,
+				A94370AC1BB6493A002521F7 /* BlePeripheral.swift */,
+				A92088AC1C72692B002FF8E8 /* BleUUIDNames.swift */,
+			);
+			path = BLE;
+			sourceTree = "<group>";
+		};
+		A94370C11BB64959002521F7 /* External Tools */ = {
+			isa = PBXGroup;
+			children = (
+				A9EC0F871C6E87120019790F /* GradientView */,
+				A99CE0611C6E69090051C818 /* ios-color-wheel */,
+				A96A79FB1C74F02F000C37E3 /* NSObject+ENHThrottledReloading */,
+				A91F9ED11C667CA6007656B7 /* Colors */,
+				A9FE75701BB9CF1000F7A5BF /* XML */,
+				A94370C21BB64959002521F7 /* DFU */,
+			);
+			path = "External Tools";
+			sourceTree = "<group>";
+		};
+		A94370C21BB64959002521F7 /* DFU */ = {
+			isa = PBXGroup;
+			children = (
+				A94370D41BB649AE002521F7 /* Constants */,
+				A94370C31BB64959002521F7 /* DFUImplementation */,
+				A94370CC1BB64959002521F7 /* HexToBinConverter */,
+			);
+			path = DFU;
+			sourceTree = "<group>";
+		};
+		A94370C31BB64959002521F7 /* DFUImplementation */ = {
+			isa = PBXGroup;
+			children = (
+				A94370C41BB64959002521F7 /* BLEOperations.h */,
+				A94370C51BB64959002521F7 /* BLEOperations.m */,
+				A94370C61BB64959002521F7 /* DFUOperations.h */,
+				A94370C71BB64959002521F7 /* DFUOperations.m */,
+				A94370C81BB64959002521F7 /* DFUOperationsDetails.h */,
+				A94370C91BB64959002521F7 /* DFUOperationsDetails.m */,
+				A94370CA1BB64959002521F7 /* FileOperations.h */,
+				A94370CB1BB64959002521F7 /* FileOperations.m */,
+			);
+			path = DFUImplementation;
+			sourceTree = "<group>";
+		};
+		A94370CC1BB64959002521F7 /* HexToBinConverter */ = {
+			isa = PBXGroup;
+			children = (
+				A94370CD1BB64959002521F7 /* IntelHex2BinConverter.h */,
+				A94370CE1BB64959002521F7 /* IntelHex2BinConverter.m */,
+			);
+			path = HexToBinConverter;
+			sourceTree = "<group>";
+		};
+		A94370D41BB649AE002521F7 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				A94370D51BB649AE002521F7 /* Utility.h */,
+				A94370D61BB649AE002521F7 /* Utility.m */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		A945357C1C8540DB00DF49D7 /* PeripheralDetails */ = {
+			isa = PBXGroup;
+			children = (
+				A945357D1C8540DB00DF49D7 /* ModuleViewController.swift */,
+				A945357E1C8540DB00DF49D7 /* PeripheralDetailsCollectionViewCell.swift */,
+				A945357F1C8540DB00DF49D7 /* PeripheralDetailsViewController.swift */,
+				A94535801C8540DB00DF49D7 /* ScrollingTabBarViewController.swift */,
+			);
+			path = PeripheralDetails;
+			sourceTree = "<group>";
+		};
+		A949AA5A1C5AC81B002F960B /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				A949AA5B1C5AC81B002F960B /* iOS */,
+				A949AA5C1C5AC81B002F960B /* OSX */,
+				A99FBF3C1D01D6D200140647 /* OSX_CommandLine */,
+				A949AA5E1C5AC81B002F960B /* tvOS */,
+				A9627AE91CD6183D00B93737 /* watchOS */,
+				A9627AF11CD6184500B93737 /* watchOS Extension */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+		A949AA5B1C5AC81B002F960B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A99C4DD21CF380B600B10FE2 /* Bluefruit_iOS.entitlements */,
+				A93EF7C01CE5243100706942 /* Settings.bundle */,
+				A949AA9B1C5ACFAB002F960B /* AppDelegate.swift */,
+				A949AA9C1C5ACFAB002F960B /* Assets.xcassets */,
+				A94F5A331C5AD41A009CC9B8 /* LaunchScreen.storyboard */,
+				A94F5A351C5AD41A009CC9B8 /* Main.storyboard */,
+				A94F5A4D1C5AE501009CC9B8 /* BluefruitConnect-Bridging-Header.h */,
+				A949AAA31C5ACFAB002F960B /* Info.plist */,
+				A94F5A2E1C5AD3A4009CC9B8 /* Controllers */,
+				A9E016C01C70D6FA00CEB54C /* Style */,
+				A987F3101C66AFA00007C58D /* Utils */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		A949AA5C1C5AC81B002F960B /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				A99C4DD31CF380BE00B10FE2 /* Bluefruit_OSX.entitlements */,
+				A949AA651C5AC912002F960B /* AppDelegate.swift */,
+				A949AA661C5AC912002F960B /* Info.plist */,
+				A949AA621C5AC8C3002F960B /* Main.storyboard */,
+				A949AA821C5ACAA7002F960B /* BluefruitConnect-Bridging-Header.h */,
+				A949AA601C5AC85A002F960B /* Images.xcassets */,
+				A9AEF9111C75F9CF00E381C0 /* Style */,
+				A94F5A571C5AF1CA009CC9B8 /* Utils */,
+				A949AA691C5AC977002F960B /* Controllers */,
+			);
+			path = OSX;
+			sourceTree = "<group>";
+		};
+		A949AA5E1C5AC81B002F960B /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = tvOS;
+			sourceTree = "<group>";
+		};
+		A949AA691C5AC977002F960B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A949AA6E1C5AC977002F960B /* MainWindowController.swift */,
+				A949AA6D1C5AC977002F960B /* MainSplitViewController.swift */,
+				A949AA731C5AC977002F960B /* StatusViewController.swift */,
+				A949AA721C5AC977002F960B /* PreferencesViewController.swift */,
+				A949AA701C5AC977002F960B /* PeripheralListViewController.swift */,
+				A949AA711C5AC977002F960B /* PeripheralTableCellView.swift */,
+				A949AA6A1C5AC977002F960B /* DetailsViewController.swift */,
+				A949AA6C1C5AC977002F960B /* InfoViewController.swift */,
+				A949AA741C5AC977002F960B /* UartViewController.swift */,
+				A9D7205F1C73D5E9001321D3 /* PinIOViewController.swift */,
+				A9AEF90E1C7560C100E381C0 /* PinTableCellView.swift */,
+				A949AA6F1C5AC977002F960B /* NeopixelViewControllerOSX.swift */,
+				A949AA6B1C5AC977002F960B /* FirmwareUpdateViewController.swift */,
+				A949AA751C5AC977002F960B /* UpdateDialogViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		A94B850D1BB65C48007B88C7 /* Updater */ = {
+			isa = PBXGroup;
+			children = (
+				A94B850E1BB65C48007B88C7 /* FirmwareUpdater.h */,
+				A94B850F1BB65C48007B88C7 /* FirmwareUpdater.m */,
+				A9675D871CFD19E60041A6F0 /* DeviceInfoData.h */,
+				A9675D881CFD19E60041A6F0 /* DeviceInfoData.m */,
+				A94B85111BB65C70007B88C7 /* ReleasesParser.h */,
+				A94B85121BB65C71007B88C7 /* ReleasesParser.m */,
+				A9675D821CFD19250041A6F0 /* DataDownloader.h */,
+				A9675D831CFD19250041A6F0 /* DataDownloader.m */,
+			);
+			path = Updater;
+			sourceTree = "<group>";
+		};
+		A94F5A2E1C5AD3A4009CC9B8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A9DA5C9B1D9D696F00C11469 /* Scan */,
+				A945357C1C8540DB00DF49D7 /* PeripheralDetails */,
+				A92088AF1C726DDD002FF8E8 /* HelpViewController.swift */,
+				A91F9E9C1C657856007656B7 /* EmptyDetailsViewController.swift */,
+				A9EC0FA01C6EC1240019790F /* Info */,
+				A91F838F1C68EDE80023C168 /* Uart */,
+				A9B41F861C69675400E4A666 /* Dfu */,
+				A92E06831C6D5EF900BECBBA /* Controller */,
+				A9EC0FA91C6EDBE10019790F /* PinIO */,
+				A90D29C81C7E0F6D003EB6D4 /* NeoPixel */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		A94F5A571C5AF1CA009CC9B8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A91F9EAC1C663939007656B7 /* SeparatorView.swift */,
+				A94F5A581C5AF1CA009CC9B8 /* StatusManager.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A9627AE91CD6183D00B93737 /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				A9627AEA1CD6183D00B93737 /* Assets.xcassets */,
+				A9627AEB1CD6183D00B93737 /* Interface.storyboard */,
+				A9627AED1CD6183D00B93737 /* Info.plist */,
+			);
+			path = watchOS;
+			sourceTree = "<group>";
+		};
+		A9627AF11CD6184500B93737 /* watchOS Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A9627AF21CD6184500B93737 /* Assets.xcassets */,
+				A9627AF31CD6184500B93737 /* ExtensionDelegate.swift */,
+				A9627AF41CD6184500B93737 /* Info.plist */,
+				A9627AF51CD6184500B93737 /* MainInterfaceController.swift */,
+				A9627AF61CD6184500B93737 /* NotificationController.swift */,
+				A9627AF71CD6184500B93737 /* PushNotificationPayload.apns */,
+				A9627AFF1CD6205600B93737 /* ScanningInterfaceController.swift */,
+				A9DDAA431CD66A35007C8A6F /* ConnectedInterfaceController.swift */,
+				A9DDAA451CD67B6B007C8A6F /* ControlModeInterfaceController.swift */,
+				A9DDAA471CD67E3E007C8A6F /* PickerModeInterfaceController.swift */,
+				A9DDAA491CD68793007C8A6F /* ControlPadInterfaceController.swift */,
+				A9DDAA4B1CD6AF74007C8A6F /* ColorPaletteInterfaceController.swift */,
+				A9DDAA4D1CD6C30D007C8A6F /* ColorRGBInterfaceController.swift */,
+			);
+			path = "watchOS Extension";
+			sourceTree = "<group>";
+		};
+		A96A79FB1C74F02F000C37E3 /* NSObject+ENHThrottledReloading */ = {
+			isa = PBXGroup;
+			children = (
+				A96A79FD1C74F02F000C37E3 /* NSObject+ENHThrottledReloading.h */,
+				A96A79FE1C74F02F000C37E3 /* NSObject+ENHThrottledReloading.m */,
+			);
+			path = "NSObject+ENHThrottledReloading";
+			sourceTree = "<group>";
+		};
+		A982965F1BB1F5E600DD478C = {
+			isa = PBXGroup;
+			children = (
+				A982966A1BB1F5E600DD478C /* BluefruitConnect */,
+				A98296691BB1F5E600DD478C /* Products */,
+				B12E2D0785DB111BB749DADE /* Pods */,
+				926C071A3DEA82E4401AE93A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A98296691BB1F5E600DD478C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A98296681BB1F5E600DD478C /* Adafruit Bluefruit LE Connect.app */,
+				A949AA871C5ACF19002F960B /* Adafruit Bluefruit LE Connect.app */,
+				A9627ABA1CD617B800B93737 /* watchOS.app */,
+				A9627AC61CD617B800B93737 /* watchOS Extension.appex */,
+				A9A644201CEB721900C762BA /* Adafruit Bluefruit LE Connect */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A982966A1BB1F5E600DD478C /* BluefruitConnect */ = {
+			isa = PBXGroup;
+			children = (
+				A9EE1ADC1C6FB54900195028 /* Config.swift */,
+				A949AA5A1C5AC81B002F960B /* Platform */,
+				A9EC0F8A1C6E99BF0019790F /* Common */,
+				A98296871BB21B5800DD478C /* Utils */,
+				A94370C11BB64959002521F7 /* External Tools */,
+				A94370A51BB6384B002521F7 /* Resources */,
+			);
+			name = BluefruitConnect;
+			path = bluefruitconnect;
+			sourceTree = "<group>";
+		};
+		A98296871BB21B5800DD478C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A91F9EAE1C663999007656B7 /* UI */,
+				A94B850D1BB65C48007B88C7 /* Updater */,
+				A94370AA1BB6493A002521F7 /* BLE */,
+				A9A2FF7F1C3EEA6B0039D188 /* Mqtt */,
+				A94B85141BB65CA3007B88C7 /* LogHelper.h */,
+				A982968A1BB222D700DD478C /* LogHelper.swift */,
+				A94B851D1BB704BC007B88C7 /* HexConversions.swift */,
+				A9F5D8BF1CD6D7F500C6A468 /* HexColorConversions.swift */,
+				A98AE3AC1C42AB5000FA8E80 /* UartDataExport.swift */,
+				A91F9E8C1C650C31007656B7 /* LocalizationManager.swift */,
+				A9BEA6411C6690E6005F54D6 /* CocoaCompatibility.swift */,
+				A96A7A061C74F329000C37E3 /* Synchronize.swift */,
+				A9A37C171CD6336C00008136 /* WatchSessionManager.swift */,
+				A9D04AD71CD655C10061DC74 /* HandoffManager.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A987F3101C66AFA00007C58D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A987F3111C66AFA00007C58D /* KeyboardPositionNotifier.swift */,
+				A99CE05D1C6E1EE10051C818 /* UIImage+Tint.swift */,
+				A92088B51C73910D002FF8E8 /* UIImage+Color.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A99CE0611C6E69090051C818 /* ios-color-wheel */ = {
+			isa = PBXGroup;
+			children = (
+				A99CE0621C6E69090051C818 /* ISColorWheel.h */,
+				A99CE0631C6E69090051C818 /* ISColorWheel.m */,
+			);
+			path = "ios-color-wheel";
+			sourceTree = "<group>";
+		};
+		A99FBF3C1D01D6D200140647 /* OSX_CommandLine */ = {
+			isa = PBXGroup;
+			children = (
+				A9FC04711D04575800519722 /* Info.plist */,
+				A99FBF3D1D01D6D200140647 /* BluefruitConnect-Bridging-Header.h */,
+				A99FBF3F1D01D6D200140647 /* main.swift */,
+				A99FBF3E1D01D6D200140647 /* CommandLine.swift */,
+			);
+			path = OSX_CommandLine;
+			sourceTree = "<group>";
+		};
+		A9A2FF7F1C3EEA6B0039D188 /* Mqtt */ = {
+			isa = PBXGroup;
+			children = (
+				A9A2FF821C3EEA9D0039D188 /* MqttManager.swift */,
+				A9A2FF801C3EEA6B0039D188 /* MqttSettings.swift */,
+			);
+			path = Mqtt;
+			sourceTree = "<group>";
+		};
+		A9AEF9111C75F9CF00E381C0 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				A984FEEC1D943BF1001C5951 /* SeparatorLineView.swift */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
+		A9B41F861C69675400E4A666 /* Dfu */ = {
+			isa = PBXGroup;
+			children = (
+				A9B41F871C69675400E4A666 /* DfuModuleViewController.swift */,
+				A94201F41C6A65B500C87989 /* DfuDialogViewController.swift */,
+				A9EC0FAF1C6F519D0019790F /* DfuFilesPickerDialogViewController.swift */,
+				A9EC0FB11C6F5CF60019790F /* DfuFilesPickerTableViewCell.swift */,
+			);
+			path = Dfu;
+			sourceTree = "<group>";
+		};
+		A9DA5C9B1D9D696F00C11469 /* Scan */ = {
+			isa = PBXGroup;
+			children = (
+				A9DA5C9C1D9D696F00C11469 /* AboutViewController.swift */,
+				A9DA5C9F1D9D696F00C11469 /* ScanningAnimationViewController.swift */,
+				A9DA5C9E1D9D696F00C11469 /* PeripheralTableViewController.swift */,
+				A9DA5C9D1D9D696F00C11469 /* PeripheralTableViewCell.swift */,
+				A9DA5CA41D9D69B100C11469 /* FilterTextSettingsViewController.swift */,
+			);
+			path = Scan;
+			sourceTree = "<group>";
+		};
+		A9E016C01C70D6FA00CEB54C /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				A92088B31C7357D5002FF8E8 /* StyleConfig.swift */,
+				A9E016C11C70D72900CEB54C /* StyledSubview.swift */,
+				A92088B11C727CD5002FF8E8 /* StyledButton.swift */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
+		A9EC0F871C6E87120019790F /* GradientView */ = {
+			isa = PBXGroup;
+			children = (
+				A9EC0F881C6E87120019790F /* GradientView.swift */,
+			);
+			path = GradientView;
+			sourceTree = "<group>";
+		};
+		A9EC0F8A1C6E99BF0019790F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A9EC0F8E1C6E99BF0019790F /* Preferences.swift */,
+				A9EC0F8D1C6E99BF0019790F /* PeripheralList.swift */,
+				A9EC0F8F1C6E99BF0019790F /* UartDataChunk.swift */,
+				A9EC0F901C6E99BF0019790F /* UartManager.swift */,
+				A9EC0F911C6E99BF0019790F /* UartModuleManager.swift */,
+				A9EC0F8C1C6E99BF0019790F /* DfuUpdateProcess.swift */,
+				A90F88761D3D0AEB009A71CF /* InfoModuleManager.swift */,
+				A9EC0F8B1C6E99BF0019790F /* ControllerModuleManager.swift */,
+				A9D7205C1C73C32F001321D3 /* PinIOModuleManager.swift */,
+				A965674E1C7E25B0009DB0F4 /* NeopixelModuleManager.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		A9EC0FA01C6EC1240019790F /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				A9EC0FA21C6EC1240019790F /* InfoModuleViewController.swift */,
+				A9EC0FA11C6EC1240019790F /* InfoCharacteristicTableViewCell.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		A9EC0FA91C6EDBE10019790F /* PinIO */ = {
+			isa = PBXGroup;
+			children = (
+				A9EC0FAA1C6EDBE10019790F /* PinIOModuleViewController.swift */,
+				A9EC0FAB1C6EDBE10019790F /* PinIOTableViewCell.swift */,
+			);
+			path = PinIO;
+			sourceTree = "<group>";
+		};
+		A9FE75701BB9CF1000F7A5BF /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				A9FE75711BB9CF1000F7A5BF /* XMLDictionary.h */,
+				A9FE75721BB9CF1000F7A5BF /* XMLDictionary.m */,
+			);
+			path = XML;
+			sourceTree = "<group>";
+		};
+		B12E2D0785DB111BB749DADE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				306E0D3C0B775E80704140AB /* Pods-OSX.debug.xcconfig */,
+				6AC1184E322E9E9A527BB7F2 /* Pods-OSX.release.xcconfig */,
+				C1A38E2241235B1ED6C49AA4 /* Pods-iOS.debug.xcconfig */,
+				84D89B88F76BCB31A1B27F96 /* Pods-iOS.release.xcconfig */,
+				EBA828893B1A8F67C4BBEE0F /* Pods-watchOS.debug.xcconfig */,
+				B86FF3BB211A024B2AE48AD1 /* Pods-watchOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A949AA861C5ACF19002F960B /* iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A949AA981C5ACF19002F960B /* Build configuration list for PBXNativeTarget "iOS" */;
+			buildPhases = (
+				52E8189D98CE332F0F11EA2F /* [CP] Check Pods Manifest.lock */,
+				A949AA831C5ACF19002F960B /* Sources */,
+				A949AA841C5ACF19002F960B /* Frameworks */,
+				A949AA851C5ACF19002F960B /* Resources */,
+				A9627AE01CD617B800B93737 /* Embed Watch Content */,
+				D990DB3403F075F1FF506FE5 /* [CP] Embed Pods Frameworks */,
+				EFDD0F5339398AFA554B5E9A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9627AD71CD617B800B93737 /* PBXTargetDependency */,
+			);
+			name = iOS;
+			productName = bluefruitconnect;
+			productReference = A949AA871C5ACF19002F960B /* Adafruit Bluefruit LE Connect.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9627AB91CD617B800B93737 /* watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9627ADD1CD617B800B93737 /* Build configuration list for PBXNativeTarget "watchOS" */;
+			buildPhases = (
+				0F51FFF706333262860C8EE5 /* [CP] Check Pods Manifest.lock */,
+				A9627AB81CD617B800B93737 /* Resources */,
+				A9627ADC1CD617B800B93737 /* Embed App Extensions */,
+				6C126D6432382EB0582772B9 /* Frameworks */,
+				932A8AAC79ECAD628492CC51 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9627AC91CD617B800B93737 /* PBXTargetDependency */,
+			);
+			name = watchOS;
+			productName = watchOS;
+			productReference = A9627ABA1CD617B800B93737 /* watchOS.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		A9627AC51CD617B800B93737 /* watchOS Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9627AD91CD617B800B93737 /* Build configuration list for PBXNativeTarget "watchOS Extension" */;
+			buildPhases = (
+				A9627AC21CD617B800B93737 /* Sources */,
+				A9627AC31CD617B800B93737 /* Frameworks */,
+				A9627AC41CD617B800B93737 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "watchOS Extension";
+			productName = "watchOS Extension";
+			productReference = A9627AC61CD617B800B93737 /* watchOS Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+		A98296671BB1F5E600DD478C /* OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A98296771BB1F5E600DD478C /* Build configuration list for PBXNativeTarget "OSX" */;
+			buildPhases = (
+				9F26F06D806B57F34D86B07C /* [CP] Check Pods Manifest.lock */,
+				A98296641BB1F5E600DD478C /* Sources */,
+				A98296651BB1F5E600DD478C /* Frameworks */,
+				A98296661BB1F5E600DD478C /* Resources */,
+				C226EB7E0ADA7914F806259F /* [CP] Embed Pods Frameworks */,
+				8289787AC497AB2D55DE8210 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OSX;
+			productName = bluefruitconnect;
+			productReference = A98296681BB1F5E600DD478C /* Adafruit Bluefruit LE Connect.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9A6441F1CEB721900C762BA /* Bluefruit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9A644261CEB721900C762BA /* Build configuration list for PBXNativeTarget "Bluefruit" */;
+			buildPhases = (
+				A9A6441C1CEB721900C762BA /* Sources */,
+				A9A6441D1CEB721900C762BA /* Frameworks */,
+				A9A6441E1CEB721900C762BA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Bluefruit;
+			productName = BluefruitCommandLine;
+			productReference = A9A644201CEB721900C762BA /* Adafruit Bluefruit LE Connect */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A98296601BB1F5E600DD478C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Adafruit;
+				TargetAttributes = {
+					A949AA861C5ACF19002F960B = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 2X94RM7457;
+						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+					A9627AB91CD617B800B93737 = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 2X94RM7457;
+						LastSwiftMigration = 0800;
+					};
+					A9627AC51CD617B800B93737 = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 2X94RM7457;
+						LastSwiftMigration = 0800;
+					};
+					A98296671BB1F5E600DD478C = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 2X94RM7457;
+						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
+					};
+					A9A6441F1CEB721900C762BA = {
+						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
+					};
+				};
+			};
+			buildConfigurationList = A98296631BB1F5E600DD478C /* Build configuration list for PBXProject "Bluefruit Connect" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A982965F1BB1F5E600DD478C;
+			productRefGroup = A98296691BB1F5E600DD478C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A98296671BB1F5E600DD478C /* OSX */,
+				A949AA861C5ACF19002F960B /* iOS */,
+				A9627AB91CD617B800B93737 /* watchOS */,
+				A9627AC51CD617B800B93737 /* watchOS Extension */,
+				A9A6441F1CEB721900C762BA /* Bluefruit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A949AA851C5ACF19002F960B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93EF7C21CE5243100706942 /* Settings.bundle in Resources */,
+				A94F5A381C5AD41A009CC9B8 /* Main.storyboard in Resources */,
+				A9AF4E121CC63562002C1C12 /* NeopixelTypes.plist in Resources */,
+				A91F9E931C65179E007656B7 /* Localizable.strings in Resources */,
+				A9941C161C80F41300AD4016 /* NeopixelBoards.plist in Resources */,
+				A9AF4E261CC7E8C0002C1C12 /* Neopixel in Resources */,
+				A94F5A471C5AE2A4009CC9B8 /* DefaultPreferences.plist in Resources */,
+				A949AAA61C5ACFAB002F960B /* Assets.xcassets in Resources */,
+				A94F5A371C5AD41A009CC9B8 /* LaunchScreen.storyboard in Resources */,
+				A9941C191C812A9D00AD4016 /* NeopixelDefaultPalette.plist in Resources */,
+				A94F5A461C5AE2A1009CC9B8 /* GattUUIDs.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9627AB81CD617B800B93737 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9627AEF1CD6183D00B93737 /* Interface.storyboard in Resources */,
+				A9627AEE1CD6183D00B93737 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9627AC41CD617B800B93737 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9627AF81CD6184500B93737 /* Assets.xcassets in Resources */,
+				A9627AFD1CD6184500B93737 /* PushNotificationPayload.apns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A98296661BB1F5E600DD478C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9AF4E111CC63562002C1C12 /* NeopixelTypes.plist in Resources */,
+				A94370A71BB6384B002521F7 /* GattUUIDs.plist in Resources */,
+				A91F9E921C65179E007656B7 /* Localizable.strings in Resources */,
+				A9941C151C80F41300AD4016 /* NeopixelBoards.plist in Resources */,
+				A949AA641C5AC8C3002F960B /* Main.storyboard in Resources */,
+				A949AA611C5AC85A002F960B /* Images.xcassets in Resources */,
+				A98E03A51BBA406700F8924C /* DefaultPreferences.plist in Resources */,
+				A9941C181C812A9D00AD4016 /* NeopixelDefaultPalette.plist in Resources */,
+				A98E03951BBA2A0300F8924C /* Credits.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0F51FFF706333262860C8EE5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		52E8189D98CE332F0F11EA2F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8289787AC497AB2D55DE8210 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OSX/Pods-OSX-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		932A8AAC79ECAD628492CC51 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-watchOS/Pods-watchOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9F26F06D806B57F34D86B07C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C226EB7E0ADA7914F806259F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OSX/Pods-OSX-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D990DB3403F075F1FF506FE5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOS/Pods-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EFDD0F5339398AFA554B5E9A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOS/Pods-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A949AA831C5ACF19002F960B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A91F839F1C68F0790023C168 /* UartSettingsViewController.swift in Sources */,
+				A9DA5CA51D9D69B100C11469 /* FilterTextSettingsViewController.swift in Sources */,
+				A9E016C21C70D72900CEB54C /* StyledSubview.swift in Sources */,
+				A94F5A491C5AE3D8009CC9B8 /* ReleasesParser.m in Sources */,
+				A90D29CA1C7E108E003EB6D4 /* NeopixelModuleViewController.swift in Sources */,
+				A9EC0F951C6E99BF0019790F /* DfuUpdateProcess.swift in Sources */,
+				A9AF4E141CC641E2002C1C12 /* NeopixelTypeValueTableViewCell.swift in Sources */,
+				A9A37C181CD6336C00008136 /* WatchSessionManager.swift in Sources */,
+				A91F9EBC1C666E6D007656B7 /* MqttSettings.swift in Sources */,
+				A94535821C8540DB00DF49D7 /* PeripheralDetailsCollectionViewCell.swift in Sources */,
+				A94F5A431C5AE28C009CC9B8 /* DFUOperationsDetails.m in Sources */,
+				A94F5A441C5AE28F009CC9B8 /* FileOperations.m in Sources */,
+				A9EC0FB01C6F519D0019790F /* DfuFilesPickerDialogViewController.swift in Sources */,
+				A9941C131C80F31000AD4016 /* NeopixelBoardSelectorViewController.swift in Sources */,
+				A91F83A21C68F4B40023C168 /* UartSettingTableViewCell.swift in Sources */,
+				A92088B41C7357D5002FF8E8 /* StyleConfig.swift in Sources */,
+				A94535841C8540DB00DF49D7 /* ScrollingTabBarViewController.swift in Sources */,
+				A949AAA51C5ACFAB002F960B /* AppDelegate.swift in Sources */,
+				A9EC0F891C6E87120019790F /* GradientView.swift in Sources */,
+				A987F3121C66AFA00007C58D /* KeyboardPositionNotifier.swift in Sources */,
+				A94F5A411C5AE287009CC9B8 /* BLEOperations.m in Sources */,
+				A9DA5CA31D9D696F00C11469 /* ScanningAnimationViewController.swift in Sources */,
+				A94F5A421C5AE28A009CC9B8 /* DFUOperations.m in Sources */,
+				A99CE0661C6E699C0051C818 /* ControllerColorWheelViewController.swift in Sources */,
+				A99CE0571C6D62AC0051C818 /* ControllerPadViewController.swift in Sources */,
+				A9DA5CA11D9D696F00C11469 /* PeripheralTableViewCell.swift in Sources */,
+				A94F5A451C5AE294009CC9B8 /* IntelHex2BinConverter.m in Sources */,
+				A9EC0F931C6E99BF0019790F /* ControllerModuleManager.swift in Sources */,
+				A91F83A01C68F07C0023C168 /* UartTimetampTableViewCell.swift in Sources */,
+				A94F5A3C1C5AE24D009CC9B8 /* LogHelper.swift in Sources */,
+				A9EC0F991C6E99BF0019790F /* Preferences.swift in Sources */,
+				A9BEA6431C6690E6005F54D6 /* CocoaCompatibility.swift in Sources */,
+				A91F839E1C68F0760023C168 /* UartMqttSettingsViewController.swift in Sources */,
+				A91F9EBB1C666E6B007656B7 /* MqttManager.swift in Sources */,
+				A92E06871C6D5EF900BECBBA /* ControllerSensorTableViewCell.swift in Sources */,
+				A92088B61C73910D002FF8E8 /* UIImage+Color.swift in Sources */,
+				A94F5A3F1C5AE279009CC9B8 /* XMLDictionary.m in Sources */,
+				A9941C1C1C812D6600AD4016 /* Color+DarkerLighter.swift in Sources */,
+				A99CE05E1C6E1EE10051C818 /* UIImage+Tint.swift in Sources */,
+				A92088B21C727CD5002FF8E8 /* StyledButton.swift in Sources */,
+				A9675D851CFD19250041A6F0 /* DataDownloader.m in Sources */,
+				A9F5D8C01CD6D7F500C6A468 /* HexColorConversions.swift in Sources */,
+				A96567501C7E25B0009DB0F4 /* NeopixelModuleManager.swift in Sources */,
+				A9EC0F9F1C6E99BF0019790F /* UartModuleManager.swift in Sources */,
+				A9675D8A1CFD19E60041A6F0 /* DeviceInfoData.m in Sources */,
+				A9AF4E0F1CC63496002C1C12 /* NeopixelTypeSelectorViewController.swift in Sources */,
+				A94201F51C6A65B500C87989 /* DfuDialogViewController.swift in Sources */,
+				A92E067A1C6D18DF00BECBBA /* MqttSettingsValueAndSelector.swift in Sources */,
+				A94535831C8540DB00DF49D7 /* PeripheralDetailsViewController.swift in Sources */,
+				A94F5A3D1C5AE252009CC9B8 /* HexConversions.swift in Sources */,
+				A9EC0FA31C6EC1240019790F /* InfoCharacteristicTableViewCell.swift in Sources */,
+				A903A5DA1CA3622C004077DE /* HelpExportViewController.swift in Sources */,
+				A91F9EB11C663999007656B7 /* RssiUI.swift in Sources */,
+				A9EC0FA41C6EC1240019790F /* InfoModuleViewController.swift in Sources */,
+				A9EC0FAD1C6EDBE10019790F /* PinIOTableViewCell.swift in Sources */,
+				A94F5A401C5AE282009CC9B8 /* Utility.m in Sources */,
+				A9B41F891C69675400E4A666 /* DfuModuleViewController.swift in Sources */,
+				A96A7A031C74F02F000C37E3 /* NSObject+ENHThrottledReloading.m in Sources */,
+				A99CE0601C6E4F000051C818 /* ControllerComponentsTableViewCell.swift in Sources */,
+				A9DA5CA01D9D696F00C11469 /* AboutViewController.swift in Sources */,
+				A91F9E8E1C650C31007656B7 /* LocalizationManager.swift in Sources */,
+				A92E06761C6D136100BECBBA /* MqttSettingsStatusCell.swift in Sources */,
+				A94F5A511C5AF098009CC9B8 /* BleManager.swift in Sources */,
+				A92088AE1C72692B002FF8E8 /* BleUUIDNames.swift in Sources */,
+				A91F9E9D1C657856007656B7 /* EmptyDetailsViewController.swift in Sources */,
+				A92E067E1C6D20D000BECBBA /* MqttSettingPickerCell.swift in Sources */,
+				A9EC0FB21C6F5CF60019790F /* DfuFilesPickerTableViewCell.swift in Sources */,
+				A92088B01C726DDD002FF8E8 /* HelpViewController.swift in Sources */,
+				A9D04AD81CD655C10061DC74 /* HandoffManager.swift in Sources */,
+				A92E06861C6D5EF900BECBBA /* ControllerModuleViewController.swift in Sources */,
+				A94F5A481C5AE3D5009CC9B8 /* FirmwareUpdater.m in Sources */,
+				A9D7205E1C73C32F001321D3 /* PinIOModuleManager.swift in Sources */,
+				A9EC0F9B1C6E99BF0019790F /* UartDataChunk.swift in Sources */,
+				A9DA5CA21D9D696F00C11469 /* PeripheralTableViewController.swift in Sources */,
+				A9EC0FAC1C6EDBE10019790F /* PinIOModuleViewController.swift in Sources */,
+				A9941C1E1C813EF700AD4016 /* NeopixelColorPickerViewController.swift in Sources */,
+				A94F5A521C5AF09B009CC9B8 /* BlePeripheral.swift in Sources */,
+				A99CE0641C6E69090051C818 /* ISColorWheel.m in Sources */,
+				A9EC0F971C6E99BF0019790F /* PeripheralList.swift in Sources */,
+				A94F5A3E1C5AE25B009CC9B8 /* UartDataExport.swift in Sources */,
+				A91F839D1C68F06C0023C168 /* UartModuleViewController.swift in Sources */,
+				A92E06781C6D15A300BECBBA /* MqttSettingsHeaderCell.swift in Sources */,
+				A9EE1ADE1C6FB54900195028 /* Config.swift in Sources */,
+				A9EC0F9D1C6E99BF0019790F /* UartManager.swift in Sources */,
+				A90F88781D3D0C24009A71CF /* InfoModuleManager.swift in Sources */,
+				A94535811C8540DB00DF49D7 /* ModuleViewController.swift in Sources */,
+				A96A7A081C74F329000C37E3 /* Synchronize.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9627AC21CD617B800B93737 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9A37C191CD6336C00008136 /* WatchSessionManager.swift in Sources */,
+				A9DDAA441CD66A35007C8A6F /* ConnectedInterfaceController.swift in Sources */,
+				A9627AFE1CD61D1A00B93737 /* LogHelper.swift in Sources */,
+				A9DDAA461CD67B6B007C8A6F /* ControlModeInterfaceController.swift in Sources */,
+				A9DDAA481CD67E3E007C8A6F /* PickerModeInterfaceController.swift in Sources */,
+				A9DDAA4E1CD6C30D007C8A6F /* ColorRGBInterfaceController.swift in Sources */,
+				A9627AFC1CD6184500B93737 /* NotificationController.swift in Sources */,
+				A9627AFB1CD6184500B93737 /* MainInterfaceController.swift in Sources */,
+				A94A46D61CD6DEA100561A70 /* HexColorConversions.swift in Sources */,
+				A9627AF91CD6184500B93737 /* ExtensionDelegate.swift in Sources */,
+				A9627B001CD6205600B93737 /* ScanningInterfaceController.swift in Sources */,
+				A9DDAA4A1CD68793007C8A6F /* ControlPadInterfaceController.swift in Sources */,
+				A9D04AD91CD655C10061DC74 /* HandoffManager.swift in Sources */,
+				A9DDAA4C1CD6AF74007C8A6F /* ColorPaletteInterfaceController.swift in Sources */,
+				A9B1FA4D1CD6D55B00911FDB /* HexConversions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A98296641BB1F5E600DD478C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A949AA7C1C5AC977002F960B /* PeripheralListViewController.swift in Sources */,
+				A94370D01BB64959002521F7 /* DFUOperations.m in Sources */,
+				A94370CF1BB64959002521F7 /* BLEOperations.m in Sources */,
+				A94370D31BB64959002521F7 /* IntelHex2BinConverter.m in Sources */,
+				A9A2FF811C3EEA6B0039D188 /* MqttSettings.swift in Sources */,
+				A92088AD1C72692B002FF8E8 /* BleUUIDNames.swift in Sources */,
+				A94B85131BB65C71007B88C7 /* ReleasesParser.m in Sources */,
+				A9A2FF831C3EEA9D0039D188 /* MqttManager.swift in Sources */,
+				A91F9EAD1C663939007656B7 /* SeparatorView.swift in Sources */,
+				A94370D21BB64959002521F7 /* FileOperations.m in Sources */,
+				A94370D71BB649AE002521F7 /* Utility.m in Sources */,
+				A965674F1C7E25B0009DB0F4 /* NeopixelModuleManager.swift in Sources */,
+				A94370D11BB64959002521F7 /* DFUOperationsDetails.m in Sources */,
+				A91F9ED41C667CA6007656B7 /* NSColor+hex.m in Sources */,
+				A91F9E8D1C650C31007656B7 /* LocalizationManager.swift in Sources */,
+				A949AA7E1C5AC977002F960B /* PreferencesViewController.swift in Sources */,
+				A94370BB1BB6493A002521F7 /* BlePeripheral.swift in Sources */,
+				A9EC0F981C6E99BF0019790F /* Preferences.swift in Sources */,
+				A9EE1ADD1C6FB54900195028 /* Config.swift in Sources */,
+				A90F88771D3D0AEB009A71CF /* InfoModuleManager.swift in Sources */,
+				A949AA761C5AC977002F960B /* DetailsViewController.swift in Sources */,
+				A949AA811C5AC977002F960B /* UpdateDialogViewController.swift in Sources */,
+				A949AA671C5AC912002F960B /* AppDelegate.swift in Sources */,
+				A91F9EB01C663999007656B7 /* RssiUI.swift in Sources */,
+				A98AE3AD1C42AB5000FA8E80 /* UartDataExport.swift in Sources */,
+				A9D7205D1C73C32F001321D3 /* PinIOModuleManager.swift in Sources */,
+				A982968B1BB222D700DD478C /* LogHelper.swift in Sources */,
+				A9FE75731BB9CF1000F7A5BF /* XMLDictionary.m in Sources */,
+				A94B85101BB65C48007B88C7 /* FirmwareUpdater.m in Sources */,
+				A9E8AE571C7B0A3A00DFEFB0 /* NeopixelViewControllerOSX.swift in Sources */,
+				A9BEA6421C6690E6005F54D6 /* CocoaCompatibility.swift in Sources */,
+				A949AA801C5AC977002F960B /* UartViewController.swift in Sources */,
+				A984FEED1D943BF1001C5951 /* SeparatorLineView.swift in Sources */,
+				A9EC0F941C6E99BF0019790F /* DfuUpdateProcess.swift in Sources */,
+				A949AA7D1C5AC977002F960B /* PeripheralTableCellView.swift in Sources */,
+				A949AA771C5AC977002F960B /* FirmwareUpdateViewController.swift in Sources */,
+				A94370BA1BB6493A002521F7 /* BleManager.swift in Sources */,
+				A94F5A591C5AF1CA009CC9B8 /* StatusManager.swift in Sources */,
+				A9941C1B1C812D6600AD4016 /* Color+DarkerLighter.swift in Sources */,
+				A949AA7A1C5AC977002F960B /* MainWindowController.swift in Sources */,
+				A9EC0F961C6E99BF0019790F /* PeripheralList.swift in Sources */,
+				A949AA781C5AC977002F960B /* InfoViewController.swift in Sources */,
+				A94B851E1BB704BC007B88C7 /* HexConversions.swift in Sources */,
+				A9D720601C73D5E9001321D3 /* PinIOViewController.swift in Sources */,
+				A9EC0F9A1C6E99BF0019790F /* UartDataChunk.swift in Sources */,
+				A9EC0F9E1C6E99BF0019790F /* UartModuleManager.swift in Sources */,
+				A9675D891CFD19E60041A6F0 /* DeviceInfoData.m in Sources */,
+				A9AEF90F1C7560C100E381C0 /* PinTableCellView.swift in Sources */,
+				A96A7A071C74F329000C37E3 /* Synchronize.swift in Sources */,
+				A9EC0F9C1C6E99BF0019790F /* UartManager.swift in Sources */,
+				A949AA7F1C5AC977002F960B /* StatusViewController.swift in Sources */,
+				A9675D841CFD19250041A6F0 /* DataDownloader.m in Sources */,
+				A949AA791C5AC977002F960B /* MainSplitViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9A6441C1CEB721900C762BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9A82E4C1D019C0B0086DB1F /* ReleasesParser.m in Sources */,
+				A9675D751CFD13A00041A6F0 /* FileOperations.m in Sources */,
+				A9675D8B1CFD19E60041A6F0 /* DeviceInfoData.m in Sources */,
+				A9A644291CEB78E800C762BA /* LogHelper.swift in Sources */,
+				A9675D731CFD139B0041A6F0 /* DFUOperations.m in Sources */,
+				A92D91B71D01ABC500CAB0E5 /* XMLDictionary.m in Sources */,
+				A9675D741CFD139D0041A6F0 /* DFUOperationsDetails.m in Sources */,
+				A9675D721CFD13970041A6F0 /* BLEOperations.m in Sources */,
+				A9A6442A1CEB790B00C762BA /* Synchronize.swift in Sources */,
+				A9675D7B1CFD16B00041A6F0 /* LocalizationManager.swift in Sources */,
+				A9A644281CEB747600C762BA /* BlePeripheral.swift in Sources */,
+				A9675D711CFD13920041A6F0 /* Utility.m in Sources */,
+				A9675D771CFD13B60041A6F0 /* DfuUpdateProcess.swift in Sources */,
+				A9675D761CFD13A50041A6F0 /* IntelHex2BinConverter.m in Sources */,
+				A9A82E491D0180740086DB1F /* FirmwareUpdater.m in Sources */,
+				A99FBF411D01D6D200140647 /* main.swift in Sources */,
+				A99FBF401D01D6D200140647 /* CommandLine.swift in Sources */,
+				A9675D861CFD19250041A6F0 /* DataDownloader.m in Sources */,
+				A9A644271CEB747300C762BA /* BleManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A9627AC91CD617B800B93737 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9627AC51CD617B800B93737 /* watchOS Extension */;
+			targetProxy = A9627AC81CD617B800B93737 /* PBXContainerItemProxy */;
+		};
+		A9627AD71CD617B800B93737 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9627AB91CD617B800B93737 /* watchOS */;
+			targetProxy = A9627AD61CD617B800B93737 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A91F9E901C65179E007656B7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A91F9E911C65179E007656B7 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		A949AA621C5AC8C3002F960B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A949AA631C5AC8C3002F960B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A94F5A331C5AD41A009CC9B8 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A94F5A341C5AD41A009CC9B8 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A94F5A351C5AD41A009CC9B8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A94F5A361C5AD41A009CC9B8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A9627AEB1CD6183D00B93737 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9627AEC1CD6183D00B93737 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A949AA991C5ACF19002F960B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1A38E2241235B1ED6C49AA4 /* Pods-iOS.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = bluefruitconnect/Platform/iOS/Bluefruit_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				INFOPLIST_FILE = bluefruitconnect/Platform/iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adafruit.bluefruitconnect;
+				PRODUCT_NAME = "Adafruit Bluefruit LE Connect";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "bluefruitconnect/Platform/iOS/BluefruitConnect-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A949AA9A1C5ACF19002F960B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84D89B88F76BCB31A1B27F96 /* Pods-iOS.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = bluefruitconnect/Platform/iOS/Bluefruit_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				INFOPLIST_FILE = bluefruitconnect/Platform/iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adafruit.bluefruitconnect;
+				PRODUCT_NAME = "Adafruit Bluefruit LE Connect";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "bluefruitconnect/Platform/iOS/BluefruitConnect-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A9627ADA1CD617B800B93737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "bluefruitconnect/Platform/watchOS Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adafruit.bluefruitconnect.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		A9627ADB1CD617B800B93737 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "bluefruitconnect/Platform/watchOS Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adafruit.bluefruitconnect.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+		A9627ADE1CD617B800B93737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EBA828893B1A8F67C4BBEE0F /* Pods-watchOS.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				IBSC_MODULE = watchOS_Extension;
+				INFOPLIST_FILE = bluefruitconnect/Platform/watchOS/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adafruit.bluefruitconnect.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		A9627ADF1CD617B800B93737 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B86FF3BB211A024B2AE48AD1 /* Pods-watchOS.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				IBSC_MODULE = watchOS_Extension;
+				INFOPLIST_FILE = bluefruitconnect/Platform/watchOS/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adafruit.bluefruitconnect.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+		A98296751BB1F5E600DD478C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A98296761BB1F5E600DD478C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		A98296781BB1F5E600DD478C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 306E0D3C0B775E80704140AB /* Pods-OSX.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = bluefruitconnect/Platform/OSX/Bluefruit_OSX.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/bluefruitconnect/Platform/OSX/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adafruit.bluefruitconnect.osx;
+				PRODUCT_NAME = "Adafruit Bluefruit LE Connect";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "bluefruitconnect/Platform/OSX/BluefruitConnect-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
+			};
+			name = Debug;
+		};
+		A98296791BB1F5E600DD478C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AC1184E322E9E9A527BB7F2 /* Pods-OSX.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = bluefruitconnect/Platform/OSX/Bluefruit_OSX.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/bluefruitconnect/Platform/OSX/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adafruit.bluefruitconnect.osx;
+				PRODUCT_NAME = "Adafruit Bluefruit LE Connect";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "bluefruitconnect/Platform/OSX/BluefruitConnect-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
+			};
+			name = Release;
+		};
+		A9A644241CEB721900C762BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					COMMANDLINE,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/bluefruitconnect/Platform/OSX_CommandLine/Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"$(INFOPLIST_FILE)",
+				);
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_NAME = "Adafruit Bluefruit LE Connect";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "bluefruitconnect/Platform/OSX_CommandLine/BluefruitConnect-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
+			};
+			name = Debug;
+		};
+		A9A644251CEB721900C762BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = COMMANDLINE;
+				INFOPLIST_FILE = "$(SRCROOT)/bluefruitconnect/Platform/OSX_CommandLine/Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"$(INFOPLIST_FILE)",
+				);
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_NAME = "Adafruit Bluefruit LE Connect";
+				SWIFT_OBJC_BRIDGING_HEADER = "bluefruitconnect/Platform/OSX_CommandLine/BluefruitConnect-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A949AA981C5ACF19002F960B /* Build configuration list for PBXNativeTarget "iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A949AA991C5ACF19002F960B /* Debug */,
+				A949AA9A1C5ACF19002F960B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9627AD91CD617B800B93737 /* Build configuration list for PBXNativeTarget "watchOS Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9627ADA1CD617B800B93737 /* Debug */,
+				A9627ADB1CD617B800B93737 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9627ADD1CD617B800B93737 /* Build configuration list for PBXNativeTarget "watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9627ADE1CD617B800B93737 /* Debug */,
+				A9627ADF1CD617B800B93737 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A98296631BB1F5E600DD478C /* Build configuration list for PBXProject "Bluefruit Connect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A98296751BB1F5E600DD478C /* Debug */,
+				A98296761BB1F5E600DD478C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A98296771BB1F5E600DD478C /* Build configuration list for PBXNativeTarget "OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A98296781BB1F5E600DD478C /* Debug */,
+				A98296791BB1F5E600DD478C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9A644261CEB721900C762BA /* Build configuration list for PBXNativeTarget "Bluefruit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9A644241CEB721900C762BA /* Debug */,
+				A9A644251CEB721900C762BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A98296601BB1F5E600DD478C /* Project object */;
+}
